@@ -11,6 +11,8 @@ Route::group(['prefix' => 'association','as' => 'association.', 'middleware' => 
       Route::post('/courses/enroll', 'CourseController@enroll')->name('courses.enroll');
       Route::get('/request/delete/{id}', 'CourseController@deleteRequest')->name('request.delete');
       Route::get('/courses/requests', 'CourseController@requests')->name('courses.requests');
+      Route::get('/reports', 'AssociationReportController@index')->name('reports');
+      Route::get('/reports/show/{course_id}', 'AssociationReportController@report')->name('reports.show');
 });
 
                                                             

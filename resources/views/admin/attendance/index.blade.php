@@ -1,32 +1,46 @@
 @extends('layouts.admin')
+@section('styles')
+    <style>
+        canvas {
+            width: 200px !important;
+            height: 200px !important;
+        }
+    </style>
+@endsection
 @section('content')
     <h3>تسجيل الحضور - {{ $lesson->title }}</h3>
 
-    <form id="attendance-form" method="POST" action="{{route('admin.attendance.store')}}">
+    <form method="POST" action="{{ route('admin.attendance.store') }}">
         @csrf
         <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
 
         <table class="table">
             <thead>
                 <tr>
-                    <th>المستفيد</th>
-                    <th>حضر؟</th>
+                    <th>الاسم</th>
+                    <th>حضور</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($beneficiaries as $beneficiary)
                     <tr>
-                        <td>{{ $beneficiary->user?->name }}</td>
+                        <td>{{ $beneficiary->user?->name ?? 'اسم غير متوفر' }}</td>
                         <td>
-                            <input value="1" type="checkbox" name="attendance[{{ $beneficiary->id }}]" 
-                                {{ $lesson->attend( $beneficiary->id)  ? 'checked' : '' }}>
+                            <select name="attendance[{{ $beneficiary->id }}]" class="form-control">
+                                <option value="1"
+                                    {{ $lesson->attend($beneficiary->id)?->attended == 1 ? 'selected' : '' }}>حضر
+                                </option>
+                                <option value="0"
+                                    {{ $lesson->attend($beneficiary->id)?->attended === 0 ? 'selected' : '' }}>غاب
+                                </option>
+                            </select>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
-        <button type="submit" class="btn btn-primary">حفظ</button>
+        <button type="submit" class="btn btn-primary">حفظ الحضور</button>
     </form>
 
     <script>

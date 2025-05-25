@@ -73,7 +73,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="asso_report.html" class="nav-link"><i class="typcn typcn-chart-bar-outline"></i> تقارير
+                        <a href="{{route('association.reports')}}" class="nav-link"><i class="typcn typcn-chart-bar-outline"></i> تقارير
                             وإحصائيات</a>
                     </li>
 

@@ -13,7 +13,7 @@ class LessonAttendanceController
     {
         $lesson = Curriculum::with(['course.chapters', 'attendances'])->findOrFail($lessonId);
 
-     
+
         $courseRequest = CourseRequest::where('course_id', $lesson->course_id)->get()->last();
 
         if (!$courseRequest) {
@@ -24,16 +24,24 @@ class LessonAttendanceController
 
         return view('admin.attendance.index', compact('lesson', 'beneficiaries'));
     }
-
     public function store(Request $request)
     {
-        foreach ($request->attendance as $beneficiaryId => $attended) {
+        $lessonId = $request->input('lesson_id');
+        $attendanceData = $request->input('attendance', []);
+
+        foreach ($attendanceData as $beneficiaryId => $attended) {
             LessonAttendance::updateOrCreate(
-                ['curriculum_id' => $request->lesson_id, 'beneficiary_id' => $beneficiaryId],
-                ['attended' => $attended]
+                [
+                    'curriculum_id' => $lessonId,
+                    'beneficiary_id' => $beneficiaryId,
+                ],
+                [
+                    'attended' => $attended,
+                ]
             );
         }
 
-        return back();
+        return redirect()->back()->with('success', 'تم تحديث الحضور بنجاح');
     }
+
 }

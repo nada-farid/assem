@@ -21,7 +21,7 @@ class Beneficiary extends Model
         'deleted_at',
     ];
 
-      public const Gender = [
+    public const Gender = [
         'male' => 'ذكر',
         'female' => 'أنثي',
     ];
@@ -31,6 +31,7 @@ class Beneficiary extends Model
         'identity_number',
         'gender',
         'user_id',
+        'association_id',
         'phone',
         'address',
         'created_at',
@@ -73,15 +74,12 @@ class Beneficiary extends Model
         return $this->hasMany(LessonAttendance::class);
     }
 
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    }
 
 
-
-
-
-}

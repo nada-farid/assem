@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
+use App\Models\CourseRequest;
+use App\Models\Course;
+use App\Models\Association;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController
 {
@@ -189,6 +194,39 @@ class HomeController
             $settings5['fields'] = [];
         }
 
-        return view('home', compact('settings1', 'settings2', 'settings3', 'settings4', 'settings5'));
+        // 1. الدورات الأكثر طلباً
+        $popularCourses = CourseRequest::select('course_id', DB::raw('COUNT(*) as total'))
+            ->with('course:id,title')
+            ->groupBy('course_id')
+            ->orderByDesc('total')
+            ->take(5)
+            ->get();
+
+        // 2. الجمعيات الأكثر تفاعلاً (عدد الطلبات)
+        $topAssociations = CourseRequest::select('association_id', DB::raw('COUNT(*) as total'))
+            ->join('associations', 'course_requests.association_id', '=', 'associations.id')
+            ->groupBy('association_id', 'associations.name')
+            ->orderByDesc('total')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                return (object)[
+                    'name' => Association::find($item->association_id)?->name ?? 'غير معروف',
+                    'total' => $item->total
+                ];
+            });
+
+        // 3. الطلبات الشهرية خلال آخر 6 شهور
+        $monthlyRequests = CourseRequest::select(
+                DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"),
+                DB::raw("COUNT(*) as total")
+            )
+            ->where('created_at', '>=', now()->subMonths(6))
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->orderBy('month')
+            ->get();
+        return view('home', compact('settings1', 'settings2', 'settings3', 'settings4', 'settings5',  'popularCourses',
+            'topAssociations',
+            'monthlyRequests'));
     }
 }

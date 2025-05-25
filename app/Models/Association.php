@@ -76,5 +76,10 @@ class Association extends Model implements HasMedia
         return $this->hasMany(CourseRequest::class);
     }
 
+    public function beneficiars()
+    {
+        return $this->hasMany(Beneficiary::class);
+    }
+
 
 }

@@ -145,9 +145,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     
     Route::post('/attendance/store', 'LessonAttendanceController@store')->name('attendance.store');
 
-    Route::prefix('/my_reports')->name('admin.reports.')->group(function () {
-    Route::get('dashboard', 'AdminReportController@dashboard')->name('dashboard');
-});
 
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

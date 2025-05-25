@@ -16,7 +16,7 @@
                     <div class="az-content-header-right">
 
 
-                        <a href="{{route('association.courses.add')}}" class="btn btn-az-primary btn-rounded">طلب جديد</a>
+                        <a href="{{ route('association.courses.add') }}" class="btn btn-az-primary btn-rounded">طلب جديد</a>
                     </div>
                 </div>
 
@@ -39,14 +39,16 @@
                             @foreach ($requests as $request)
                                 <tr>
                                     <th scope="row">12 يناير 2025</th>
-                                    <td><a href="asso_course-details.html"> {{$request->course->title}} </a> </td>
-                                    <td>{{$request->beneficiaries->count()}} </td>
-                                    <td> {{App\Models\CourseRequest::STATUS_SELECT[$request->status] ?? ''}}</td>
+                                    <td><a href="{{ route('frontend.course', $request->course_id) }}">
+                                            {{ $request->course->title }} </a> </td>
+                                    <td>{{ $request->beneficiaries->count() }} </td>
+                                    <td> {{ App\Models\CourseRequest::STATUS_SELECT[$request->status] ?? '' }}</td>
 
 
                                     {{-- <td><a href="#"> <i class="fa-solid fa-pen-to-square"></i></a>
                                     </td> --}}
-                                    <td><a href="{{route('association.request.delete',$request->id)}}"> <i class="fa-solid fa-trash"></i></a></td>
+                                    <td><a href="{{ route('association.request.delete', $request->id) }}"> <i
+                                                class="fa-solid fa-trash"></i></a></td>
 
                                 </tr>
                             @endforeach
