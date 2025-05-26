@@ -85,5 +85,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(UserAlert::class);
     }
+    
+    public function getCustomDateAttribute(){
+      return $this->created_at->translatedFormat('F d, Y');
+    }
 
 }

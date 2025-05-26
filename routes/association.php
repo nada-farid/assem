@@ -6,7 +6,7 @@ Route::group(['prefix' => 'association','as' => 'association.'],function () {
       
 Route::group(['prefix' => 'association','as' => 'association.', 'middleware' => ['auth', 'association']],function () {
       Route::get('/home', 'HomeController@index')->name('home');
-      Route::get('/profile', 'ProfileController@index')->name('profile');
+      Route::get('/profile', 'ProfileController@editProfile')->name('editProfile');
       Route::get('/courses/add', 'CourseController@addCourse')->name('courses.add');
       Route::post('/courses/enroll', 'CourseController@enroll')->name('courses.enroll');
       Route::get('/request/delete/{id}', 'CourseController@deleteRequest')->name('request.delete');

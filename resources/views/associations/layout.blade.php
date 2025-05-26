@@ -128,26 +128,25 @@
                     </div><!-- dropdown-menu -->
                 </div><!-- az-header-notification --> --}}
                 <div class="dropdown az-profile-menu">
-                    <a href="" class="az-img-user"><img src=" img/daam.jpg" alt=""></a>
+                    <a href="" class="az-img-user"><img src="{{ get_setting('logo') }}" alt=""></a>
                     <div class="dropdown-menu">
                         <div class="az-dropdown-header d-sm-none">
                             <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
                         </div>
                         <div class="az-header-profile">
                             <div class="az-img-user">
-                                <img src=" img/daam.jpg" alt="">
+                                <img src="{{$assocation->logo?->getFirstMediaUr()}}" alt="">
                             </div><!-- az-img-user -->
-                            <h6> جمعية دعم</h6>
-                            <span>لرعاية الأرامل والمطلقات</span>
+                            <h6> {{$assocation->name}}</h6>
                         </div><!-- az-header-profile -->
 
-                        <a href="asso_profile.html" class="dropdown-item"><i class="typcn typcn-user-outline"></i>
-                            الملف الشخصي</a>
-                        <a href="asso_profile_edit.html" class="dropdown-item"><i class="typcn typcn-edit"></i> تعديل
+                        {{-- <a href="asso_profile.html" class="dropdown-item"><i class="typcn typcn-user-outline"></i>
+                            الملف الشخصي</a> --}}
+                        <a href="{{ route('association.editProfile') }}" class="dropdown-item"><i class="typcn typcn-edit"></i> تعديل
                             البيانات</a>
 
-                        <a href="asso_setting.html" class="dropdown-item"><i class="typcn typcn-cog-outline"></i>
-                            إعدادات الحساب</a>
+                        {{-- <a href="asso_setting.html" class="dropdown-item"><i class="typcn typcn-cog-outline"></i>
+                            إعدادات الحساب</a> --}}
                         <a onclick="event.preventDefault(); document.getElementById('logoutform').submit();"
                             class="dropdown-item"><i class="typcn typcn-power-outline"></i>
                             تسجيل الخروج</a>
