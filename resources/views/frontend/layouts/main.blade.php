@@ -64,7 +64,7 @@
         <div class="vs-menu-area text-center">
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
-                <a href="{{ route('frontend.home') }}"><img src="{{ get_setting('logo') }}" alt="عاصم"></a>
+                <a href="{{ route('frontend.home') }}"><img src="{!! asset(get_setting('logo')) !!}" alt="عاصم"></a>
             </div>
             <div class="vs-mobile-menu">
                 <ul>
@@ -166,7 +166,7 @@
                     <div class="row align-items-center justify-content-between">
                         <div class="col-auto">
                             <div class="vs-logo"> <a href="{{ route('frontend.home') }}"><img
-                                       src="{{ get_setting('logo') }}" alt="logo"></a> </div>
+                                       src="{!! asset(get_setting('logo')) !!}" alt="logo"></a> </div>
                         </div>
                         <div class="col text-end text-xl-center">
                             <nav class="main-menu menu-style1 ">
@@ -242,7 +242,7 @@
                         <div class="widget footer-widget">
                             <div class="vs-widget-about">
                                 <div class="footer-logo"> <a href="{{ route('frontend.home') }}"><img
-                                           src="{{ get_setting('logo') }}" 
+                                           src="{!! asset(get_setting('logo_footer')) !!}" 
                                             alt="logo"></a> </div>
                                 <p class="footer-text">
                                     {!! get_setting('description_2') !!}
@@ -256,7 +256,7 @@
                             <h3 class="widget_title">روابط سريعة</h3>
                             <div class="menu-all-pages-container footer-menu">
                                 <ul class="menu">
-                                    <li><a href="{{ route('association.profile') }}">حسابي الشخصي </a></li>
+                                    <li><a href="{{ route('association.profile.edit') }}">حسابي الشخصي </a></li>
                                     <li><a href="{{ route('frontend.courses') }}">الدورات التدريبية</a></li>
                                     <li><a href="{{ route('frontend.about') }}">عن الجمعية</a></li>
                                     <li><a href="#">الحوكمة والتقارير </a></li>

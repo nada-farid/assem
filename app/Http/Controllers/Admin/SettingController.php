@@ -46,8 +46,23 @@ class SettingController extends Controller
                     Setting::updateOrCreate(['key' => 'logo'], ['value' => 'settings/' . $file_name]);
                 }
             } else {
+              
                 Setting::updateOrCreate(['key' => 'logo'], ['value' => null]);
             }
+             if ($request->has('logo_footer')) {
+                if ($request->input('logo_footer') != "undefined") {
+                    $file = new File(storage_path('tmp/uploads/' . basename($request->input('logo_footer'))));
+                    $extension = pathinfo($file, PATHINFO_EXTENSION);
+                    $file_name = time() . '_logo_settings.' . $extension;
+                    $file->move('public/settings', $file_name);
+                    Setting::updateOrCreate(['key' => 'logo_footer'], ['value' => 'settings/' . $file_name]);
+                }
+            } else {
+              
+                Setting::updateOrCreate(['key' => 'logo_footer'], ['value' => null]);
+            }
+            
+             
             if ($request->has('about')) {
                 if ($request->input('about') != "undefined") {
                     $file = new File(storage_path('tmp/uploads/' . basename($request->input('about'))));
@@ -57,10 +72,10 @@ class SettingController extends Controller
                     Setting::updateOrCreate(['key' => 'about'], ['value' => 'settings/' . $file_name]);
                 }
             } else {
-                Setting::updateOrCreate(['key' => 'logo'], ['value' => null]);
+                Setting::updateOrCreate(['key' => 'about'], ['value' => null]);
             }
             if ($request->has('structure')) {
-                if ($request->input('logo') != "undefined") {
+                if ($request->input('structure') != "undefined") {
                     $file = new File(storage_path('tmp/uploads/' . basename($request->input('structure'))));
                     $extension = pathinfo($file, PATHINFO_EXTENSION);
                     $file_name = time() . '_structure_settings.' . $extension;
@@ -93,10 +108,10 @@ class SettingController extends Controller
                 Setting::updateOrCreate(['key' => 'metaimage'], ['value' => null]);
             }
         } elseif ($request->setting_type == 'setting_4') {
-            Setting::updateOrCreate(['key' => 'count_courses'], values: ['value' => $request->count_courses]);
+               Setting::updateOrCreate(['key' => 'count_courses'], ['value' => $request->count_courses]);
             Setting::updateOrCreate(['key' => 'count_benificair'], ['value' => $request->count_benificair]);
-            Setting::updateOrCreate(['key' => 'count_tweets'], ['value' => $request->count_tweets]);
-            Setting::updateOrCreate(['key' => 'count_products'], ['value' => $request->count_products]);
+            Setting::updateOrCreate(['key' => 'count_centers'], ['value' => $request->count_centers]);
+            Setting::updateOrCreate(['key' => 'count_associations'], ['value' => $request->count_associations]);
         } elseif ($request->setting_type == 'setting_5') {
             Setting::updateOrCreate(['key' => 'font_size'], ['value' => $request->font_size]);
             Setting::updateOrCreate(['key' => 'sidemenu_background'], ['value' => $request->sidemenu_background]);

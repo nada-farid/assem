@@ -1,12 +1,5 @@
 @extends('layouts.admin')
-@section('styles')
-    <style>
-        canvas {
-            width: 200px !important;
-            height: 200px !important;
-        }
-    </style>
-@endsection
+
 @section('content')
     <h3>تسجيل الحضور - {{ $lesson->title }}</h3>
 

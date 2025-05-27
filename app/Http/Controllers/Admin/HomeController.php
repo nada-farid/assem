@@ -141,7 +141,7 @@ class HomeController
             'column_class'          => 'col-md-6',
             'entries_number'        => '5',
             'fields'                => [
-                'photo'             => '',
+                // 'photo'             => '',
                 'title'             => '',
                 'short_description' => '',
                 'center'            => 'name',
@@ -178,7 +178,7 @@ class HomeController
                 'name'             => '',
                 'specialization'   => '',
                 'beneficiar_count' => '',
-                'image'            => '',
+                // 'image'            => '',
             ],
             'translation_key' => 'center',
         ];
@@ -211,7 +211,7 @@ class HomeController
             ->get()
             ->map(function ($item) {
                 return (object)[
-                    'name' => Association::find($item->association_id)?->name ?? 'غير معروف',
+                    'name' => Association::find($item->association_id)?->user->name ?? 'غير معروف',
                     'total' => $item->total
                 ];
             });

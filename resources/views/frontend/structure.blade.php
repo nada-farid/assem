@@ -16,7 +16,7 @@
 
                 <div class="col-xl-8 mt-n5 pt-5 pt-xl-0">
                     <div class="img-box3">
-                        <div class="img-1 mega-hover"><img class="w-100" src="{{ get_setting('structure')}}" alt="About Img">
+                        <div class="img-1 mega-hover"><img class="w-100" src="{!! asset(get_setting('structure')) !!}" alt="About Img">
                         </div>
                         <div class="shape-dotted jump"></div>
                     </div>
@@ -25,4 +25,3 @@
         </div>
     </section>
 @endsection
-beneficars

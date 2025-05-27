@@ -12,8 +12,9 @@
                         <div class="hero-bg" data-bg-src="{{ $slider->image->getUrl() }}"></div>
                         <div class="container">
                             <div class="hero-content">
-                                <h1 class="hero-title animated">{{ $slider->title }}
-                                </h1>
+                                <!--<h1 class="hero-title animated">{{ $slider->title }}-->
+                                <!--</h1>-->
+                                <h1 class="hero-title animated">مــــــــعـــــــاً <span>لمستقـــبل</span> واعـــــــــــــــد</h1>
                                 <p class="hero-text animated">{{ $slider->sub_title }}</p>
                                 <div class="hero-btns animated">
                                 </div>
@@ -116,7 +117,7 @@
                                 <div class="course-meta">
                                     <span><i class="fal fa-users"></i>{{ $course->beneficiary_count }} مستفيد</span>
                                     <span><i class="fal fa-clock"></i>{{ $course->duration }} </span>
-                                    <span><i class="fal fa-calendar-alt"></i> {{ $course->start_date }}</span>
+                                    <span><i class="fal fa-calendar-alt"></i> {{ $course->custom_date }}</span>
                                 </div>
                             </div>
                         </div>

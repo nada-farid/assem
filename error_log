@@ -1,0 +1,50 @@
+[26-May-2025 11:11:54 Asia/Singapore] PHP Warning:  require(/home/visionss/assem.visions-sa.com/vendor/autoload.php): Failed to open stream: No such file or directory in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:11:54 Asia/Singapore] PHP Fatal error:  Uncaught Error: Failed opening required '/home/visionss/assem.visions-sa.com/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/visionss/assem.visions-sa.com/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:12:54 Asia/Singapore] PHP Warning:  require(/home/visionss/assem.visions-sa.com/vendor/autoload.php): Failed to open stream: No such file or directory in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:12:54 Asia/Singapore] PHP Fatal error:  Uncaught Error: Failed opening required '/home/visionss/assem.visions-sa.com/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/visionss/assem.visions-sa.com/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:13:13 Asia/Singapore] PHP Warning:  require(/home/visionss/assem.visions-sa.com/vendor/autoload.php): Failed to open stream: No such file or directory in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:13:13 Asia/Singapore] PHP Fatal error:  Uncaught Error: Failed opening required '/home/visionss/assem.visions-sa.com/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/visionss/assem.visions-sa.com/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:13:16 Asia/Singapore] PHP Warning:  require(/home/visionss/assem.visions-sa.com/vendor/autoload.php): Failed to open stream: No such file or directory in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:13:16 Asia/Singapore] PHP Fatal error:  Uncaught Error: Failed opening required '/home/visionss/assem.visions-sa.com/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/visionss/assem.visions-sa.com/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:13:37 Asia/Singapore] PHP Warning:  require(/home/visionss/assem.visions-sa.com/vendor/autoload.php): Failed to open stream: No such file or directory in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:13:37 Asia/Singapore] PHP Fatal error:  Uncaught Error: Failed opening required '/home/visionss/assem.visions-sa.com/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/visionss/assem.visions-sa.com/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:14:28 Asia/Singapore] PHP Warning:  require(/home/visionss/assem.visions-sa.com/vendor/autoload.php): Failed to open stream: No such file or directory in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:14:28 Asia/Singapore] PHP Fatal error:  Uncaught Error: Failed opening required '/home/visionss/assem.visions-sa.com/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/visionss/assem.visions-sa.com/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/visionss/assem.visions-sa.com/index.php on line 34
+[26-May-2025 11:15:31 Asia/Singapore] PHP Warning:  require(/home/visionss/assem.visions-sa.com/vendor/autoload.php): Failed to open stream: No such file or directory in /home/visionss/assem.visions-sa.com/artisan on line 18
+[26-May-2025 11:15:31 Asia/Singapore] PHP Fatal error:  Uncaught Error: Failed opening required '/home/visionss/assem.visions-sa.com/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/visionss/assem.visions-sa.com/artisan:18
+Stack trace:
+#0 {main}
+  thrown in /home/visionss/assem.visions-sa.com/artisan on line 18
+[26-May-2025 11:16:17 Asia/Singapore] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/visionss/assem.visions-sa.com/bootstrap/app.php:14
+Stack trace:
+#0 /home/visionss/assem.visions-sa.com/artisan(20): require_once()
+#1 {main}
+  thrown in /home/visionss/assem.visions-sa.com/bootstrap/app.php on line 14
+[26-May-2025 11:16:45 Asia/Singapore] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/visionss/assem.visions-sa.com/bootstrap/app.php:14
+Stack trace:
+#0 /home/visionss/assem.visions-sa.com/index.php(47): require_once()
+#1 {main}
+  thrown in /home/visionss/assem.visions-sa.com/bootstrap/app.php on line 14
+[26-May-2025 11:17:43 Asia/Singapore] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/visionss/assem.visions-sa.com/bootstrap/app.php:14
+Stack trace:
+#0 /home/visionss/assem.visions-sa.com/index.php(47): require_once()
+#1 {main}
+  thrown in /home/visionss/assem.visions-sa.com/bootstrap/app.php on line 14

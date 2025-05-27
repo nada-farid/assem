@@ -78,6 +78,6 @@ class Center extends Model implements HasMedia
 
     public function courses(){
 
-        return $this->hasMany(Center::class,'center_id');
+        return $this->hasMany(Course::class,'center_id');
     }
 }

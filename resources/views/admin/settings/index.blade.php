@@ -59,12 +59,21 @@
                                 <div class="needsclick dropzone {{ $errors->has('logo') ? 'is-invalid' : '' }}"
                                     id="logo-dropzone">
                                 </div>
+                                 <span class="help-block">{{ trans('cruds.setting.fields.logo_helper') }}</span>
+                            </div>
+                             <div class="form-group col-md-4">
+                                <label for="logo_footer">{{ trans('cruds.setting.fields.logo_footer') }}</label>
+                                <div class="needsclick dropzone {{ $errors->has('logo_footer') ? 'is-invalid' : '' }}"
+                                    id="logo_footer-dropzone">
+                                </div>
+                                 <span class="help-block">{{ trans('cruds.setting.fields.logo_footer_helper') }}</span>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="about">{{ trans('cruds.setting.fields.about') }}</label>
                                 <div class="needsclick dropzone {{ $errors->has('about') ? 'is-invalid' : '' }}"
                                     id="about-dropzone">
                                 </div>
+                                  <span class="help-block">{{ trans('cruds.setting.fields.about_helper') }}</span>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="phone">{{ trans('cruds.setting.fields.phone') }}</label>
@@ -300,8 +309,8 @@
             },
             params: {
                 size: 5,
-                width: 4096,
-                height: 4096
+                width: 376,
+                height: 105
             },
             success: function(file, response) {
                 $('#setting_1 form').find('input[name="logo"]').remove()
@@ -348,6 +357,65 @@
         }
     </script>
     <script>
+        Dropzone.options.logoFooterDropzone = {
+            url: '{{ route('admin.settings.storeMedia') }}',
+            maxFilesize: 5, // MB
+            acceptedFiles: '.jpeg,.jpg,.png,.gif',
+            maxFiles: 1,
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            params: {
+                size: 5,
+                width: 150,
+                height: 102
+            },
+            success: function(file, response) {
+                $('#setting_1 form').find('input[name="logo_footer"]').remove()
+                $('#setting_1 form').append('<input type="hidden" name="logo_footer" value="' + response.name + '">')
+            },
+            removedfile: function(file) {
+                file.previewElement.remove()
+                if (file.status !== 'error') {
+                    $('#setting_1 form').find('input[name="logo_footer"]').remove()
+                    this.options.maxFiles = this.options.maxFiles + 1
+                }
+            },
+            init: function() {
+                @if (get_setting('logo_footer'))
+                    var external_link = "{!! asset(get_setting('logo_footer')) !!}"
+                    var mockFile = {
+                        name: "logo_footer",
+                        size: 12345
+                    }; // Provide a mock file object
+                    this.options.addedfile.call(this, mockFile)
+                    this.options.thumbnail.call(this, mockFile, external_link)
+                    mockFile.previewElement.classList.add('dz-complete')
+                    $('#setting_1 form').append('<input type="hidden" name="logo_footer" value="' + mockFile.file_name +
+                        '">')
+                    this.options.maxFiles = this.options.maxFiles - 1
+                @endif
+            },
+            error: function(file, response) {
+                if ($.type(response) === 'string') {
+                    var message = response //dropzone sends it's own error messages in string
+                } else {
+                    var message = response.errors.file
+                }
+                file.previewElement.classList.add('dz-error')
+                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                _results = []
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    node = _ref[_i]
+                    _results.push(node.textContent = message)
+                }
+
+                return _results
+            }
+        }
+    </script>
+    <script>
         Dropzone.options.aboutDropzone = {
             url: '{{ route('admin.settings.storeMedia') }}',
             maxFilesize: 5, // MB
@@ -359,8 +427,8 @@
             },
             params: {
                 size: 5,
-                width: 4096,
-                height: 4096
+                width: 630,
+                height: 630
             },
             success: function(file, response) {
                 $('#setting_1 form').find('input[name="about"]').remove()
@@ -418,8 +486,6 @@
             },
             params: {
                 size: 5,
-                width: 4096,
-                height: 4096
             },
             success: function(file, response) {
                 $('#setting_1 form').find('input[name="structure"]').remove()

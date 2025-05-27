@@ -47,11 +47,12 @@
     <!--==============================
                 Course Area
             ==============================-->
-    <section class="space-top space-extra-bottom " data-bg-src="assets/img/bg/course-bg-pattern.jpg">
+    <section class="space-top space-extra-bottom " data-bg-src="{{asset(
+    'frontend/assets/img/bg/course-bg-pattern.jpg')}}">
         <div class="container">
             <div class="title-area text-center wow fadeInUp" data-wow-delay="0.3s">
                 <div class="sec-icon">
-                    <div class="vs-circle"><img src="assets/img/title-icon-smoke.png"> </div>
+                    <div class="vs-circle"><img src="{{asset('frontend/assets/img/title-icon-smoke.png')}}"> </div>
                 </div>
                 <h2 class="sec-title">أكتشف الدورات التدريبيه الخاصة بالمركز</h2>
             </div>
