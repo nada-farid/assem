@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserAlert;
 use App\Models\Association;
 use Alert;
+use Auth;
 
 class ProfileController extends Controller
 {
@@ -26,7 +27,7 @@ class ProfileController extends Controller
 
         $alert = UserAlert::create([
             'alert_text' => " قمت جمعية جديدة بالتسجيل:  {$association->name}",
-            'alert_link' => route('admin.associations.edit', $association->id), 
+            'alert_link' => route('admin.associations.edit', $association->id),
         ]);
 
         $adminUsers = User::where('user_type', 'staff')->get();
@@ -36,4 +37,44 @@ class ProfileController extends Controller
 
         return redirect()->route('frontend.home');
     }
+
+    public function editProfile()
+    {
+        $association = Association::where('user_id', Auth::id())->first();
+        return view('associations.edit-profile', compact('association'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $association = Association::where('user_id', Auth::id())->first();
+
+        $request->validate([
+
+            'manager' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'bref' => 'required|string',
+            'logo' => 'nullable|image|max:2048',
+        ]);
+
+
+        $association->name = $request->input('name');
+        $association->manager = $request->input('manager');
+        $association->phone = $request->input('phone');
+        $association->bref = $request->input('bref');
+        $association->address = $request->input('address') ?? $association->address;
+
+        $association->save();
+
+
+        if ($request->hasFile('logo')) {
+
+            $association->clearMediaCollection('logo');
+
+            $association->addMediaFromRequest('logo')->toMediaCollection('logo');
+        }
+        Alert::success('تم بنجاح', 'تم تحديث بيانات الجمعية بنجاح');
+
+        return redirect()->back();
+    }
+
 }

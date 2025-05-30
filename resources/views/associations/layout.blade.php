@@ -128,21 +128,21 @@
                     </div><!-- dropdown-menu -->
                 </div><!-- az-header-notification --> --}}
                 <div class="dropdown az-profile-menu">
-                    <a href="" class="az-img-user"><img src="{{ get_setting('logo') }}" alt=""></a>
+                    <a href="" class="az-img-user"><img src="{{$assocation->logo?->getUrl()}}" alt=""></a>
                     <div class="dropdown-menu">
                         <div class="az-dropdown-header d-sm-none">
                             <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
                         </div>
                         <div class="az-header-profile">
                             <div class="az-img-user">
-                                <img src="{{$assocation->logo?->getFirstMediaUr()}}" alt="">
+                                <img src="{{$assocation->logo?->getUrl()}}" alt="">
                             </div><!-- az-img-user -->
                             <h6> {{$assocation->name}}</h6>
                         </div><!-- az-header-profile -->
 
                         {{-- <a href="asso_profile.html" class="dropdown-item"><i class="typcn typcn-user-outline"></i>
                             الملف الشخصي</a> --}}
-                        <a href="{{ route('association.editProfile') }}" class="dropdown-item"><i class="typcn typcn-edit"></i> تعديل
+                        <a href="{{ route('association.profile.edit') }}" class="dropdown-item"><i class="typcn typcn-edit"></i> تعديل
                             البيانات</a>
 
                         {{-- <a href="asso_setting.html" class="dropdown-item"><i class="typcn typcn-cog-outline"></i>

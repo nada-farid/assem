@@ -300,8 +300,7 @@
             },
             params: {
                 size: 5,
-                width: 4096,
-                height: 4096
+                 
             },
             success: function(file, response) {
                 $('#setting_1 form').find('input[name="logo"]').remove()
@@ -359,8 +358,7 @@
             },
             params: {
                 size: 5,
-                width: 4096,
-                height: 4096
+                 
             },
             success: function(file, response) {
                 $('#setting_1 form').find('input[name="about"]').remove()
@@ -418,8 +416,7 @@
             },
             params: {
                 size: 5,
-                width: 4096,
-                height: 4096
+                 
             },
             success: function(file, response) {
                 $('#setting_1 form').find('input[name="structure"]').remove()
@@ -478,8 +475,7 @@
             },
             params: {
                 size: 5,
-                width: 4096,
-                height: 4096
+                 
             },
             success: function(file, response) {
                 $('#setting_4 form').find('input[name="metaimage"]').remove()
