@@ -1,4 +1,12 @@
 @extends('layouts.admin')
+@section('styles')
+    <style>
+        canvas {
+            width: 200px !important;
+            height: 200px !important;
+        }
+    </style>
+@endsection
 
 @section('content')
     <h4>تفاصيل طلب الدورة: {{ $courseRequest->course->title }} - الجمعية: {{ $courseRequest->association->name }}</h4>

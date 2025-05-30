@@ -47,12 +47,12 @@
     <div class="az-header">
         <div class="container">
             <div class="az-header-left">
-                <a href="index.html" class="az-logo"><span></span> <img src="img/logo.png" width="200" /></a>
+                <a href="{{route('association.home')}}" class="az-logo"><span></span> <img src="{{asset('association/img/logo.png')}}" width="200" /></a>
                 <a href="" id="azMenuShow" class="az-header-menu-icon d-lg-none"><span></span></a>
             </div><!-- az-header-left -->
             <div class="az-header-menu">
                 <div class="az-header-menu-header">
-                    <a href="index.html" class="az-logo"><span></span> <img src="img/logo.png" width="150" /></a>
+                    <a href="{{route('association.home')}}" class="az-logo"><span></span> <img src="img/logo.png" width="150" /></a>
                     <a href="" class="close">&times;</a>
                 </div><!-- az-header-menu-header -->
                 <ul class="nav">

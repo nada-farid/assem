@@ -222,21 +222,21 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.course.fields.video_background_helper') }}</span>
                 </div>
-                <div class="form-group">
+                  <div class="form-group">
+                    <span class="toggle-text">{{ trans('cruds.course.fields.avaliable') }}</span>
+
                     <div class="form-check {{ $errors->has('avaliable') ? 'is-invalid' : '' }}">
-                        <input type="hidden" name="avaliable" value="0">
                         <input class="form-check-input" type="checkbox" name="avaliable" id="avaliable" value="1"
-                            {{ old('avaliable', 0) == 1 || old('avaliable') === null ? 'checked' : '' }}>
-                        <label class="form-check-label"
-                            for="avaliable">{{ trans('cruds.course.fields.avaliable') }}</label>
+                            {{$course->avaliable == 1 ||old('avaliable', 0) === 1 ? 'checked' : '' }}>
+                        <label class="form-check-label toggle-label" for="avaliable"></label>
                     </div>
                     @if ($errors->has('avaliable'))
                         <div class="invalid-feedback">
                             {{ $errors->first('avaliable') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.course.fields.avaliable_helper') }}</span>
                 </div>
+                
                 <div class="form-group">
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
@@ -448,7 +448,6 @@
             },
             params: {
                 size: 20,
-                 
             },
             success: function(file, response) {
                 $('form').find('input[name="video_background"]').remove()

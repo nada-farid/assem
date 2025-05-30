@@ -442,7 +442,6 @@
             },
             params: {
                 size: 20,
-                 
             },
             success: function(file, response) {
                 $('form').find('input[name="video_background"]').remove()

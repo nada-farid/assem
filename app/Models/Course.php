@@ -144,4 +144,8 @@ class Course extends Model implements HasMedia
     public function chapters(){
         return $this->hasMany(Curriculum::class , 'course_id');
     }
+
+      public function getCustomDateAttribute(){
+      return $this->created_at->translatedFormat('F d, Y');
+    }
 }
