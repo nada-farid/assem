@@ -24,6 +24,10 @@ class UpdateHawkmaRequest extends FormRequest
             'file' => [
                 'required',
             ],
+            'category_id' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

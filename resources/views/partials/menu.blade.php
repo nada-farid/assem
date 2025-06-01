@@ -127,7 +127,7 @@
                 </ul>
             </li>
         @endcan
-           @can('course_enrollement_access')
+        @can('course_enrollement_access')
             <li
                 class="c-sidebar-nav-dropdown {{ request()->is('admin/course-requests*') ? 'c-show' : '' }} {{ request()->is('admin/beneficiaries*') ? 'c-show' : '' }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -162,7 +162,7 @@
                 </ul>
             </li>
         @endcan
-          @can('setting_access')
+        @can('setting_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.settings.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/settings') || request()->is('admin/settings/*') ? 'c-active' : '' }}">
@@ -185,14 +185,38 @@
             </li>
         @endcan
         @can('hawkma_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.hawkmas.index') }}"
-                    class="c-sidebar-nav-link {{ request()->is('admin/hawkmas') || request()->is('admin/hawkmas/*') ? 'c-active' : '' }}">
-                      <i class="fa-fw fas fa-file-alt c-sidebar-nav-icon">
+            <li
+                class="c-sidebar-nav-dropdown {{ request()->is('admin/hawkmas*') ? 'c-show' : '' }} {{ request()->is('admin/hawkam-categories*') ? 'c-show' : '' }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-align-justify c-sidebar-nav-icon">
 
                     </i>
-                    {{ trans('cruds.hawkma.title') }}
+                    {{ trans('cruds.hawkmaMangment.title') }}
                 </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('hawkma_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.hawkmas.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/hawkmas') || request()->is('admin/hawkmas/*') ? 'c-active' : '' }}">
+                               <i class="fa-fw fas fa-file c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.hawkma.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('hawkam_category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.hawkam-categories.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/hawkam-categories') || request()->is('admin/hawkam-categories/*') ? 'c-active' : '' }}">
+                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.hawkamCategory.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
             </li>
         @endcan
         @can('report_mangment_access')
@@ -331,9 +355,9 @@
                 </a>
             </li>
         @endcan --}}
-    
 
-     @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+
+        @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'c-active' : '' }}"

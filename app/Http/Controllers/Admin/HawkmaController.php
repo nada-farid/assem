@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyHawkmaRequest;
 use App\Http\Requests\StoreHawkmaRequest;
 use App\Http\Requests\UpdateHawkmaRequest;
+use App\Models\HawkamCategory;
 use App\Models\Hawkma;
 use Gate;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class HawkmaController extends Controller
         abort_if(Gate::denies('hawkma_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Hawkma::query()->select(sprintf('%s.*', (new Hawkma)->table));
+            $query = Hawkma::with(['category'])->select(sprintf('%s.*', (new Hawkma)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -53,8 +54,14 @@ class HawkmaController extends Controller
             $table->editColumn('file', function ($row) {
                 return $row->file ? '<a href="' . $row->file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
+            $table->editColumn('published', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->published ? 'checked' : null) . '>';
+            });
+            $table->addColumn('category_name', function ($row) {
+                return $row->category ? $row->category->name : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'file']);
+            $table->rawColumns(['actions', 'placeholder', 'file', 'published', 'category']);
 
             return $table->make(true);
         }
@@ -66,7 +73,9 @@ class HawkmaController extends Controller
     {
         abort_if(Gate::denies('hawkma_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.hawkmas.create');
+        $categories = HawkamCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.hawkmas.create', compact('categories'));
     }
 
     public function store(StoreHawkmaRequest $request)
@@ -92,7 +101,11 @@ class HawkmaController extends Controller
     {
         abort_if(Gate::denies('hawkma_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.hawkmas.edit', compact('hawkma'));
+        $categories = HawkamCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $hawkma->load('category');
+
+        return view('admin.hawkmas.edit', compact('categories', 'hawkma'));
     }
 
     public function update(UpdateHawkmaRequest $request, Hawkma $hawkma)
@@ -127,6 +140,8 @@ class HawkmaController extends Controller
     public function show(Hawkma $hawkma)
     {
         abort_if(Gate::denies('hawkma_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $hawkma->load('category');
 
         return view('admin.hawkmas.show', compact('hawkma'));
     }

@@ -30,6 +30,10 @@
                     <th>
                         {{ trans('cruds.hawkma.fields.file') }}
                     </th>
+
+                    <th>
+                        {{ trans('cruds.hawkma.fields.category') }}
+                    </th>
                     <th>
                         &nbsp;
                     </th>
@@ -89,11 +93,12 @@
 { data: 'id', name: 'id' },
 { data: 'title', name: 'title' },
 { data: 'file', name: 'file', sortable: false, searchable: false },
+{ data: 'category_name', name: 'category.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
-    pageLength: 50,
+    pageLength: 25,
   };
   let table = $('.datatable-Hawkma').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

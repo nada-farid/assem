@@ -31,7 +31,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.hawkma.fields.file_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="icon">{{ trans('cruds.hawkma.fields.icon') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('icon') ? 'is-invalid' : '' }}" id="icon-dropzone">
                 </div>
@@ -41,6 +41,20 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.hawkma.fields.icon_helper') }}</span>
+            </div> --}}
+            <div class="form-group">
+                <label class="required" for="category_id">{{ trans('cruds.hawkma.fields.category') }}</label>
+                <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                    @foreach($categories as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $hawkma->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('category'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('category') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.hawkma.fields.category_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -118,7 +132,8 @@
     },
     params: {
       size: 2,
-       
+      width: 4096,
+      height: 4096
     },
     success: function (file, response) {
       $('form').find('input[name="icon"]').remove()
