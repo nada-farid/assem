@@ -1,4 +1,4 @@
- <?php
+<?php
 
 Route::redirect('/', '/login');
 Route::get('/home', function () {
@@ -11,7 +11,7 @@ Route::get('/home', function () {
 
 Auth::routes(['register' => false]);
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth','staff']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'staff']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -44,6 +44,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('courses/media', 'CourseController@storeMedia')->name('courses.storeMedia');
     Route::post('courses/ckmedia', 'CourseController@storeCKEditorImages')->name('courses.storeCKEditorImages');
     Route::resource('courses', 'CourseController');
+    Route::get('courses/qr_attendance/{id}', 'CoursesController@qr_attendance')->name('courses.qr_attendance');
+    Route::get('courses/qr_certificate/{id}', 'CoursesController@qr_certificate')->name('courses.qr_certificate');
+    Route::post('courses/update_certificate', 'CoursesController@update_certificate')->name('courses.update_certificate');
+    Route::get('courses/send_certificate/{id}', 'CoursesController@send_certificate')->name('courses.send_certificate');
+    Route::get('courses/get_certificate/{id}', 'CoursesController@get_certificate')->name('courses.get_certificate');
 
     // Category
     Route::delete('categories/destroy', 'CategoryController@massDestroy')->name('categories.massDestroy');
@@ -80,7 +85,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Hawkam Categories
     Route::delete('hawkam-categories/destroy', 'HawkamCategoriesController@massDestroy')->name('hawkam-categories.massDestroy');
     Route::resource('hawkam-categories', 'HawkamCategoriesController');
-    
+
     // Report Categories
     Route::delete('report-categories/destroy', 'ReportCategoriesController@massDestroy')->name('report-categories.massDestroy');
     Route::resource('report-categories', 'ReportCategoriesController');
@@ -99,6 +104,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Goals
     Route::delete('goals/destroy', 'GoalsController@massDestroy')->name('goals.massDestroy');
+    Route::post('goals/media', 'GoalsController@storeMedia')->name('goals.storeMedia');
+    Route::post('goals/ckmedia', 'GoalsController@storeCKEditorImages')->name('goals.storeCKEditorImages');
     Route::resource('goals', 'GoalsController');
 
     // Partner
@@ -117,7 +124,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('needs/destroy', 'NeedController@massDestroy')->name('needs.massDestroy');
     Route::resource('needs', 'NeedController');
 
-     // Association
+    // Association
     Route::delete('associations/destroy', 'AssociationController@massDestroy')->name('associations.massDestroy');
     Route::post('associations/media', 'AssociationController@storeMedia')->name('associations.storeMedia');
     Route::post('associations/ckmedia', 'AssociationController@storeCKEditorImages')->name('associations.storeCKEditorImages');
@@ -135,15 +142,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('user-alerts/read', 'UserAlertsController@read');
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
-        // Beneficiary
+    // Beneficiary
     Route::delete('beneficiaries/destroy', 'BeneficiaryController@massDestroy')->name('beneficiaries.massDestroy');
     Route::post('beneficiaries/parse-csv-import', 'BeneficiaryController@parseCsvImport')->name('beneficiaries.parseCsvImport');
     Route::post('beneficiaries/process-csv-import', 'BeneficiaryController@processCsvImport')->name('beneficiaries.processCsvImport');
     Route::resource('beneficiaries', 'BeneficiaryController');
 
     Route::get('/attendance/{lesson_id}', 'LessonAttendanceController@index')->name('attendance.index');
-    
+
     Route::post('/attendance/store', 'LessonAttendanceController@store')->name('attendance.store');
+
+    // Audit Logs
+    Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+
+    // Supporter
+    Route::delete('supporters/destroy', 'SupporterController@massDestroy')->name('supporters.massDestroy');
+    Route::resource('supporters', 'SupporterController');
+
+    Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
+    Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
 
 
 });

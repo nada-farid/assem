@@ -17,14 +17,7 @@ class UpdateCourseRequest extends FormRequest
     public function rules()
     {
         return [
-            'start_at' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
-            ],
-            'end_at' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
-            ],
+ 
             'description' => [
                 'required',
             ],
@@ -62,9 +55,6 @@ class UpdateCourseRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'goals' => [
-                'required',
-            ],
             'video_background' => [
                 'required',
             ],
@@ -73,6 +63,35 @@ class UpdateCourseRequest extends FormRequest
             ],
             'inside_image' => [
                 'required',
+            ],
+             'start_at' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'nullable',
+            ],
+            'end_at' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'nullable',
+            ],
+            'goal_id' => [
+                'required',
+                'integer',
+            ],
+            'assistant' => [
+                'string',
+                'nullable',
+            ],
+            'supporter_id' => [
+                'required',
+                'integer',
+            ],
+            'support_value' => [
+                'required',
+            ],
+            'number_supported' => [
+                'required',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
             ],
         ];
     }

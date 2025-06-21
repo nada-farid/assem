@@ -38,8 +38,6 @@ class Course extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'start_at',
-        'end_at',
         'description',
         'category_id',
         'title',
@@ -50,9 +48,16 @@ class Course extends Model implements HasMedia
         'video_url',
         'duration',
         'duration_weekly',
-        'beneficiary_count',
-        'goals',
         'avaliable',
+        'start_at',
+        'end_at',
+        'goal_id',
+        'assistant',
+        'supporter_id',
+        'support_value',
+        'number_supported',
+        'location',
+        'url',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -72,26 +77,6 @@ class Course extends Model implements HasMedia
     public function courseCourseRequests()
     {
         return $this->hasMany(CourseRequest::class, 'course_id', 'id');
-    }
-
-    public function getStartAtAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setStartAtAttribute($value)
-    {
-        $this->attributes['start_at'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
-    public function getEndAtAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setEndAtAttribute($value)
-    {
-        $this->attributes['end_at'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     public function getPhotoAttribute()
@@ -140,12 +125,56 @@ class Course extends Model implements HasMedia
         return $file;
     }
 
-
-    public function chapters(){
-        return $this->hasMany(Curriculum::class , 'course_id');
+    public function getStartAtAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
-      public function getCustomDateAttribute(){
-      return $this->created_at->translatedFormat('F d, Y');
+    public function setStartAtAttribute($value)
+    {
+        $this->attributes['start_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
+
+    public function getEndAtAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setEndAtAttribute($value)
+    {
+        $this->attributes['end_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function goal()
+    {
+        return $this->belongsTo(Goal::class, 'goal_id');
+    }
+
+    public function supporter()
+    {
+        return $this->belongsTo(Supporter::class, 'supporter_id');
+    }
+    public function chapters()
+    {
+        return $this->hasMany(Curriculum::class, 'course_id');
+    }
+
+    public function getCustomDateAttribute()
+    {
+        return $this->created_at->translatedFormat('F d, Y');
+    }
+
+
+    public function getStatusAttribute()
+    {
+        $today = now();
+        if ($this->start_at > $today) {
+            return 'new';
+        } elseif ($this->start_at <= $today && $this->end_at >= $today) {
+            return 'active';
+        } elseif ($this->end_at < $today) {
+            return 'past';
+        }
+    }
+
 }

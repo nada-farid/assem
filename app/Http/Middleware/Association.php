@@ -25,6 +25,9 @@ class Association
             return $next($request);
         } elseif ($user->user_type == 'admin') {
             return redirect()->route('admin.home');
+        } elseif ($user->user_type == 'center') {
+            return redirect()->route('center.home');
+
         } else {
             \Auth::logout();
             return redirect()->route('frontend.home');

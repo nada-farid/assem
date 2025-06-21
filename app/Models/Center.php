@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,9 +20,11 @@ class Center extends Model implements HasMedia
     protected $appends = [
         'logo',
         'image',
+        'license_image',
     ];
 
     protected $dates = [
+        'end_date',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -36,6 +39,17 @@ class Center extends Model implements HasMedia
         'facebook_link',
         'twitter_link',
         'linked_in',
+        'user_id',
+        'location',
+        'website',
+        'license_number',
+        'end_date',
+        'director_name',
+        'director_phone',
+        'director_email',
+        'coordinator_name',
+        'coordinator_phone',
+        'coordinator_email',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -76,8 +90,30 @@ class Center extends Model implements HasMedia
         return $file;
     }
 
-    public function courses(){
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
-        return $this->hasMany(Course::class,'center_id');
+    public function getEndDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getLicenseImageAttribute()
+    {
+        $file = $this->getMedia('license_image')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 }

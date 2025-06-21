@@ -10,12 +10,15 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Category;
 use App\Models\Center;
 use App\Models\Course;
+use App\Models\Goal;
+use App\Models\Supporter;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Alert;
+use App\Models\User;
+use App\Models\UserAlert;
 
 class CourseController extends Controller
 {
@@ -26,7 +29,7 @@ class CourseController extends Controller
         abort_if(Gate::denies('course_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Course::with(['category', 'center'])->select(sprintf('%s.*', (new Course)->table));
+            $query = Course::with(['category', 'center', 'goal', 'supporter'])->select(sprintf('%s.*', (new Course)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -79,7 +82,15 @@ class CourseController extends Controller
                 return $row->type ? Course::TYPE_SELECT[$row->type] : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'photo', 'category', 'center']);
+            $table->addColumn('supporter_name', function ($row) {
+                return $row->supporter ? $row->supporter->name : '';
+            });
+
+            $table->editColumn('number_supported', function ($row) {
+                return $row->number_supported ? $row->number_supported : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'photo', 'category', 'center', 'supporter']);
 
             return $table->make(true);
         }
@@ -95,7 +106,11 @@ class CourseController extends Controller
 
         $centers = Center::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.courses.create', compact('categories', 'centers'));
+        $goals = Goal::pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $supporters = Supporter::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.courses.create', compact('categories', 'centers', 'goals', 'supporters'));
     }
 
     public function store(StoreCourseRequest $request)
@@ -118,7 +133,14 @@ class CourseController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $course->id]);
         }
 
-        Alert::success('اضافة بنجاح', 'تمت الاضافة بنجاح');
+
+        $alert = UserAlert::create([
+            'alert_text' => " قمت جمعية عاصم  بإضافتك إلي دورة جديدة",
+            'alert_link' => route('center.courses.show', $course->id),
+        ]);
+        $center = Center::find($request->center_id);
+        $alert->users()->sync($center->user_id);
+
 
         return redirect()->route('admin.courses.index');
     }
@@ -131,9 +153,13 @@ class CourseController extends Controller
 
         $centers = Center::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $course->load('category', 'center');
+        $goals = Goal::pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.courses.edit', compact('categories', 'centers', 'course'));
+        $supporters = Supporter::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $course->load('category', 'center', 'goal', 'supporter');
+
+        return view('admin.courses.edit', compact('categories', 'centers', 'course', 'goals', 'supporters'));
     }
 
     public function update(UpdateCourseRequest $request, Course $course)
@@ -173,7 +199,14 @@ class CourseController extends Controller
             $course->video_background->delete();
         }
 
-        Alert::success('تحديث بنجاح', 'تم التحديث بنجاح');
+
+        $alert = UserAlert::create([
+            'alert_text' => " قمت جمعية عاصم  بتعديل بيانات الدورة $course->title",
+            'alert_link' => route('center.courses.show', $course->id),
+        ]);
+        $center = Center::find($request->center_id);
+        $alert->users()->sync($center->user_id);
+
 
         return redirect()->route('admin.courses.index');
     }
@@ -182,7 +215,7 @@ class CourseController extends Controller
     {
         abort_if(Gate::denies('course_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $course->load('category', 'center');
+        $course->load('category', 'center', 'goal', 'supporter', 'courseCourseRequests');
 
         return view('admin.courses.show', compact('course'));
     }

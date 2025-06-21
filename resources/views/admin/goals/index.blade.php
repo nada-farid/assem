@@ -26,7 +26,7 @@
                             {{ trans('cruds.goal.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.goal.fields.description') }}
+                            {{ trans('cruds.goal.fields.title') }}
                         </th>
                         <th>
                             &nbsp;
@@ -43,7 +43,7 @@
                                 {{ $goal->id ?? '' }}
                             </td>
                             <td>
-                                {{ $goal->description ?? '' }}
+                                {{ $goal->title ?? '' }}
                             </td>
                             <td>
                                 @can('goal_show')

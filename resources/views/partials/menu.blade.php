@@ -198,7 +198,7 @@
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.hawkmas.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/hawkmas') || request()->is('admin/hawkmas/*') ? 'c-active' : '' }}">
-                               <i class="fa-fw fas fa-file c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-file c-sidebar-nav-icon">
 
                                 </i>
                                 {{ trans('cruds.hawkma.title') }}
@@ -356,6 +356,35 @@
             </li>
         @endcan --}}
 
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.systemCalendar') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'c-active' : '' }}">
+                <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
+
+                </i>
+                {{ trans('global.systemCalendar') }}
+            </a>
+        </li>
+        @can('supporter_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.supporters.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/supporters') || request()->is('admin/supporters/*') ? 'c-active' : '' }}">
+                    <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.supporter.title') }}
+                </a>
+            </li>
+        @endcan
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.systemCalendar') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'c-active' : '' }}">
+                <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
+
+                </i>
+                {{ trans('global.systemCalendar') }}
+            </a>
+        </li>
 
         @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')

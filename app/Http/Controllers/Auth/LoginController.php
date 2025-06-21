@@ -55,6 +55,9 @@ class LoginController extends Controller
         } elseif ($user->user_type == 'association') {
             return redirect()->route('association.home');
         }
+        elseif ($user->user_type == 'center') {
+            return redirect()->route('center.home');
+        }
     
         return redirect('/home');
     }

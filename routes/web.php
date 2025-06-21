@@ -12,7 +12,7 @@ Route::group(['as' => 'frontend.'], function () {
     Route::get('/courses', 'CourseController@index')->name('courses');
     Route::get('/course/{id}', 'CourseController@show')->name('course');
     Route::get('centers', 'CenterController@index')->name('centers');
-    Route::get('center/{id}', 'CenterController@show')->name('center');
+    Route::get('centers/{id}', 'CenterController@show')->name('center');
     Route::get('contact-us', 'ContactUsController@contact')->name('contact');
     Route::post('contact-us/store', 'ContactUsController@store')->name('contact.store');
     Route::get('/clear-cache', 'HomeController@cache');

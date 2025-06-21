@@ -31,8 +31,8 @@
                 <span class="help-block">{{ trans('cruds.center.fields.specialization_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="experience_years">{{ trans('cruds.center.fields.experience_years') }}</label>
-                <input class="form-control {{ $errors->has('experience_years') ? 'is-invalid' : '' }}" type="number" name="experience_years" id="experience_years" value="{{ old('experience_years', $center->experience_years) }}" step="1" required>
+                <label for="experience_years">{{ trans('cruds.center.fields.experience_years') }}</label>
+                <input class="form-control {{ $errors->has('experience_years') ? 'is-invalid' : '' }}" type="number" name="experience_years" id="experience_years" value="{{ old('experience_years', $center->experience_years) }}" step="1">
                 @if($errors->has('experience_years'))
                     <div class="invalid-feedback">
                         {{ $errors->first('experience_years') }}
@@ -41,8 +41,8 @@
                 <span class="help-block">{{ trans('cruds.center.fields.experience_years_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="beneficiar_count">{{ trans('cruds.center.fields.beneficiar_count') }}</label>
-                <input class="form-control {{ $errors->has('beneficiar_count') ? 'is-invalid' : '' }}" type="number" name="beneficiar_count" id="beneficiar_count" value="{{ old('beneficiar_count', $center->beneficiar_count) }}" step="1" required>
+                <label for="beneficiar_count">{{ trans('cruds.center.fields.beneficiar_count') }}</label>
+                <input class="form-control {{ $errors->has('beneficiar_count') ? 'is-invalid' : '' }}" type="number" name="beneficiar_count" id="beneficiar_count" value="{{ old('beneficiar_count', $center->beneficiar_count) }}" step="1">
                 @if($errors->has('beneficiar_count'))
                     <div class="invalid-feedback">
                         {{ $errors->first('beneficiar_count') }}
@@ -111,6 +111,131 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.center.fields.image_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="user_id">{{ trans('cruds.center.fields.user') }}</label>
+                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
+                    @foreach($users as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $center->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('user'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('user') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.user_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="location">{{ trans('cruds.center.fields.location') }}</label>
+                <input class="form-control {{ $errors->has('location') ? 'is-invalid' : '' }}" type="text" name="location" id="location" value="{{ old('location', $center->location) }}">
+                @if($errors->has('location'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('location') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.location_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="website">{{ trans('cruds.center.fields.website') }}</label>
+                <input class="form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" type="text" name="website" id="website" value="{{ old('website', $center->website) }}">
+                @if($errors->has('website'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('website') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.website_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="license_number">{{ trans('cruds.center.fields.license_number') }}</label>
+                <input class="form-control {{ $errors->has('license_number') ? 'is-invalid' : '' }}" type="text" name="license_number" id="license_number" value="{{ old('license_number', $center->license_number) }}">
+                @if($errors->has('license_number'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('license_number') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.license_number_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="end_date">{{ trans('cruds.center.fields.end_date') }}</label>
+                <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="end_date" value="{{ old('end_date', $center->end_date) }}">
+                @if($errors->has('end_date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('end_date') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.end_date_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="license_image">{{ trans('cruds.center.fields.license_image') }}</label>
+                <div class="needsclick dropzone {{ $errors->has('license_image') ? 'is-invalid' : '' }}" id="license_image-dropzone">
+                </div>
+                @if($errors->has('license_image'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('license_image') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.license_image_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="director_name">{{ trans('cruds.center.fields.director_name') }}</label>
+                <input class="form-control {{ $errors->has('director_name') ? 'is-invalid' : '' }}" type="text" name="director_name" id="director_name" value="{{ old('director_name', $center->director_name) }}">
+                @if($errors->has('director_name'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('director_name') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.director_name_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="director_phone">{{ trans('cruds.center.fields.director_phone') }}</label>
+                <input class="form-control {{ $errors->has('director_phone') ? 'is-invalid' : '' }}" type="number" name="director_phone" id="director_phone" value="{{ old('director_phone', $center->director_phone) }}" step="1">
+                @if($errors->has('director_phone'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('director_phone') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.director_phone_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="director_email">{{ trans('cruds.center.fields.director_email') }}</label>
+                <input class="form-control {{ $errors->has('director_email') ? 'is-invalid' : '' }}" type="email" name="director_email" id="director_email" value="{{ old('director_email', $center->director_email) }}">
+                @if($errors->has('director_email'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('director_email') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.director_email_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="coordinator_name">{{ trans('cruds.center.fields.coordinator_name') }}</label>
+                <input class="form-control {{ $errors->has('coordinator_name') ? 'is-invalid' : '' }}" type="text" name="coordinator_name" id="coordinator_name" value="{{ old('coordinator_name', $center->coordinator_name) }}">
+                @if($errors->has('coordinator_name'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('coordinator_name') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.coordinator_name_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="coordinator_phone">{{ trans('cruds.center.fields.coordinator_phone') }}</label>
+                <input class="form-control {{ $errors->has('coordinator_phone') ? 'is-invalid' : '' }}" type="number" name="coordinator_phone" id="coordinator_phone" value="{{ old('coordinator_phone', $center->coordinator_phone) }}" step="1">
+                @if($errors->has('coordinator_phone'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('coordinator_phone') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.coordinator_phone_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="coordinator_email">{{ trans('cruds.center.fields.coordinator_email') }}</label>
+                <input class="form-control {{ $errors->has('coordinator_email') ? 'is-invalid' : '' }}" type="email" name="coordinator_email" id="coordinator_email" value="{{ old('coordinator_email', $center->coordinator_email) }}">
+                @if($errors->has('coordinator_email'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('coordinator_email') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.center.fields.coordinator_email_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -202,8 +327,8 @@
     },
     params: {
       size: 20,
-      width: 275,
-      height: 100
+      width: 4096,
+      height: 4096
     },
     success: function (file, response) {
       $('form').find('input[name="logo"]').remove()
@@ -257,8 +382,8 @@
     },
     params: {
       size: 20,
-      width: 480,
-      height: 480
+      width: 4096,
+      height: 4096
     },
     success: function (file, response) {
       $('form').find('input[name="image"]').remove()
@@ -278,6 +403,61 @@
       this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
       file.previewElement.classList.add('dz-complete')
       $('form').append('<input type="hidden" name="image" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            var message = response //dropzone sends it's own error messages in string
+        } else {
+            var message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+}
+
+</script>
+<script>
+    Dropzone.options.licenseImageDropzone = {
+    url: '{{ route('admin.centers.storeMedia') }}',
+    maxFilesize: 2, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').find('input[name="license_image"]').remove()
+      $('form').append('<input type="hidden" name="license_image" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="license_image"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($center) && $center->license_image)
+      var file = {!! json_encode($center->license_image) !!}
+          this.options.addedfile.call(this, file)
+      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="license_image" value="' + file.file_name + '">')
       this.options.maxFiles = this.options.maxFiles - 1
 @endif
     },

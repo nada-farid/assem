@@ -111,6 +111,106 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.user') }}
+                        </th>
+                        <td>
+                            {{ $center->user->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.location') }}
+                        </th>
+                        <td>
+                            {{ $center->location }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.website') }}
+                        </th>
+                        <td>
+                            {{ $center->website }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.license_number') }}
+                        </th>
+                        <td>
+                            {{ $center->license_number }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.end_date') }}
+                        </th>
+                        <td>
+                            {{ $center->end_date }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.license_image') }}
+                        </th>
+                        <td>
+                            @if($center->license_image)
+                                <a href="{{ $center->license_image->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $center->license_image->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.director_name') }}
+                        </th>
+                        <td>
+                            {{ $center->director_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.director_phone') }}
+                        </th>
+                        <td>
+                            {{ $center->director_phone }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.director_email') }}
+                        </th>
+                        <td>
+                            {{ $center->director_email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.coordinator_name') }}
+                        </th>
+                        <td>
+                            {{ $center->coordinator_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.coordinator_phone') }}
+                        </th>
+                        <td>
+                            {{ $center->coordinator_phone }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.center.fields.coordinator_email') }}
+                        </th>
+                        <td>
+                            {{ $center->coordinator_email }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
