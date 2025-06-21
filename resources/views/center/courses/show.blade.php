@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.center')
 @section('content')
 <div class="row">
     <div class="col-md-4"> 
@@ -9,15 +9,12 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <div class="form-group">
-                        <a class="btn btn-default" href="{{ route('admin.courses.index') }}">
-                            {{ trans('global.back_to_list') }}
-                        </a>
+                    <div class="form-group d-flex justify-content-between">
                         <a class="btn btn-success" href="{{ route('admin.courses.qr_attendance',encrypt($course->id))}}">
-                            عرض صفحة تسجيل  الحضور
+                            عرض  تسجيل  الحضور
                         </a>
                         <a class="btn btn-info" href="{{ route('admin.courses.qr_certificate',encrypt($course->id))}}">
-                            عرض صفحة طلب شهادة
+                            عرض  طلب شهادة
                         </a>
                     </div>
                     <table class="table table-bordered table-striped">
@@ -64,7 +61,7 @@
                             </tr>
                             <tr>
                                 <th>
-                                    {{ trans('cruds.course.fields.attend_type') }}
+                                    {{ trans('cruds.course.fields.type') }}
                                 </th>
                                 <td>
                                     {{ App\Models\Course::TYPE_SELECT[$course->type] ?? '' }}
@@ -72,10 +69,10 @@
                             </tr>
                             <tr>
                                 <th>
-                                    {{ trans('cruds.course.fields.published') }}
+                                    {{ trans('cruds.course.fields.avaliable') }}
                                 </th>
                                 <td>
-                                    <input type="checkbox" disabled="disabled" {{ $course->published ? 'checked' : '' }}>
+                                    <input type="checkbox" disabled="disabled" {{ $course->avaliable ? 'checked' : '' }}>
                                 </td>
                             </tr>
                             <tr>

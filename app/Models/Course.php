@@ -177,4 +177,10 @@ class Course extends Model implements HasMedia
         }
     }
 
+       public function courseCourseStudents()
+    {
+        return $this->hasMany(CourseStudent::class, 'course_id', 'id');
+    }
+
+
 }

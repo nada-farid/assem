@@ -189,6 +189,19 @@
             padding: 10px;
         }
     </style>
+    @if (app()->getLocale() == 'ar')
+    <style>
+        .c-sidebar-nav .c-sidebar-nav-dropdown-items {
+            padding-right: 5%;
+        }
+    </style>
+@else
+    <style>
+        .c-sidebar-nav .c-sidebar-nav-dropdown-items {
+            padding-left: 5%;
+        }
+    </style>
+@endif
     @yield('styles')
 </head>
 
