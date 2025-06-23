@@ -6,6 +6,12 @@
         </a>
     </div>
 
+    @php
+        $newAssociationsCount = \App\Models\Association::whereHas('user', function ($q) {
+            $q->where('approved', 0);
+        })->count();
+    @endphp
+
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.home') }}" class="c-sidebar-nav-link">
@@ -23,6 +29,9 @@
 
                     </i>
                     {{ trans('cruds.userManagement.title') }}
+                    @if ($newAssociationsCount > 0)
+                        <span class="badge badge-warning">{{ $newAssociationsCount }}</span>
+                    @endif
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     {{-- @can('permission_access')
@@ -64,6 +73,9 @@
 
                                 </i>
                                 {{ trans('cruds.association.title') }}
+                                @if ($newAssociationsCount > 0)
+                                    <span class="badge badge-warning">{{ $newAssociationsCount }}</span>
+                                @endif
                             </a>
                         </li>
                     @endcan

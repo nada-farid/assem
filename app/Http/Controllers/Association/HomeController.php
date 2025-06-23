@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Association;
 use App\Models\Course;
+use App\Models\CourseStudent;
 
 
 class HomeController extends Controller
@@ -21,7 +22,7 @@ class HomeController extends Controller
             : null;
 
     // أكثر الدورات طلبًا من قبل الجمعية
-    $popularCourses = CourseRequest::select('course_id', DB::raw('count(*) as total'))
+    $popularCourses = CourseStudent::select('course_id', DB::raw('count(*) as total'))
       ->where('association_id', $association->id)
       ->groupBy('course_id')
       ->with('course')
@@ -30,16 +31,16 @@ class HomeController extends Controller
       ->get();
 
     // الطلبات الشهرية الخاصة بالجمعية
-    $monthlyRequests = CourseRequest::select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"), DB::raw('count(*) as total'))
+    $monthlyRequests = CourseStudent::select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"), DB::raw('count(*) as total'))
       ->where('association_id', $association->id)
       ->groupBy('month')
       ->orderBy('month')
       ->get();
 
     $association = Association::where('user_id', Auth::id())->first();
-    $ben_count = $association->beneficiars()->count();
+    $ben_count = $association->students()->count();
     $courses_count = Course::count();
-    $orders_count = CourseRequest::where('association_id', $association->id)->count();
+    $orders_count = CourseStudent::where('association_id', $association->id)->count();
 
     return view('associations.index', compact('ben_count', 'courses_count', 'orders_count', 'popularCourses',  'monthlyRequests'));
 

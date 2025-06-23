@@ -16,12 +16,12 @@ class CourseStudent extends Model
 
     public const REGISTERED_RADIO = [
         'yes' => 'yes',
-        'no'  => 'no',
+        'no' => 'no',
     ];
 
     public const CERTIFICATE_RADIO = [
         'yes' => 'yes',
-        'no'  => 'no',
+        'no' => 'no',
     ];
 
     protected $dates = [
@@ -43,13 +43,15 @@ class CourseStudent extends Model
         'relevance',
         'relevance_identity',
         'attend_course',
-        'courses_before', 
+        'courses_before',
         'transportaion',
         'prev_exper',
         'address',
         'request_certificate',
         'email_certificate',
         'course_id',
+        'association_id',
+        'approved',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -75,7 +77,8 @@ class CourseStudent extends Model
         return $this->belongsTo(Course::class, 'course_id');
     }
 
-    public function attendance(){
-        return $this->hasMany(CourseAttendance::class,'course_student_id');
+    public function attendance()
+    {
+        return $this->hasMany(CourseAttendance::class, 'course_student_id');
     }
 }

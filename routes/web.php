@@ -19,6 +19,10 @@ Route::group(['as' => 'frontend.'], function () {
     Route::get('/courses/filter', 'CourseController@filter')->name('courses.filter');
     Route::get('/login-register', 'AuthController@regitserOrLogin')->name('login-register');
     Route::post('/regitser', 'AuthController@regitser')->name('regitser');
+    Route::get('course/attend/{id}', 'CourseController@course_attend')->name('course.attend');
+    Route::get('course/certificate/{id}', 'CourseController@course_certificate')->name('course.certificate');
+    Route::post('course/attend_store', 'CourseController@attend_store')->name('course.attend_store');
+    Route::post('course/certificate_store', 'CourseController@certificate_store')->name('course.certificate_store');
 
 });
 

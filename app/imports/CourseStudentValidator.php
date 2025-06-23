@@ -7,7 +7,7 @@ use Illuminate\Support\MessageBag;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CourseBeneficiariesValidator implements ToCollection, WithHeadingRow
+class CourseStudentValidator implements ToCollection, WithHeadingRow
 {
     public $errors;
     public $validRows;

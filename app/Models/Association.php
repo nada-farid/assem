@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+
 class Association extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia, HasFactory;
@@ -70,15 +71,15 @@ class Association extends Model implements HasMedia
 
         return $file;
     }
+    public function students()
+    {
+        return $this->hasMany(CourseStudent::class, 'association_id');
+    }
+
 
     public function requests()
     {
-        return $this->hasMany(CourseRequest::class);
-    }
-
-    public function beneficiars()
-    {
-        return $this->hasMany(Beneficiary::class);
+        return $this->hasMany(CourseRequest::class, 'association_id');
     }
 
 

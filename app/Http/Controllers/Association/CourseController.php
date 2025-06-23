@@ -9,8 +9,9 @@ use App\Models\CourseRequest;
 use App\Models\LessonAttendance;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\imports\CourseBeneficiariesImport;
-use App\imports\CourseBeneficiariesValidator;
+use App\Models\CourseStudent;
+use App\Imports\CourseStudentsImport;
+use App\imports\CourseStudentValidator;
 use App\Models\Association;
 use Illuminate\Support\Facades\Auth;
 use Alert;
@@ -36,7 +37,7 @@ class CourseController extends Controller
             'course_id' => 'required|exists:courses,id',
         ]);
 
-        $validator = new CourseBeneficiariesValidator();
+        $validator = new CourseStudentValidator();
         Excel::import($validator, $request->file('file'));
 
         if ($validator->errors->isNotEmpty()) {
@@ -46,18 +47,15 @@ class CourseController extends Controller
                 ->withInput();
         }
 
+        $course = Course::findOrFail($request->course_id);
         $association = Association::where('user_id', Auth::id())->first();
-        $course_request = $association->requests()->updateOrCreate([
-            'course_id' => $request->course_id,
+        $course_request = $association->requests()->updateOrCreate(
+            ['course_id' => $course->id],
+            ['status' => 'pending'] // إصلاح: كانت bending خطأ
+        );
 
-        ], [
-            'course_id' => $request->course_id,
-            'status' => 'bending',
-        ]);
-
-        Excel::import(new CourseBeneficiariesImport($course_request), $request->file('file'));
-
-
+         Excel::import(new CourseStudentsImport($course, $association->id), $request->file('file'));
+         
         if ($request->hasFile('file')) {
             if (!$course_request->beneficiar || $request->input('beneficiar') !== $course_request->beneficiar->file_name) {
                 if ($course_request->beneficiar) {
@@ -93,8 +91,8 @@ class CourseController extends Controller
 
         $request = CourseRequest::find($id)->first();
         $ids = $request->beneficiaries()->pluck('beneficiaries.id');
-        LessonAttendance::whereIn('beneficiary_id',$ids)->delete();
-        Beneficiary::whereIn('id',$ids)->delete();
+        LessonAttendance::whereIn('beneficiary_id', $ids)->delete();
+        Beneficiary::whereIn('id', $ids)->delete();
         $request->delete();
 
 

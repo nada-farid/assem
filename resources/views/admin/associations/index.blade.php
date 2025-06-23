@@ -15,7 +15,8 @@
         </div>
 
         <div class="card-body">
-            <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Association" id="associationTable">
+            <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Association"
+                id="associationTable">
                 <thead>
                     <tr>
                         <th width="10">
@@ -39,8 +40,8 @@
                         <th>
                             {{ trans('cruds.user.fields.email') }}
                         </th>
-                          <th>
-                            {{ trans('cruds.user.fields.approve') }}
+                        <th>
+                            {{ trans('cruds.association.fields.status') }}
                         </th>
                         <th>
                             {{ trans('cruds.association.fields.logo') }}
@@ -134,7 +135,7 @@
                         data: 'email',
                         name: 'user.email'
                     },
-                     {
+                    {
                         data: 'approved',
                         name: 'user.approved'
                     },

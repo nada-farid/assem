@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\User;
 use App\Models\UserAlert;
+use App\Models\CourseStudent;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -251,4 +253,33 @@ class CourseController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+    public function get_certificate($id)
+    {
+        $courseStudent = CourseStudent::findOrFail($id);
+        $path = certificate_store($id);
+        return Storage::download($path);
+    }
+
+    public function send_certificate($id)
+    {
+        $courseStudent = CourseStudent::findOrFail($id);
+        Mail::to($courseStudent->email_certificate)->send(new CertificateMail2($courseStudent));
+        alert('تم الارسال بنجاح', '', 'success');
+        return redirect()->back();
+    }
+
+
+    public function qr_attendance($id)
+    {
+        $course = Course::findOrFail(decrypt($id));
+        return view('admin.courses.qr_attendance', compact('course'));
+    }
+
+    public function qr_certificate($id)
+    {
+        $course = Course::findOrFail(decrypt($id));
+        return view('admin.courses.qr_certificate', compact('course'));
+    }
+
+
 }

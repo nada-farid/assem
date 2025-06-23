@@ -156,20 +156,6 @@
                     <span class="help-block">{{ trans('cruds.association.fields.logo_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <span class="toggle-text">{{ trans('cruds.user.fields.approve') }}</span>
-
-                    <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="checkbox" name="approved" id="approved" value="1"
-                            {{ $association->user->approved == 1 ||old('approved', 0) === 1 ? 'checked' : '' }}>
-                        <label class="form-check-label toggle-label" for="approved"></label>
-                    </div>
-                    @if ($errors->has('approved'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('approved') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="form-group">
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

@@ -1,62 +1,50 @@
-@extends('layouts.admin')
-@section('content')
-<div class="card">
-    <div class="card-header">
-        {{ isset($course) ? trans('global.edit') : trans('global.create') }} {{ trans('cruds.course.title_singular') }}
-    </div>
-    <div class="card-body">
-        <form method="POST" action="{{ isset($course) ? route('admin.courses.update', $course->id) : route('admin.courses.store') }}" enctype="multipart/form-data">
-            @csrf
-            @if(isset($course))
-                @method('PUT')
-            @endif
+@include('admin.courses.partials.form')
 
-            <ul class="nav nav-tabs" id="courseTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab">معلومات أساسية</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab">الوصف والوسائط</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="schedule-tab" data-toggle="tab" href="#schedule" role="tab">الجدول الزمني</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="support-tab" data-toggle="tab" href="#support" role="tab">الدعم</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="extra-tab" data-toggle="tab" href="#extra" role="tab">تفاصيل إضافية</a>
-                </li>
-            </ul>
-
-            <div class="tab-content mt-3" id="courseTabContent">
-                <div class="tab-pane fade show active" id="basic" role="tabpanel">
-                    @include('admin.courses.partials.fields_basic')
-                </div>
-                <div class="tab-pane fade" id="media" role="tabpanel">
-                    @include('admin.courses.partials.fields_media')
-                </div>
-                <div class="tab-pane fade" id="schedule" role="tabpanel">
-                    @include('admin.courses.partials.fields_schedule')
-                </div>
-                <div class="tab-pane fade" id="support" role="tabpanel">
-                    @include('admin.courses.partials.fields_support')
-                </div>
-                <div class="tab-pane fade" id="extra" role="tabpanel">
-                    @include('admin.courses.partials.fields_extra')
-                </div>
-            </div>
-
-            <div class="form-group mt-3">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-@endsection
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            var $sections = $('.tab-pane');
+
+            function navigateTo(index) {
+                $('.nav-tabs .nav-link').removeClass('active');
+                $('.tab-pane').removeClass('show active');
+                $('.nav-tabs .nav-link').eq(index).addClass('active');
+                $sections.eq(index).addClass('show active');
+
+                $('.form-navigation .previous').toggle(index > 0);
+                var atEnd = index >= $sections.length - 1;
+                $('.form-navigation .next').toggle(!atEnd);
+                $('.form-navigation .submit').toggle(atEnd);
+            }
+
+            function curIndex() {
+                return $sections.index($sections.filter('.show.active'));
+            }
+
+            $('.form-navigation .previous').click(function() {
+                navigateTo(curIndex() - 1);
+            });
+
+            $('.form-navigation .next').click(function() {
+                var currentTab = $sections.eq(curIndex());
+                var isValid = true;
+
+                currentTab.find('input, select, textarea').each(function() {
+                    if (!this.checkValidity()) {
+                        isValid = false;
+                        this.reportValidity();
+                        return false;
+                    }
+                });
+
+                if (isValid) {
+                    navigateTo(curIndex() + 1);
+                }
+            });
+
+            navigateTo(0);
+        });
+    </script>
     <script>
         Dropzone.options.photoDropzone = {
             url: '{{ route('admin.courses.storeMedia') }}',

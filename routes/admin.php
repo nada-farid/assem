@@ -44,11 +44,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('courses/media', 'CourseController@storeMedia')->name('courses.storeMedia');
     Route::post('courses/ckmedia', 'CourseController@storeCKEditorImages')->name('courses.storeCKEditorImages');
     Route::resource('courses', 'CourseController');
-    Route::get('courses/qr_attendance/{id}', 'CoursesController@qr_attendance')->name('courses.qr_attendance');
-    Route::get('courses/qr_certificate/{id}', 'CoursesController@qr_certificate')->name('courses.qr_certificate');
-    Route::post('courses/update_certificate', 'CoursesController@update_certificate')->name('courses.update_certificate');
-    Route::get('courses/send_certificate/{id}', 'CoursesController@send_certificate')->name('courses.send_certificate');
-    Route::get('courses/get_certificate/{id}', 'CoursesController@get_certificate')->name('courses.get_certificate');
+    Route::get('courses/qr_attendance/{id}', 'CourseController@qr_attendance')->name('courses.qr_attendance');
+    Route::get('courses/qr_certificate/{id}', 'CourseController@qr_certificate')->name('courses.qr_certificate');
+    Route::post('courses/update_certificate', 'CourseController@update_certificate')->name('courses.update_certificate');
+    Route::get('courses/send_certificate/{id}', 'CourseController@send_certificate')->name('courses.send_certificate');
+    Route::get('courses/get_certificate/{id}', 'CourseController@get_certificate')->name('courses.get_certificate');
 
     // Category
     Route::delete('categories/destroy', 'CategoryController@massDestroy')->name('categories.massDestroy');
@@ -129,6 +129,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('associations/media', 'AssociationController@storeMedia')->name('associations.storeMedia');
     Route::post('associations/ckmedia', 'AssociationController@storeCKEditorImages')->name('associations.storeCKEditorImages');
     Route::resource('associations', 'AssociationController');
+    Route::get('associations/{association}/approve', 'AssociationController@approve')->name('associations.approve');
+    Route::post('associations/{association}/reject', 'AssociationController@reject')->name('associations.reject');
+
 
     // Course Request
     Route::delete('course-requests/destroy', 'CourseRequestController@massDestroy')->name('course-requests.massDestroy');

@@ -384,8 +384,8 @@
             },
             params: {
                 size: 20,
-                width: 4096,
-                height: 4096
+                width: 275,
+                height: 100
             },
             success: function(file, response) {
                 $('form').find('input[name="logo"]').remove()
@@ -438,8 +438,8 @@
             },
             params: {
                 size: 20,
-                width: 4096,
-                height: 4096
+                width: 480,
+                height: 480
             },
             success: function(file, response) {
                 $('form').find('input[name="image"]').remove()
@@ -492,8 +492,6 @@
             },
             params: {
                 size: 2,
-                width: 4096,
-                height: 4096
             },
             success: function(file, response) {
                 $('form').find('input[name="license_image"]').remove()
