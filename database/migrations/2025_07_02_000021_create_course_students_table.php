@@ -27,10 +27,16 @@ class CreateCourseStudentsTable extends Migration
             $table->string('address')->nullable();
             $table->tinyInteger('request_certificate')->default(0);
             $table->string('email_certificate')->nullable();
+            $table->boolean('approved')->default(false);
             $table->unsignedBigInteger('course_id')->nullable();
             $table->foreign('course_id', 'course_fk_8821564')->references('id')->on('courses');
             $table->unsignedBigInteger('association_id')->nullable();
             $table->foreign('association_id', 'association_fk_10573079')->references('id')->on('associations');
+            $table->unsignedBigInteger('course_request_id')->nullable()->after('association_id');
+            $table->foreign('course_request_id')
+                ->references('id')
+                ->on('course_requests')
+                ->onDelete('set null');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -54,7 +54,7 @@ class CourseController extends Controller
             ['status' => 'pending'] // إصلاح: كانت bending خطأ
         );
 
-         Excel::import(new CourseStudentsImport($course, $association->id), $request->file('file'));
+         Excel::import(new CourseStudentsImport($course, $association->id), $request->file('file'),$course_request->id);
          
         if ($request->hasFile('file')) {
             if (!$course_request->beneficiar || $request->input('beneficiar') !== $course_request->beneficiar->file_name) {
@@ -87,7 +87,7 @@ class CourseController extends Controller
 
     public function deleteRequest($id)
     {
-        //حذف الغياب والمستفدين المرتبيطن بالطلب دا
+  
 
         $request = CourseRequest::find($id)->first();
         $ids = $request->beneficiaries()->pluck('beneficiaries.id');

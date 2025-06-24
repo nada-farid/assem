@@ -130,42 +130,57 @@ class CourseRequestController extends Controller
         return redirect()->route('admin.course-requests.index');
     }
 
-    // public function show(CourseRequest $courseRequest)
-    // {
-    //     abort_if(Gate::denies('course_request_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-    //     $courseRequest->load('course', 'association', 'beneficiaries');
-
-    //     return view('admin.courseRequests.show', compact('courseRequest'));
-    // }
 
     public function show(CourseRequest $courseRequest)
     {
         abort_if(Gate::denies('course_request_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $courseRequest->load('course.chapters', 'association', 'beneficiaries');
-
-        $totalLessons = $courseRequest->course->chapters->count();
-
-        foreach ($courseRequest->beneficiaries as $beneficiary) {
-            $attended = LessonAttendance::where('beneficiary_id', $beneficiary->id)
-                ->whereIn('curriculum_id', $courseRequest->course->chapters->pluck('id'))
-                ->where('attended', 1)
-                ->count();
-            $missed = $totalLessons - $attended;
-            $percentage = $totalLessons > 0 ? round(($attended / $totalLessons) * 100, 2) : 0;
-
-            $beneficiary->lessonStats = [
-                'total' => $totalLessons,
-                'attended' => $attended,
-                'missed' => $missed,
-                'percentage' => $percentage,
-            ];
-        }
+        $courseRequest->load(['pendingStudents', 'course']);
 
         return view('admin.courseRequests.show', compact('courseRequest'));
     }
 
+    public function acceptRequest($id)
+    {
+        $request = CourseRequest::with('pendingStudents', 'course')->findOrFail($id);
+
+        $allowed = $request->course->number_supported;
+        $alreadyApproved = CourseStudent::where('course_id', $request->course->id)->where('approved', true)->count();
+
+        $availableSlots = $allowed - $alreadyApproved;
+        $requestedCount = $request->pendingStudents->count();
+
+        if ($requestedCount > $availableSlots) {
+            return back()->withErrors(['العدد المطلوب أكبر من العدد المسموح في الدورة.']);
+        }
+
+        // قبول كل المستفيدين
+        foreach ($request->pendingStudents as $student) {
+            $student->approved = true;
+            $student->save();
+        }
+
+        $request->status = 'accepted';
+        $request->save();
+
+        Alert::success('تمت الموافقة', 'تمت الموافقة على الطلب وجاري إدراج المستفيدين.');
+        return redirect()->route('admin.course_requests.index');
+    }
+
+    public function rejectRequest($id)
+    {
+        $request = CourseRequest::with('pendingStudents')->findOrFail($id);
+
+        foreach ($request->pendingStudents as $student) {
+            $student->delete();
+        }
+
+        $request->status = 'rejected';
+        $request->save();
+
+        Alert::success('تم الرفض', 'تم رفض الطلب وحذف المستفيدين.');
+        return redirect()->route('admin.course_requests.index');
+    }
 
     public function destroy(CourseRequest $courseRequest)
     {

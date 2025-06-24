@@ -13,10 +13,14 @@ class CourseStudentsImport implements ToCollection, WithHeadingRow
     protected $course;
     protected $association_id;
 
-    public function __construct(Course $course, $association_id)
+    protected $course_request_id;
+
+    public function __construct(Course $course, $association_id,$course_request_id)
     {
         $this->course = $course;
         $this->association_id = $association_id;
+        $this->course_request_id = $course_request_id;
+
     }
 
     public function collection(Collection $rows)
@@ -47,6 +51,7 @@ class CourseStudentsImport implements ToCollection, WithHeadingRow
                 'email_certificate' => $row['email_certificate'],
                 'course_id' => $this->course->id,
                 'association_id' => $this->association_id,
+                'course_request_id' => $this->course_request_id,
             ]);
         }
     }

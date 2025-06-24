@@ -139,6 +139,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('course-requests/ckmedia', 'CourseRequestController@storeCKEditorImages')->name('course-requests.storeCKEditorImages');
     Route::resource('course-requests', 'CourseRequestController');
     Route::post('course-requests/update-beneficiary-status', 'CourseRequestController@updateBeneficiaryStatus')->name('course-requests.update-status');
+    Route::post('course-requests/{id}/accept', 'CourseRequestController@accept')->name('course_requests.accept');
+    Route::post('course-requests/{id}/reject', 'CourseRequestController@reject')->name('course_requests.reject');
+
 
     // User Alerts
     Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');

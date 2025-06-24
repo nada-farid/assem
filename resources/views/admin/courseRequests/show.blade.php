@@ -1,138 +1,151 @@
 @extends('layouts.admin')
-@section('styles')
-    <style>
-        canvas {
-            width: 200px !important;
-            height: 200px !important;
-        }
-    </style>
-@endsection
-
 @section('content')
-    <h4>تفاصيل طلب الدورة: {{ $courseRequest->course->title }} - الجمعية: {{ $courseRequest->association->name }}</h4>
+    <div class="card">
+        <div class="card-header">
+            <h3>بيانات الطلب</h3>
+            <p>اسم الدورة: {{ $courseRequest->course->title }}</p>
+            <p>عدد المستفيدين المطلوبين: {{ $courseRequest->pendingStudents->count() }}</p>
+            <div class="row">
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>الاسم</th>
-                <th>الهوية</th>
-                <th>الجوال</th>
-                <th>النوع</th>
-                <th>العنوان</th>
-                {{-- <th>الحالة الحالية</th>
-                <th>تحديث الحالة</th> --}}
-                <th>الحضور</th>
+                <div class="col-md-6">
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($courseRequest->beneficiaries as $beneficiary)
-                <tr>
-                    <td>{{ $beneficiary->user?->name }}</td>
-                    <td>{{ $beneficiary->identity_number }}</td>
-                    <td>{{ $beneficiary->phone }}</td>
-                    <td>{{ \App\Models\Beneficiary::Gender[$beneficiary->gender] }}</td>
-                    <td>{{ $beneficiary->address }}</td>
-                    {{-- <td>
-                        @php $status = $beneficiary->pivot->status ?? 'pending'; @endphp
-                        @if ($status === 'approved')
-                            <span class="badge bg-success">مقبول</span>
-                        @elseif($status === 'refused')
-                            <span class="badge bg-danger">مرفوض</span>
-                        @else
-                            <span class="badge bg-warning text-dark">قيد المراجعة</span>
-                        @endif
-                    </td> --}}
-                    {{-- <td>
-                        <select class="form-control form-control-sm status-dropdown"
-                            data-request-id="{{ $courseRequest->id }}" data-beneficiary-id="{{ $beneficiary->id }}">
-                            <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>قيد المراجعة</option>
-                            <option value="approved" {{ $status == 'approved' ? 'selected' : '' }}>مقبول</option>
-                            <option value="refused" {{ $status == 'refused' ? 'selected' : '' }}>مرفوض</option>
-                        </select> --}}
-                    </td>
-                    <td>
-                        <ul style="list-style: none; padding: 0;">
-                            <li>عدد الدروس: {{ $beneficiary->lessonStats['total'] }}</li>
-                            <li>الحضور: {{ $beneficiary->lessonStats['attended'] }}</li>
-                            <li>الغياب: {{ $beneficiary->lessonStats['missed'] }}</li>
-                            <li>النسبة: {{ $beneficiary->lessonStats['percentage'] }}%</li>
-                        </ul>
-                        <canvas id="chart-{{ $beneficiary->id }}" width="100" height="100"></canvas>
-                    </td>
+                    <h4>المستفيدين المرفوعين:</h4>
+                </div>
 
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-@endsection
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-between">
 
-@section('scripts')
-    <script>
-        $(document).on('change', '.status-dropdown', function() {
-            let CourseRequestId = $(this).data('request-id');
-            let beneficiaryId = $(this).data('beneficiary-id');
-            let status = $(this).val();
+                        <form action="{{ route('admin.course_requests.accept', $courseRequest->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success">قبول الطلب </button>
+                        </form>
 
-            $.ajax({
-                url: '{{ route('admin.course-requests.update-status') }}',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    course_courseRequest_id: CourseRequestId,
-                    beneficiary_id: beneficiaryId,
-                    status: status
-                },
-                success: function(response) {
-                    alert(response.message);
+                        <form action="{{ route('admin.course_requests.reject', $courseRequest->id) }}" method="POST"
+                           >
+                            @csrf
+                            <button type="submit" class="btn btn-danger">رفض الطلب </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-                    let badgeCell = $(
-                            `select[data-request-id="${CourseRequestId}"][data-beneficiary-id="${beneficiaryId}"]`
-                        )
-                        .closest('tr').find('td').eq(2);
 
-                    let newBadge = '';
-                    if (status === 'approved') {
-                        newBadge = '<span class="badge bg-success">مقبول</span>';
-                    } else if (status === 'refused') {
-                        newBadge = '<span class="badge bg-danger">مرفوض</span>';
-                    } else {
-                        newBadge = '<span class="badge bg-warning text-dark">قيد المراجعة</span>';
-                    }
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class=" table table-bordered table-striped table-hover datatable datatable-courseCourseStudents">
+                    <thead>
+                        <tr>
+                            <th width="10">
 
-                    badgeCell.html(newBadge);
-                },
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.id') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.name') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.email') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.identity_num') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.phone_number') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.date_of_birth') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.registered') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.certificate') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.description') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.relevance') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.attend_course') }}
+                            </th>
+                            <th>
+                                الدورات السابقة
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.transportaion') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.prev_exper') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.courseStudent.fields.address') }}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($courseRequest->pendingStudents as $courseStudent)
+                            <tr data-entry-id="{{ $courseStudent->id }}">
+                                <td>
 
-                error: function(xhr) {
-                    alert('حدث خطأ أثناء تحديث الحالة');
-                }
-            });
-        });
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        @foreach ($courseRequest->beneficiaries as $beneficiary)
-            new Chart(document.getElementById('chart-{{ $beneficiary->id }}').getContext('2d'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['حضور', 'غياب'],
-                    datasets: [{
-                        data: [{{ $beneficiary->lessonStats['attended'] }},
-                            {{ $beneficiary->lessonStats['missed'] }}
-                        ],
-                        backgroundColor: ['#4CAF50', '#F44336']
-                    }]
-                },
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
-        @endforeach
-    </script>
+                                </td>
+                                <td>
+                                    {{ $courseStudent->id ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->name ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->email ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->identity_num ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->phone_number ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->date_of_birth ?? '' }}
+                                </td>
+                                <td>
+                                    {{ App\Models\CourseStudent::REGISTERED_RADIO[$courseStudent->registered] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ App\Models\CourseStudent::CERTIFICATE_RADIO[$courseStudent->certificate] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->description ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->relevance ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->attend_course ?? '' }}
+                                </td>
+                                <td>
+                                    @if ($courseStudent->courses_before)
+                                        @foreach (json_decode($courseStudent->courses_before, true) as $raw)
+                                            {{ $raw['course_name'] }} ,
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ $courseStudent->transportaion ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->prev_exper ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $courseStudent->address ?? '' }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection
