@@ -12,7 +12,7 @@
                     <div class="media">
                         <div class="media-body">
                             <label>تاريخ بداية الاشتراك</label>
-                            <h6>{{ auth()->user()?->custom_date }}</h6>
+                            <h6>{{ get_date(auth()->user()?->created_at) }}</h6>
                         </div>
                     </div>
                     <a href="{{ route('association.courses.add') }}" class="btn btn-purple btn-rounded">

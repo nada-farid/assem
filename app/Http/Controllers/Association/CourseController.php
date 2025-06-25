@@ -7,6 +7,8 @@ use App\Models\Beneficiary;
 use App\Models\Course;
 use App\Models\CourseRequest;
 use App\Models\LessonAttendance;
+use App\Models\UserAlert;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\CourseStudent;
@@ -51,10 +53,10 @@ class CourseController extends Controller
         $association = Association::where('user_id', Auth::id())->first();
         $course_request = $association->requests()->updateOrCreate(
             ['course_id' => $course->id],
-            ['status' => 'pending'] // إصلاح: كانت bending خطأ
+            ['status' => 'pending'] 
         );
 
-         Excel::import(new CourseStudentsImport($course, $association->id), $request->file('file'),$course_request->id);
+         Excel::import(new CourseStudentsImport($course, $association->id,$course_request->id), $request->file('file'));
          
         if ($request->hasFile('file')) {
             if (!$course_request->beneficiar || $request->input('beneficiar') !== $course_request->beneficiar->file_name) {
@@ -67,6 +69,13 @@ class CourseController extends Controller
             $course_request->beneficiar->delete();
         }
 
+        $alert = UserAlert::create([
+            'alert_text' => "طلب انضمام جديد لدورة $course->title",
+            'alert_link' => route('admin.course-requests.show',$course_request->id),
+        ]);
+       $adminUsers = User::where('user_type', 'staff')->get();
+        $alert->users()->sync($adminUsers->pluck('id')->toArray());
+        
         Alert::success('تم بنجاح', 'تم اضافة طلب انضمام المستفدين للدورة بنجاح وفي انتظار الموافقة');
 
         return redirect()->route('association.courses.requests');

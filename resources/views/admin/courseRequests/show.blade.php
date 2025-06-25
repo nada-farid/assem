@@ -4,29 +4,29 @@
         <div class="card-header">
             <h3>بيانات الطلب</h3>
             <p>اسم الدورة: {{ $courseRequest->course->title }}</p>
-            <p>عدد المستفيدين المطلوبين: {{ $courseRequest->pendingStudents->count() }}</p>
+            <p>عدد المستفيدين المطلوبين: {{ $courseRequest->students->count() }}</p>
             <div class="row">
 
                 <div class="col-md-6">
 
                     <h4>المستفيدين المرفوعين:</h4>
                 </div>
+                @if ($courseRequest->status === 'pending')
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-between">
 
-                <div class="col-md-4">
-                    <div class="d-flex justify-content-between">
+                            <form action="{{ route('admin.course_requests.accept', $courseRequest->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-success">قبول الطلب </button>
+                            </form>
 
-                        <form action="{{ route('admin.course_requests.accept', $courseRequest->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-success">قبول الطلب </button>
-                        </form>
-
-                        <form action="{{ route('admin.course_requests.reject', $courseRequest->id) }}" method="POST"
-                           >
-                            @csrf
-                            <button type="submit" class="btn btn-danger">رفض الطلب </button>
-                        </form>
+                            <form action="{{ route('admin.course_requests.reject', $courseRequest->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">رفض الطلب </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
 
@@ -84,10 +84,12 @@
                             </th>
                             <th>
                                 {{ trans('cruds.courseStudent.fields.address') }}
+                            </th>
+                            <th>الحالة</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($courseRequest->pendingStudents as $courseStudent)
+                        @foreach ($courseRequest->students as $courseStudent)
                             <tr data-entry-id="{{ $courseStudent->id }}">
                                 <td>
 
@@ -140,6 +142,13 @@
                                 </td>
                                 <td>
                                     {{ $courseStudent->address ?? '' }}
+                                </td>
+                                <td>
+                                    @if ($courseStudent->approved)
+                                        <span class="badge bg-success">مقبول</span>
+                                    @else
+                                        <span class="badge bg-warning">في الانتظار</span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

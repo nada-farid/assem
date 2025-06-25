@@ -10,12 +10,16 @@ use App\Http\Requests\UpdateCourseRequestRequest;
 use App\Models\Association;
 use App\Models\Course;
 use App\Models\CourseRequest;
+use App\Models\CourseStudent;
 use App\Models\LessonAttendance;
+use App\Models\User;
+use App\Models\UserAlert;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Alert;
 
 class CourseRequestController extends Controller
 {
@@ -135,7 +139,7 @@ class CourseRequestController extends Controller
     {
         abort_if(Gate::denies('course_request_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $courseRequest->load(['pendingStudents', 'course']);
+        $courseRequest->load(['students', 'course']);
 
         return view('admin.courseRequests.show', compact('courseRequest'));
     }
@@ -154,17 +158,24 @@ class CourseRequestController extends Controller
             return back()->withErrors(['العدد المطلوب أكبر من العدد المسموح في الدورة.']);
         }
 
-        // قبول كل المستفيدين
         foreach ($request->pendingStudents as $student) {
             $student->approved = true;
             $student->save();
         }
 
-        $request->status = 'accepted';
+        $request->status = 'approved';
         $request->save();
+        
+        $alert = UserAlert::create([
+            'alert_text' => " تم الموافقة علي طلب انضمام مستفدينكم للدورة",
+            'alert_link' => route('association.courses.requests'),
+        ]);
+        $association = Association::find($request->association_id);
+        $user = User::find($association->user_id);
+        $alert->users()->sync($user);
 
         Alert::success('تمت الموافقة', 'تمت الموافقة على الطلب وجاري إدراج المستفيدين.');
-        return redirect()->route('admin.course_requests.index');
+        return redirect()->route('admin.course-requests.index');
     }
 
     public function rejectRequest($id)
@@ -178,8 +189,18 @@ class CourseRequestController extends Controller
         $request->status = 'rejected';
         $request->save();
 
+         $alert = UserAlert::create([
+            'alert_text' => " نأسف تم رفض  طلب انضمام مستفدينكم للدورة",
+            'alert_link' => route('association.courses.requests'),
+        ]);
+        $association = Association::find($request->association_id);
+        $user = User::find($association->user_id);
+        $alert->users()->sync($user);
+
+
         Alert::success('تم الرفض', 'تم رفض الطلب وحذف المستفيدين.');
-        return redirect()->route('admin.course_requests.index');
+        
+        return redirect()->route('admin.course-requests.index');
     }
 
     public function destroy(CourseRequest $courseRequest)
@@ -212,26 +233,6 @@ class CourseRequestController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
-    }
-
-
-    public function updateBeneficiaryStatus(Request $request)
-    {
-        $request->validate([
-            'course_courseRequest_id' => 'required|integer',
-            'beneficiary_id' => 'required|integer',
-            'status' => 'required|in:pending,approved,refused',
-        ]);
-
-        $courseRequest = CourseRequest::findOrFail($request->course_courseRequest_id);
-        $beneficiaryId = $request->beneficiary_id;
-
-
-        $courseRequest->beneficiaries()->updateExistingPivot($beneficiaryId, [
-            'status' => $request->status,
-        ]);
-
-        return response()->json(['message' => 'تم تحديث الحالة بنجاح']);
     }
 
 
