@@ -51,6 +51,7 @@ class CourseStudent extends Model
         'email_certificate',
         'course_id',
         'association_id',
+        'course_request_id',
         'approved',
         'created_at',
         'updated_at',

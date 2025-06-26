@@ -97,12 +97,12 @@
                         @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
 
                         <h6 class="az-notification-title">الأشعارات</h6>
-                        <p class="az-notification-text">You have {{ $alertsCount }} unread notification</p>
+                        <p class="az-notification-text"> {{ $alertsCount }} لديك اشعارات غير مقروءه</p>
                         <div class="az-notification-list">
                             @if (count(
                                     $alerts = \Auth::user()->userUserAlerts()->withPivot('read')->limit(10)->orderBy('created_at', 'ASC')->get()->reverse()) > 0)
                                 @foreach ($alerts as $alert)
-                                    <a href="{{ $alert->alert_link ? $alert->alert_link : '#' }}" target="_blank"
+                                      <a href="{{ route('admin.user-alert.read',$alert) }}"  target="_blank"
                                         rel="noopener noreferrer">
 
                                         <div class="media {{ $alert->pivot->read === 0 ? 'new' : '' }}">

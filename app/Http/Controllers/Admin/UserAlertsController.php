@@ -26,9 +26,9 @@ class UserAlertsController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'user_alert_show';
-                $editGate      = 'user_alert_edit';
-                $deleteGate    = 'user_alert_delete';
+                $viewGate = 'user_alert_show';
+                $editGate = 'user_alert_edit';
+                $deleteGate = 'user_alert_delete';
                 $crudRoutePart = 'user-alerts';
 
                 return view('partials.datatablesActions', compact(
@@ -116,9 +116,21 @@ class UserAlertsController extends Controller
     {
         $alerts = \Auth::user()->userUserAlerts()->where('read', false)->get();
         foreach ($alerts as $alert) {
-            $pivot       = $alert->pivot;
+            $pivot = $alert->pivot;
             $pivot->read = true;
             $pivot->save();
         }
+
+
     }
+
+    public function readAlert(UserAlert $alert)
+    {
+        $user = auth()->user();
+        $user->userUserAlerts()->updateExistingPivot($alert->id, ['read' => 1]);
+
+
+        return redirect($alert->alert_link ?? url('/'));
+    }
+
 }

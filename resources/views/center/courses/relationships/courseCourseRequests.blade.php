@@ -63,9 +63,9 @@
                                     </a>
                                 @endif
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ App\Models\CourseRequest::STATUS_SELECT[$courseRequest->status] ?? '' }}
-                            </td>
+                            </td> --}}
                             <td>
                                 @can('course_request_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.course-requests.show', $courseRequest->id) }}">

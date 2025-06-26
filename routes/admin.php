@@ -145,7 +145,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // User Alerts
     Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
-    Route::get('user-alerts/read', 'UserAlertsController@read');
+    Route::get('user-alerts/read', 'UserAlertsController@read')->name('user-alerts.read');
+    Route::get('user-alert/read/{alert}', 'UserAlertsController@readAlert')->name('user-alert.read');
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
     // Beneficiary

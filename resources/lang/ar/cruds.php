@@ -468,6 +468,8 @@ return [
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
+            'title' => 'العنوان',
+            'title_helper' => ' ',
             'description' => 'الوصف',
             'description_helper' => ' ',
             'created_at' => 'تم الإنشاء في',

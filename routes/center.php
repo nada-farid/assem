@@ -18,6 +18,8 @@ Route::group(['prefix' => 'center', 'as' => 'center.', 'namespace' => 'Center', 
     Route::delete('categories/destroy', 'CategoryController@massDestroy')->name('categories.massDestroy');
     Route::resource('categories', 'CategoryController');
 
+    Route::get('user-alert/read/{alert}', 'UserAlertsController@readAlert')->name('user-alert.read');
+
     Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function () {
         Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
         Route::post('password', 'ChangePasswordController@update')->name('password.update');

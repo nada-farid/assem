@@ -1,5 +1,14 @@
-@extends('layouts.center')
+@extends('layouts.admin')
 @section('content')
+@can('course_create')
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route('admin.courses.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.course.title_singular') }}
+            </a>
+        </div>
+    </div>
+@endcan
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.course.title_singular') }} {{ trans('global.list') }}
@@ -24,14 +33,26 @@
                     <th>
                         {{ trans('cruds.course.fields.title') }}
                     </th>
-                      <th>
-                        {{ trans('cruds.course.fields.status') }}
-                    </th>
                     <th>
                         {{ trans('cruds.course.fields.short_description') }}
                     </th>
                     <th>
+                        {{ trans('cruds.course.fields.center') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.course.fields.type') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.course.fields.start_at') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.course.fields.end_at') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.course.fields.supporter') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.course.fields.number_supported') }}
                     </th>
                     <th>
                         &nbsp;
@@ -50,22 +71,56 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-  let dtOverrideGlobals = {                   
+@can('course_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('admin.courses.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
+      });
+
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
+
+        return
+      }
+
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
+    }
+  }
+  dtButtons.push(deleteButton)
+@endcan
+
+  let dtOverrideGlobals = {
     buttons: dtButtons,
     processing: true,
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('center.courses.index') }}",
+    ajax: "{{ route('admin.courses.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'photo', name: 'photo', sortable: false, searchable: false },
 { data: 'category_title', name: 'category.title' },
 { data: 'title', name: 'title' },
-{ data: 'status', name: 'status' },
 { data: 'short_description', name: 'short_description' },
+{ data: 'center_name', name: 'center.name' },
 { data: 'type', name: 'type' },
+{ data: 'start_at', name: 'start_at' },
+{ data: 'end_at', name: 'end_at' },
+{ data: 'supporter_name', name: 'supporter.name' },
+{ data: 'number_supported', name: 'number_supported' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

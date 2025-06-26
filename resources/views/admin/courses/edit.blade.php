@@ -1,4 +1,8 @@
-@include('admin.courses.partials.form')
+@extends('layouts.admin')
+
+@section('content')
+    @include('admin.courses.partials.form')
+@endsection
 
 @section('scripts')
     <script>
