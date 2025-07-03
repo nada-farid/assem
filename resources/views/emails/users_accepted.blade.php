@@ -57,10 +57,10 @@
             <img src="{{ asset('frontend/images/logo.png') }}" alt="شعار الموقع">
         </div>
         <div class="header">
-            تهانينا! تم قبول تسجيل جمعيتكم في منصة <strong>عاصم</strong>
+            تهانينا! تم قبول طلب الأنضمام في منصة <strong>عاصم</strong>
         </div>
         <p>عزيزي/عزيزتي <strong>{{ $user->name }}</strong>،</p>
-        <p>تم <strong style="color: green;">قبول</strong> الجمعية ويمكنكم الآن الدخول إلى النظام واستخدام كافة المزايا.</p>
+        <p>تم <strong style="color: green;">قبول</strong> طلب الأنضمام ويمكنكم الآن الدخول إلى النظام واستخدام كافة المزايا.</p>
         <a href="{{ url('/') }}" class="btn">الذهاب إلى الموقع</a>
         <div class="footer">
             هذا البريد تم إرساله من نظام <strong>جمعية عاصم</strong> للتدريب والتأهيل.

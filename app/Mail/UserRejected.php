@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
 
-class AssociationRejected extends Mailable
+class UserRejected extends Mailable
 {
 
     use Queueable, SerializesModels;
@@ -57,7 +57,7 @@ class AssociationRejected extends Mailable
     public function build()
     {
 
-        return $this->subject('تم رفض الجمعية')
-            ->view('emails.association_rejected');
+        return $this->subject('تم رفض طلب الأنضمام')
+            ->view('emails.users_rejected');
     }
 }

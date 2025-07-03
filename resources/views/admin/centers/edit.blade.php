@@ -125,7 +125,7 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.center.fields.linked_in_helper') }}</span>
                     </div>
-                    <div class="form-group col-md-6">
+                             <div class="form-group col-md-6">
                         <label for="website">{{ trans('cruds.center.fields.website') }}</label>
                         <input class="form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" type="text"
                             name="website" id="website" value="{{ old('website', $center->website) }}">
@@ -171,7 +171,7 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.center.fields.location_helper') }}</span>
                     </div>
-
+           
                     <div class="form-group col-md-6">
                         <label for="license_number">{{ trans('cruds.center.fields.license_number') }}</label>
                         <input class="form-control {{ $errors->has('license_number') ? 'is-invalid' : '' }}"

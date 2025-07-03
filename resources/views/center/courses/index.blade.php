@@ -1,14 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.center')
 @section('content')
-@can('course_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.courses.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.course.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan
+
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.course.title_singular') }} {{ trans('global.list') }}
@@ -33,11 +25,11 @@
                     <th>
                         {{ trans('cruds.course.fields.title') }}
                     </th>
-                    <th>
-                        {{ trans('cruds.course.fields.short_description') }}
+                      <th>
+                        {{ trans('cruds.course.fields.status') }}
                     </th>
                     <th>
-                        {{ trans('cruds.course.fields.center') }}
+                        {{ trans('cruds.course.fields.short_description') }}
                     </th>
                     <th>
                         {{ trans('cruds.course.fields.type') }}
@@ -47,12 +39,6 @@
                     </th>
                     <th>
                         {{ trans('cruds.course.fields.end_at') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.course.fields.supporter') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.course.fields.number_supported') }}
                     </th>
                     <th>
                         &nbsp;
@@ -107,20 +93,18 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.courses.index') }}",
+    ajax: "{{ route('center.courses.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'photo', name: 'photo', sortable: false, searchable: false },
 { data: 'category_title', name: 'category.title' },
 { data: 'title', name: 'title' },
+{ data: 'status', name: 'status' },
 { data: 'short_description', name: 'short_description' },
-{ data: 'center_name', name: 'center.name' },
 { data: 'type', name: 'type' },
 { data: 'start_at', name: 'start_at' },
 { data: 'end_at', name: 'end_at' },
-{ data: 'supporter_name', name: 'supporter.name' },
-{ data: 'number_supported', name: 'number_supported' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -217,6 +217,8 @@ return [
             'url_helper' => ' ',
             'location' => ' الموقع الجغرافي للدورة ',
             'location_helper' => ' ',
+            'status' => 'حالة الدورة',
+            'status_helper' => ' ',
         ],
     ],
     'coursesManagement' => [

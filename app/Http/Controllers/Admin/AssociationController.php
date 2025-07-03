@@ -15,8 +15,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\AssociationAccepted;
-use App\Mail\AssociationRejected;
+use App\Mail\UserAccepted;
+use App\Mail\UserRejected;
 use Alert;
 
 class AssociationController extends Controller
@@ -247,7 +247,7 @@ class AssociationController extends Controller
         $association->user->approved = 1;
         $association->user->save();
 
-        Mail::to($association->user->email)->send(new AssociationAccepted($association->user));
+        Mail::to($association->user->email)->send(new UserAccepted($association->user));
 
         Alert::success('تم القبول', 'تم تفعيل الجمعية وإرسال الإيميل.');
         return redirect()->back();
@@ -262,7 +262,7 @@ class AssociationController extends Controller
         $association->delete();
         $user->forceDelete();
 
-        Mail::to($user->email)->send(new AssociationRejected($user, $reason));
+        Mail::to($user->email)->send(new UserRejected($user, $reason));
 
         Alert::info('تم الرفض', 'تم حذف الجمعية وإرسال سبب الرفض.');
         return redirect()->back();

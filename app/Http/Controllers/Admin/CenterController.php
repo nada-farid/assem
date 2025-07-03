@@ -15,6 +15,10 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Alert;
+use App\Mail\UserAccepted;
+use App\Mail\UserRejected;
+use Illuminate\Support\Facades\Mail;
+
 
 class CenterController extends Controller
 {
@@ -154,6 +158,12 @@ class CenterController extends Controller
 
     public function update(UpdateCenterRequest $request, Center $center)
     {
+        $user = User::find($center->user_id);
+        $user->update([
+            'email' => $request->email,
+            'password' => $request->password,
+            'name'=>$request->name
+        ]);
         $center->update($request->all());
 
         if ($request->input('logo', false)) {
@@ -233,4 +243,31 @@ class CenterController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+
+    public function approve(Center $center)
+    {
+        $center->user->approved = 1;
+        $center->user->save();
+
+        Mail::to($center->user->email)->send(new UserAccepted($center->user));
+
+        Alert::success('تم القبول', 'تم تفعيل المركز وإرسال الإيميل.');
+        return redirect()->back();  
+    }
+
+    public function reject(Request $request, Center $center)
+    {
+        $user = $center->user;
+        $reason = $request->input('reason');
+
+
+        $center->delete();
+        $user->forceDelete();
+
+        Mail::to($user->email)->send(new UserRejected($user, $reason));
+
+        Alert::info('تم الرفض', 'تم حذف المركز وإرسال سبب الرفض.');
+        return redirect()->back();
+    }
+
 }

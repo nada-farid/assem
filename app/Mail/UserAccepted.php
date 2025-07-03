@@ -54,7 +54,7 @@ class AssociationAccepted extends Mailable
 
     public function build()
     {
-        return $this->subject('تم قبول الجمعية')
-            ->view('emails.association_accepted');
+        return $this->subject('تم قبول طلب الأنضمام')
+            ->view('emails.users_accepted');
     }
 }

@@ -211,6 +211,57 @@
                             {{ $center->coordinator_email }}
                         </td>
                     </tr>
+                                            <tr>
+                            <th>
+                             حالة المركز
+                            </th>
+
+                            <td>
+                                @if ($center->user?->approved == 1)
+                                    <span class="badge badge-success">تم القبول</span>
+                                @else
+                                    <span class="badge badge-secondary mb-2 d-block">بانتظار المراجعة</span>
+
+                                   
+                                    <a class="btn btn-success btn-sm"
+                                        href="{{ route('admin.centers.approve',$center) }}">
+                                        قبول المركز
+                                    </a>
+
+                                   
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#rejectModal-{{$center->user->id }}">
+                                        رفض المركز
+                                    </button>
+
+                                    <!-- Modal الرفض -->
+                                    <div class="modal fade" id="rejectModal-{{$center->user->id }}" tabindex="-1"
+                                        role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <form method="POST"
+                                                action="{{ route('admin.centers.reject', $center->id) }}">
+                                                @csrf
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">سبب الرفض</h5>
+                                                        <button type="button" class="close"
+                                                            data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <textarea name="reason" class="form-control" required></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-danger">رفض نهائي</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @endif
+                            </td>
+
+                        </tr>
+
                 </tbody>
             </table>
             <div class="form-group">

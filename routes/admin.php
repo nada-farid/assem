@@ -59,6 +59,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('centers/media', 'CenterController@storeMedia')->name('centers.storeMedia');
     Route::post('centers/ckmedia', 'CenterController@storeCKEditorImages')->name('centers.storeCKEditorImages');
     Route::resource('centers', 'CenterController');
+    Route::get('centers/approve/{center}', 'CenterController@approve')->name('centers.approve');
+    Route::post('centers/reject/{center}', 'CenterController@reject')->name('centers.reject'); 
+
 
     // Curriculum
     Route::delete('curricula/destroy', 'CurriculumController@massDestroy')->name('curricula.massDestroy');

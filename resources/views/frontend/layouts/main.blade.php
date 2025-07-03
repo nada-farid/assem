@@ -145,7 +145,7 @@
                             <a class="user-login" href="{{ route('association.home') }}"><i class="fas fa-user-circle"></i>
                                 لوحة التحكم</a>
                         @else
-                            <a class="user-login" href="{{ route('frontend.login-register') }}"><i
+                            <a class="user-login" href="{{ route('frontend.login') }}"><i
                                     class="fas fa-user-circle"></i> مستخدم جديد
                                 / دخول</a>
                         @endauth
