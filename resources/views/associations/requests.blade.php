@@ -38,10 +38,10 @@
 
                             @foreach ($requests as $request)
                                 <tr>
-                                    <th scope="row">12 يناير 2025</th>
+                                    <th scope="row"> {{get_date($request?->created_at)}}  </th>
                                     <td><a href="{{ route('frontend.course', $request->course_id) }}">
                                             {{ $request->course->title }} </a> </td>
-                                    <td>{{ $request->beneficiaries->count() }} </td>
+                                    <td>{{ $request->approvedStudents->count() }} </td>
                                     <td> {{ App\Models\CourseRequest::STATUS_SELECT[$request->status] ?? '' }}</td>
 
 

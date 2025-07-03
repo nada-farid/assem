@@ -10,15 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-
-
-        Schema::create('lesson_attendances', function (Blueprint $table) {
+        //
+        Schema::create('course_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('beneficiary_id')->constrained();
-            $table->foreignId('curriculum_id')->constrained();
-            $table->boolean('attended')->default(false);
+            $table->foreignId('association_id')->constrained()->onDelete('cascade');
+            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**
@@ -26,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('lesson_attendance');
+        //
     }
 };

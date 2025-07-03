@@ -10,8 +10,6 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('start_at');
-            $table->date('end_at');
             $table->longText('description');
             $table->string('title');
             $table->longText('short_description')->nullable();
@@ -20,9 +18,14 @@ class CreateCoursesTable extends Migration
             $table->string('video_url');
             $table->string('duration');
             $table->string('duration_weekly');
-            $table->integer('beneficiary_count')->nullable();
-            $table->longText('goals');
             $table->boolean('avaliable')->default(0)->nullable();
+            $table->datetime('start_at')->nullable();
+            $table->datetime('end_at')->nullable();
+            $table->string('assistant')->nullable();
+            $table->decimal('support_value', 15, 2);
+            $table->integer('number_supported');
+            $table->string('location')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

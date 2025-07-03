@@ -14,6 +14,7 @@ Route::group(['prefix' => 'association','as' => 'association.', 'middleware' => 
       Route::get('/courses/requests', 'CourseController@requests')->name('courses.requests');
       Route::get('/reports', 'AssociationReportController@index')->name('reports');
       Route::get('/reports/show/{course_id}', 'AssociationReportController@report')->name('reports.show');
+      Route::get('user-alert/read/{alert}', 'UserAlertsController@readAlert')->name('user-alert.read');
 });
 
                                                             

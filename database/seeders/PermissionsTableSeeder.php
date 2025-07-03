@@ -508,6 +508,34 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 125,
+                'title' => 'audit_log_show',
+            ],
+            [
+                'id'    => 126,
+                'title' => 'audit_log_access',
+            ],
+            [
+                'id'    => 127,
+                'title' => 'supporter_create',
+            ],
+            [
+                'id'    => 128,
+                'title' => 'supporter_edit',
+            ],
+            [
+                'id'    => 129,
+                'title' => 'supporter_show',
+            ],
+            [
+                'id'    => 130,
+                'title' => 'supporter_delete',
+            ],
+            [
+                'id'    => 131,
+                'title' => 'supporter_access',
+            ],
+            [
+                'id'    => 132,
                 'title' => 'profile_password_edit',
             ],
         ];

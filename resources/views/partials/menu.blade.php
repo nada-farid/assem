@@ -6,6 +6,12 @@
         </a>
     </div>
 
+    @php
+        $newAssociationsCount = \App\Models\Association::whereHas('user', function ($q) {
+            $q->where('approved', 0);
+        })->count();
+    @endphp
+
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.home') }}" class="c-sidebar-nav-link">
@@ -23,6 +29,9 @@
 
                     </i>
                     {{ trans('cruds.userManagement.title') }}
+                    @if ($newAssociationsCount > 0)
+                        <span class="badge badge-warning">{{ $newAssociationsCount }}</span>
+                    @endif
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     {{-- @can('permission_access')
@@ -64,6 +73,9 @@
 
                                 </i>
                                 {{ trans('cruds.association.title') }}
+                                @if ($newAssociationsCount > 0)
+                                    <span class="badge badge-warning">{{ $newAssociationsCount }}</span>
+                                @endif
                             </a>
                         </li>
                     @endcan
@@ -198,7 +210,7 @@
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.hawkmas.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/hawkmas') || request()->is('admin/hawkmas/*') ? 'c-active' : '' }}">
-                               <i class="fa-fw fas fa-file c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-file c-sidebar-nav-icon">
 
                                 </i>
                                 {{ trans('cruds.hawkma.title') }}
@@ -344,7 +356,7 @@
                 </ul>
             </li>
         @endcan
-        {{-- @can('user_alert_access')
+        @can('user_alert_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.user-alerts.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/user-alerts') || request()->is('admin/user-alerts/*') ? 'c-active' : '' }}">
@@ -354,8 +366,37 @@
                     {{ trans('cruds.userAlert.title') }}
                 </a>
             </li>
-        @endcan --}}
+        @endcan
 
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.systemCalendar') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'c-active' : '' }}">
+                <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
+
+                </i>
+                {{ trans('global.systemCalendar') }}
+            </a>
+        </li>
+        @can('supporter_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.supporters.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/supporters') || request()->is('admin/supporters/*') ? 'c-active' : '' }}">
+                    <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.supporter.title') }}
+                </a>
+            </li>
+        @endcan
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.systemCalendar') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'c-active' : '' }}">
+                <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
+
+                </i>
+                {{ trans('global.systemCalendar') }}
+            </a>
+        </li>
 
         @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')

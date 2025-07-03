@@ -23,6 +23,9 @@ class Staff
         }
         if ($user->user_type == 'staff') {
             return $next($request);
+        } elseif ($user->user_type == 'center') {
+            return redirect()->route('center.home');
+
         } elseif ($user->user_type == 'association') {
             return redirect()->route('association.home');
         } else {

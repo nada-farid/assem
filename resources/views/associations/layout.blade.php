@@ -47,17 +47,20 @@
     <div class="az-header">
         <div class="container">
             <div class="az-header-left">
-                <a href="{{route('association.home')}}" class="az-logo"><span></span> <img src="{{asset('association/img/logo.png')}}" width="200" /></a>
+                <a href="{{ route('association.home') }}" class="az-logo"><span></span> <img
+                        src="{{ asset('association/img/logo.png') }}" width="200" /></a>
                 <a href="" id="azMenuShow" class="az-header-menu-icon d-lg-none"><span></span></a>
             </div><!-- az-header-left -->
             <div class="az-header-menu">
                 <div class="az-header-menu-header">
-                    <a href="{{route('association.home')}}" class="az-logo"><span></span> <img src="img/logo.png" width="150" /></a>
+                    <a href="{{ route('association.home') }}" class="az-logo"><span></span> <img src="img/logo.png"
+                            width="150" /></a>
                     <a href="" class="close">&times;</a>
                 </div><!-- az-header-menu-header -->
                 <ul class="nav">
                     <li class="nav-item active show">
-                        <a href="{{route('association.home')}}" class="nav-link"><i class="typcn typcn-chart-area-outline"></i>
+                        <a href="{{ route('association.home') }}" class="nav-link"><i
+                                class="typcn typcn-chart-area-outline"></i>
                             الرئيسية</a>
                     </li>
 
@@ -73,7 +76,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{route('association.reports')}}" class="nav-link"><i class="typcn typcn-chart-bar-outline"></i> تقارير
+                        <a href="{{ route('association.reports') }}" class="nav-link"><i
+                                class="typcn typcn-chart-bar-outline"></i> تقارير
                             وإحصائيات</a>
                     </li>
 
@@ -83,66 +87,56 @@
             <div class="az-header-right">
                 {{-- <div class="az-header-message">
                     <a href="asso_message.html"><i class="typcn typcn-messages"></i></a>
-                </div><!-- az-header-message -->
+                </div><!-- az-header-message --> --}}
                 <div class="dropdown az-header-notification">
                     <a href="" class="new"><i class="typcn typcn-bell"></i></a>
                     <div class="dropdown-menu">
                         <div class="az-dropdown-header mg-b-20 d-sm-none">
                             <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
                         </div>
-                          @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
-                             
+                        @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
+
                         <h6 class="az-notification-title">الأشعارات</h6>
-                        <p class="az-notification-text">You have {{$alertsCount}} unread notification</p>
+                        <p class="az-notification-text"> {{ $alertsCount }} لديك اشعارات غير مقروءه</p>
                         <div class="az-notification-list">
-                            <div class="media new">
-                                <div class="az-img-user"><img src=" img/faces/face2.jpg" alt=""></div>
-                                <div class="media-body">
-                                    <p>Congratulate <strong>Socrates Itumay</strong> for work anniversaries</p>
-                                    <span>Mar 15 12:32pm</span>
-                                </div><!-- media-body -->
-                            </div><!-- media -->
-                            <div class="media new">
-                                <div class="az-img-user online"><img src=" img/faces/face3.jpg" alt=""></div>
-                                <div class="media-body">
-                                    <p><strong>Joyce Chua</strong> just created a new blog post</p>
-                                    <span>Mar 13 04:16am</span>
-                                </div><!-- media-body -->
-                            </div><!-- media -->
-                            <div class="media">
-                                <div class="az-img-user"><img src=" img/faces/face4.jpg" alt=""></div>
-                                <div class="media-body">
-                                    <p><strong>Althea Cabardo</strong> just created a new blog post</p>
-                                    <span>Mar 13 02:56am</span>
-                                </div><!-- media-body -->
-                            </div><!-- media -->
-                            <div class="media">
-                                <div class="az-img-user"><img src=" img/faces/face5.jpg" alt=""></div>
-                                <div class="media-body">
-                                    <p><strong>Adrian Monino</strong> added new comment on your photo</p>
-                                    <span>Mar 12 10:40pm</span>
-                                </div><!-- media-body -->
-                            </div><!-- media -->
+                            @if (count(
+                                    $alerts = \Auth::user()->userUserAlerts()->withPivot('read')->limit(10)->orderBy('created_at', 'ASC')->get()->reverse()) > 0)
+                                @foreach ($alerts as $alert)
+                                      <a href="{{ route('admin.user-alert.read',$alert) }}"  target="_blank"
+                                        rel="noopener noreferrer">
+
+                                        <div class="media {{ $alert->pivot->read === 0 ? 'new' : '' }}">
+                                            <div class="az-img-user"></div>
+                                            <div class="media-body">
+                                                <p> {{ $alert->alert_text }}</p>
+                                                <span>{{ $alert->create_at }}</span>
+                                            </div><!-- media-body -->
+                                        </div><!-- media -->
+                                    </a>
+                                @endforeach
+                            @endif
                         </div><!-- az-notification-list -->
-                        <div class="dropdown-footer"><a href="">View All Notifications</a></div>
+                        {{-- <div class="dropdown-footer"><a href="">View All Notifications</a></div> --}}
                     </div><!-- dropdown-menu -->
-                </div><!-- az-header-notification --> --}}
+                </div><!-- az-header-notification -->
                 <div class="dropdown az-profile-menu">
-                    <a href="" class="az-img-user"><img src="{{$assocation->logo?->getUrl()}}" alt=""></a>
+                    <a href="" class="az-img-user"><img src="{{ $assocation->logo?->getUrl() }}"
+                            alt=""></a>
                     <div class="dropdown-menu">
                         <div class="az-dropdown-header d-sm-none">
                             <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
                         </div>
                         <div class="az-header-profile">
                             <div class="az-img-user">
-                                <img src="{{$assocation->logo?->getUrl()}}" alt="">
+                                <img src="{{ $assocation->logo?->getUrl() }}" alt="">
                             </div><!-- az-img-user -->
-                            <h6> {{$assocation->name}}</h6>
+                            <h6> {{ $assocation->name }}</h6>
                         </div><!-- az-header-profile -->
 
                         {{-- <a href="asso_profile.html" class="dropdown-item"><i class="typcn typcn-user-outline"></i>
                             الملف الشخصي</a> --}}
-                        <a href="{{ route('association.profile.edit') }}" class="dropdown-item"><i class="typcn typcn-edit"></i> تعديل
+                        <a href="{{ route('association.profile.edit') }}" class="dropdown-item"><i
+                                class="typcn typcn-edit"></i> تعديل
                             البيانات</a>
 
                         {{-- <a href="asso_setting.html" class="dropdown-item"><i class="typcn typcn-cog-outline"></i>

@@ -7,11 +7,7 @@
 
         <div class="card-body">
             <div class="form-group">
-                <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.associations.index') }}">
-                        {{ trans('global.back_to_list') }}
-                    </a>
-                </div>
+
                 <table class="table table-bordered table-striped">
                     <tbody>
                         <tr>
@@ -124,16 +120,54 @@
                             </td>
                         </tr>
                         <tr>
+                            <th>
+                                {{ trans('cruds.association.fields.status') }}
+                            </th>
+
                             <td>
-                               <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"
-                                                {{$association->user->approved == 1 ? 'checked' : null}} >
-                                            <label class="form-check-label toggle-label change-published"
-                                                table="newsTable" route="{{route('admin.news.change-status', $association->id)}}"></label>
+                                @if ($association->user?->approved == 1)
+                                    <span class="badge badge-success">تم القبول</span>
+                                @else
+                                    <span class="badge badge-secondary mb-2 d-block">بانتظار المراجعة</span>
+
+                                   
+                                    <a class="btn btn-success btn-sm"
+                                        href="{{ route('admin.associations.approve', $association->id) }}">
+                                        قبول الجمعية
+                                    </a>
+
+                                   
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#rejectModal-{{ $association->id }}">
+                                        رفض الجمعية
+                                    </button>
+
+                                    <!-- Modal الرفض -->
+                                    <div class="modal fade" id="rejectModal-{{ $association->id }}" tabindex="-1"
+                                        role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <form method="POST"
+                                                action="{{ route('admin.associations.reject', $association->id) }}">
+                                                @csrf
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">سبب الرفض</h5>
+                                                        <button type="button" class="close"
+                                                            data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <textarea name="reason" class="form-control" required></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-danger">رفض نهائي</button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
+                                @endif
                             </td>
+
                         </tr>
                     </tbody>
                 </table>

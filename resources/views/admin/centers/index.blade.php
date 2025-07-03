@@ -40,6 +40,15 @@
                         {{ trans('cruds.center.fields.image') }}
                     </th>
                     <th>
+                        {{ trans('cruds.center.fields.license_number') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.center.fields.director_name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.center.fields.coordinator_name') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -101,11 +110,14 @@
 { data: 'experience_years', name: 'experience_years' },
 { data: 'logo', name: 'logo', sortable: false, searchable: false },
 { data: 'image', name: 'image', sortable: false, searchable: false },
+{ data: 'license_number', name: 'license_number' },
+{ data: 'director_name', name: 'director_name' },
+{ data: 'coordinator_name', name: 'coordinator_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
-    pageLength: 100,
+    pageLength: 50,
   };
   let table = $('.datatable-Center').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

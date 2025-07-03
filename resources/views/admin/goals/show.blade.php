@@ -25,10 +25,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.goal.fields.title') }}
+                        </th>
+                        <td>
+                            {{ $goal->title }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.goal.fields.description') }}
                         </th>
                         <td>
-                            {{ $goal->description }}
+                            {!! $goal->description !!}
                         </td>
                     </tr>
                 </tbody>

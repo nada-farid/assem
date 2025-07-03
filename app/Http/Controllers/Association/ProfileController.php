@@ -27,7 +27,7 @@ class ProfileController extends Controller
 
         $alert = UserAlert::create([
             'alert_text' => " قمت جمعية جديدة بالتسجيل:  {$association->name}",
-            'alert_link' => route('admin.associations.edit', $association->id),
+            'alert_link' => route('admin.associations.show', $association->id),
         ]);
 
         $adminUsers = User::where('user_type', 'staff')->get();

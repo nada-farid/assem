@@ -8,23 +8,27 @@ use App\Http\Requests\MassDestroyCenterRequest;
 use App\Http\Requests\StoreCenterRequest;
 use App\Http\Requests\UpdateCenterRequest;
 use App\Models\Center;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Alert;
+use App\Mail\UserAccepted;
+use App\Mail\UserRejected;
+use Illuminate\Support\Facades\Mail;
+
 
 class CenterController extends Controller
 {
     use MediaUploadingTrait;
-
     public function index(Request $request)
     {
         abort_if(Gate::denies('center_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Center::query()->select(sprintf('%s.*', (new Center)->table));
+            $query = Center::with(['user'])->select(sprintf('%s.*', (new Center)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -79,6 +83,15 @@ class CenterController extends Controller
 
                 return '';
             });
+            $table->editColumn('license_number', function ($row) {
+                return $row->license_number ? $row->license_number : '';
+            });
+            $table->editColumn('director_name', function ($row) {
+                return $row->director_name ? $row->director_name : '';
+            });
+            $table->editColumn('coordinator_name', function ($row) {
+                return $row->coordinator_name ? $row->coordinator_name : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'logo', 'image']);
 
@@ -88,16 +101,28 @@ class CenterController extends Controller
         return view('admin.centers.index');
     }
 
+
     public function create()
     {
         abort_if(Gate::denies('center_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.centers.create');
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.centers.create', compact('users'));
     }
 
     public function store(StoreCenterRequest $request)
     {
+        $user = User::create([
+            'email' => $request->email,
+            'password' => $request->password,
+            'user_type' => 'center',
+            'approved' => 1,
+            'name'=>$request->name
+        ]);
         $center = Center::create($request->all());
+        $center->user_id = $user->id;
+        $center->save();
 
         if ($request->input('logo', false)) {
             $center->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
@@ -105,6 +130,10 @@ class CenterController extends Controller
 
         if ($request->input('image', false)) {
             $center->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+        }
+
+        if ($request->input('license_image', false)) {
+            $center->addMedia(storage_path('tmp/uploads/' . basename($request->input('license_image'))))->toMediaCollection('license_image');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -120,11 +149,21 @@ class CenterController extends Controller
     {
         abort_if(Gate::denies('center_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.centers.edit', compact('center'));
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $center->load('user');
+
+        return view('admin.centers.edit', compact('center', 'users'));
     }
 
     public function update(UpdateCenterRequest $request, Center $center)
     {
+        $user = User::find($center->user_id);
+        $user->update([
+            'email' => $request->email,
+            'password' => $request->password,
+            'name'=>$request->name
+        ]);
         $center->update($request->all());
 
         if ($request->input('logo', false)) {
@@ -149,6 +188,16 @@ class CenterController extends Controller
             $center->image->delete();
         }
 
+        if ($request->input('license_image', false)) {
+            if (!$center->license_image || $request->input('license_image') !== $center->license_image->file_name) {
+                if ($center->license_image) {
+                    $center->license_image->delete();
+                }
+                $center->addMedia(storage_path('tmp/uploads/' . basename($request->input('license_image'))))->toMediaCollection('license_image');
+            }
+        } elseif ($center->license_image) {
+            $center->license_image->delete();
+        }
         Alert::success('تحديث بنجاح', 'تم التحديث بنجاح');
 
         return redirect()->route('admin.centers.index');
@@ -157,6 +206,8 @@ class CenterController extends Controller
     public function show(Center $center)
     {
         abort_if(Gate::denies('center_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $center->load('user');
 
         return view('admin.centers.show', compact('center'));
     }
@@ -192,4 +243,31 @@ class CenterController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+
+    public function approve(Center $center)
+    {
+        $center->user->approved = 1;
+        $center->user->save();
+
+        Mail::to($center->user->email)->send(new UserAccepted($center->user));
+
+        Alert::success('تم القبول', 'تم تفعيل المركز وإرسال الإيميل.');
+        return redirect()->back();  
+    }
+
+    public function reject(Request $request, Center $center)
+    {
+        $user = $center->user;
+        $reason = $request->input('reason');
+
+
+        $center->delete();
+        $user->forceDelete();
+
+        Mail::to($user->email)->send(new UserRejected($user, $reason));
+
+        Alert::info('تم الرفض', 'تم حذف المركز وإرسال سبب الرفض.');
+        return redirect()->back();
+    }
+
 }

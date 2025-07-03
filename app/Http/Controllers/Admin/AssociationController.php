@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserAccepted;
+use App\Mail\UserRejected;
 use Alert;
 
 class AssociationController extends Controller
@@ -79,17 +82,43 @@ class AssociationController extends Controller
 
                 return '';
             });
-
             $table->editColumn('approved', function ($row) {
-                return '<div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"
-                                                ' . ($row->user?->approved == 1 ? 'checked' : null) . ' >
-                                            <label class="form-check-label toggle-label change-approved"
-                                                table="associationTable" route=' . route('admin.users.change-approved', $row->user?->id) . '></label>
-                                        </div>
-                                    </div>';
+
+                if ($row->user?->approved == 1) {
+                    return '<span class="badge badge-success">تم القبول</span>';
+                }
+
+
+                $badge = '<span class="badge badge-secondary mb-1 d-block">بانتظار المراجعة</span>';
+
+                $approveBtn = '<a class="btn btn-sm btn-success" href="' . route('admin.associations.approve', $row->id) . '">قبول</a>';
+
+                $rejectBtn = '
+        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#rejectModal-' . $row->id . '">رفض</button>
+
+        <div class="modal fade" id="rejectModal-' . $row->id . '" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <form method="POST" action="' . route('admin.associations.reject', $row->id) . '">
+                    ' . csrf_field() . '
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">سبب الرفض</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea name="reason" class="form-control" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">رفض نهائي</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>';
+
+                return $badge . $approveBtn . ' ' . $rejectBtn;
             });
+
 
             $table->rawColumns(['actions', 'placeholder', 'user', 'logo', 'approved']);
 
@@ -211,5 +240,31 @@ class AssociationController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function approve(Association $association)
+    {
+        $association->user->approved = 1;
+        $association->user->save();
+
+        Mail::to($association->user->email)->send(new UserAccepted($association->user));
+
+        Alert::success('تم القبول', 'تم تفعيل الجمعية وإرسال الإيميل.');
+        return redirect()->back();
+    }
+
+    public function reject(Request $request, Association $association)
+    {
+        $user = $association->user;
+        $reason = $request->input('reason');
+
+
+        $association->delete();
+        $user->forceDelete();
+
+        Mail::to($user->email)->send(new UserRejected($user, $reason));
+
+        Alert::info('تم الرفض', 'تم حذف الجمعية وإرسال سبب الرفض.');
+        return redirect()->back();
     }
 }
