@@ -181,7 +181,6 @@ class AssociationController extends Controller
         $association->update($request->all());
         $user = User::find($association->user_id);
         $user->update($request->all());
-        $user->approved = isset($request->approved) ? 1 : 0;
         $user->save();
 
 

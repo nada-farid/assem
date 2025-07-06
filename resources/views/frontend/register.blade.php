@@ -112,6 +112,9 @@
 
                             <input type="url" name="website" placeholder="موقع الإنترنت" value="{{ old('website') }}" class="@error('website') is-invalid @enderror" required />
                             @error('website') <div class="text-danger">{{ $message }}</div> @enderror
+
+                            <input type="text" name="center_phone" placeholder="رقم الهاتف" value="{{ old('center_phone') }}" class="@error('center_phone') is-invalid @enderror" required />
+                            @error('center_phone') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
 
                         <!-- جمعية -->
@@ -180,8 +183,8 @@
 
 
                         <div id="centerStep3" class="entity-step">
-                            <input type="text" name="director_name" placeholder="اسم المدير التنفيذي" value="{{ old('director_name') }}" class="@error('director_name') is-invalid @enderror" required />
-                            @error('director_name') <div class="text-danger">{{ $message }}</div> @enderror
+                            <input type="text" name="center_director_name" placeholder="اسم المدير التنفيذي" value="{{ old('center_director_name') }}" class="@error('center_director_name') is-invalid @enderror" required />
+                            @error('center_director_name') <div class="text-danger">{{ $message }}</div> @enderror
 
                             <input type="text" name="center_director_phone" placeholder="رقم الجوال" value="{{ old('center_director_phone') }}" class="@error('center_director_phone') is-invalid @enderror" required />
                             @error('center_director_phone') <div class="text-danger">{{ $message }}</div> @enderror

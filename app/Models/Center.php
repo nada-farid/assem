@@ -50,6 +50,7 @@ class Center extends Model implements HasMedia
         'coordinator_name',
         'coordinator_phone',
         'coordinator_email',
+        'phone',
         'created_at',
         'updated_at',
         'deleted_at',

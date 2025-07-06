@@ -142,7 +142,7 @@
                     </div>
                     <div class="col col-xl-auto d-none d-md-block">
                         @auth
-                            <a class="user-login" href="{{ route('association.home') }}"><i class="fas fa-user-circle"></i>
+                            <a class="user-login" href="{{ route('admin.home') }}"><i class="fas fa-user-circle"></i>
                                 لوحة التحكم</a>
                         @else
                             <a class="user-login" href="{{ route('frontend.login') }}"><i

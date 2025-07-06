@@ -27,6 +27,7 @@ class CreateCourseStudentsTable extends Migration
             $table->string('address')->nullable();
             $table->tinyInteger('request_certificate')->default(0);
             $table->string('email_certificate')->nullable();
+            $table->text('courses_before')->nullable();
             $table->boolean('approved')->default(false);
             $table->unsignedBigInteger('course_id')->nullable();
             $table->foreign('course_id', 'course_fk_8821564')->references('id')->on('courses');

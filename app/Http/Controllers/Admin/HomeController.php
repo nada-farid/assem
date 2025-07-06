@@ -147,11 +147,11 @@ class HomeController
         }
 
         $settings4 = [
-            'chart_title' => 'الدورات المضافة مؤخرا',
+            'chart_title' => 'الجمعيات المضافة مؤخرا',
             'chart_type' => 'latest_entries',
             'report_type' => 'group_by_date',
-            'model' => 'App\Models\Course',
-            'group_by_field' => 'start_at',
+            'model' => 'App\Models\Association',
+            'group_by_field' => 'created_at',
             'group_by_period' => 'day',
             'aggregate_function' => 'count',
             'filter_field' => 'created_at',
@@ -161,12 +161,13 @@ class HomeController
             'entries_number' => '5',
             'fields' => [
                 // 'photo'             => '',
-                'title' => '',
-                'short_description' => '',
-                'center' => 'name',
-                'type' => '',
+                'name' => '',
+                'license_number' => '',
+                'director_name' => '',
+                'director_phone' => '',
+                'director_email' => '',
             ],
-            'translation_key' => 'course',
+            'translation_key' => 'association',
         ];
 
         $settings4['data'] = [];
@@ -196,7 +197,10 @@ class HomeController
             'fields' => [
                 'name' => '',
                 'specialization' => '',
-                'beneficiar_count' => '',
+                'director_name' => '',
+                'director_phone' => '',
+                'director_email' => '',
+                'specialization' => '',
                 // 'image'            => '',
             ],
             'translation_key' => 'center',

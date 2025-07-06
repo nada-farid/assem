@@ -28,6 +28,7 @@ class CreateCentersTable extends Migration
             $table->string('coordinator_name')->nullable();
             $table->integer('coordinator_phone')->nullable();
             $table->string('coordinator_email')->nullable();
+            $table->integer('phone')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

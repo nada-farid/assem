@@ -7,9 +7,10 @@
     </div>
 
     @php
-        $newAssociationsCount = \App\Models\Association::whereHas('user', function ($q) {
-            $q->where('approved', 0);
-        })->count();
+        $query = \App\Models\User::where('approved', 0);
+        $new_centers = $query->where('user_type', 'center')->count();
+        $new_associations = $query->where('user_type', 'association')->count();
+
     @endphp
 
     <ul class="c-sidebar-nav">
@@ -23,14 +24,14 @@
         </li>
         @can('user_management_access')
             <li
-                class="c-sidebar-nav-dropdown {{ request()->is('admin/permissions*') ? 'c-show' : '' }} {{ request()->is('admin/roles*') ? 'c-show' : '' }} {{ request()->is('admin/users*') ? 'c-show' : '' }}">
+                class="c-sidebar-nav-dropdown {{ request()->is('admin/permissions*') ? 'c-show' : '' }} {{ request()->is('admin/roles*') ? 'c-show' : '' }} {{ request()->is('admin/centers*') ? 'c-show' : '' }} {{ request()->is('admin/users*') ? 'c-show' : '' }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-users c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.userManagement.title') }}
-                    @if ($newAssociationsCount > 0)
-                        <span class="badge badge-warning">{{ $newAssociationsCount }}</span>
+                    @if ($new_centers > 0 || $new_associations > 0)
+                        <span class="badge badge-warning">{{ $new_centers + $new_associations }}</span>
                     @endif
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
@@ -73,8 +74,22 @@
 
                                 </i>
                                 {{ trans('cruds.association.title') }}
-                                @if ($newAssociationsCount > 0)
+                                @if ($new_associations > 0)
                                     <span class="badge badge-warning">{{ $newAssociationsCount }}</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endcan
+                    @can('center_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.centers.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/centers') || request()->is('admin/centers/*') ? 'c-active' : '' }}">
+                                <i class="fa-fw fas fa-hospital c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.center.title') }}
+                                @if ($new_centers > 0)
+                                    <span class="badge badge-warning">{{ $new_centers }}</span>
                                 @endif
                             </a>
                         </li>
@@ -84,7 +99,7 @@
         @endcan
         @can('courses_management_access')
             <li
-                class="c-sidebar-nav-dropdown {{ request()->is('admin/courses*') ? 'c-show' : '' }} {{ request()->is('admin/categories*') ? 'c-show' : '' }} {{ request()->is('admin/centers*') ? 'c-show' : '' }} {{ request()->is('admin/curricula*') ? 'c-show' : '' }}">
+                class="c-sidebar-nav-dropdown {{ request()->is('admin/courses*') ? 'c-show' : '' }} {{ request()->is('admin/categories*') ? 'c-show' : '' }}  {{ request()->is('admin/curricula*') ? 'c-show' : '' }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
@@ -111,17 +126,6 @@
 
                                 </i>
                                 {{ trans('cruds.category.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('center_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.centers.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/centers') || request()->is('admin/centers/*') ? 'c-active' : '' }}">
-                                <i class="fa-fw fas fa-hospital c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.center.title') }}
                             </a>
                         </li>
                     @endcan

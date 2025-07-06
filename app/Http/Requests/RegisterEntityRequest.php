@@ -31,11 +31,12 @@ class RegisterEntityRequest extends FormRequest
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'license_number' => 'required',
             'director_name' => 'required',
-            'director_phone' => 'required',
-            'director_email' => 'required|email',
+            'director_phone' => 'required|regex:/^05[0-9]{8}$/|unique:associations,phone',
+            'director_email' => 'required|email|unique:associations,director_email',
             'coordinator_name' => 'required',
-            'coordinator_phone' => 'required|regex:/^05[0-9]{8}$/',
-            'coordinator_email' => 'required|email',
+            'coordinator_phone' => 'required|regex:/^05[0-9]{8}$/|unique:associations,phone',
+            'coordinator_email' => 'required|email|unique:associations,coordinator_email',
+            'phone' => 'required|regex:/^05[0-9]{8}$/|unique:associations,phone',
         ];
     }
 
@@ -53,10 +54,11 @@ class RegisterEntityRequest extends FormRequest
             'end_date' => 'required|date',
             'center_director_name' => 'required',
             'center_director_phone' => 'required|regex:/^05[0-9]{8}$/',
-            'center_director_email' => 'required|email',
+            'center_director_email' => 'required|email|unique:centers,director_email',
             'center_coordinator_name' => 'required',
-            'center_coordinator_phone' => 'required|regex:/^05[0-9]{8}$/',
-            'center_coordinator_email' => 'required|email',
+            'center_coordinator_phone' => 'required|regex:/^05[0-9]{8}$/|unique:centers,coordinator_phone',
+            'center_coordinator_email' => 'required|email|unique:centers,coordinator_email',
+            'center_phone' => 'required|regex:/^05[0-9]{8}$/|unique:centers,phone',
         ];
     }
 
@@ -82,6 +84,19 @@ public function messages()
         'center_password.required' => 'كلمة المرور مطلوبة',
         'center_name.required' => 'اسم المركز مطلوب',
         'website.url' => 'الموقع الإلكتروني غير صالح',
+        'center_phone.regex' => 'رقم المركز يجب أن يكون 10 أرقام ويبدأ ب 05',
+        'center_phone.required' => 'رقم المركز مطلوب',
+        'center_phone.unique' => 'رقم المركز مستخدم من قبل',
+        'center_coordinator_phone.regex' => 'رقم المنسق يجب أن يكون 10 أرقام ويبدأ ب 05',
+        'center_coordinator_phone.required' => 'رقم المنسق مطلوب',
+        'center_coordinator_phone.unique' => 'رقم المنسق مستخدم من قبل',
+        'center_coordinator_email.email' => 'البريد الإلكتروني غير صالح',
+        'center_coordinator_email.unique' => 'البريد الإلكتروني مستخدم من قبل',
+        'center_director_email.email' => 'البريد الإلكتروني غير صالح',
+        'center_director_email.unique' => 'البريد الإلكتروني مستخدم من قبل',
+        'center_director_phone.regex' => 'رقم المدير يجب أن يكون 10 أرقام ويبدأ ب 05',
+        'center_director_phone.required' => 'رقم المدير مطلوب',
+        'center_director_phone.unique' => 'رقم المدير مستخدم من قبل',
     ];
 }
 
