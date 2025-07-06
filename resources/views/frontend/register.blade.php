@@ -1,10 +1,17 @@
 @extends('frontend.layouts.main')
 @section('styles')
 <style>
-    .step { display: none; }
-    .step.active { display: block; }
+    .step {
+        display: none;
+    }
 
-    input, select, textarea {
+    .step.active {
+        display: block;
+    }
+
+    input,
+    select,
+    textarea {
         width: 100%;
         padding: 10px;
         margin: 10px 0;
@@ -12,7 +19,10 @@
         border: 1px solid #ccc;
     }
 
-    .buttons { text-align: center; margin-top: 20px; }
+    .buttons {
+        text-align: center;
+        margin-top: 20px;
+    }
 
     .progress {
         text-align: center;
@@ -32,9 +42,15 @@
         color: white;
     }
 
-    .progress span.active { background: #ABC157; }
+    .progress span.active {
+        background: #ABC157;
+    }
 
-    .text-danger { color: red; font-size: 14px; }
+    .text-danger {
+        color: red;
+        font-size: 14px;
+    }
+
 </style>
 @endsection
 
@@ -82,8 +98,8 @@
                             @error('center_name') <div class="text-danger">{{ $message }}</div> @enderror
 
                             <label>الشعار</label>
-                            <input type="file" name="logo" accept="image/*" class="@error('logo') is-invalid @enderror" required />
-                            @error('logo') <div class="text-danger">{{ $message }}</div> @enderror
+                            <input type="file" name="center_logo" accept="image/*" class="@error('center_logo') is-invalid @enderror" required />
+                            @error('center_logo') <div class="text-danger">{{ $message }}</div> @enderror
 
                             <input type="text" name="location" placeholder="الموقع الجغرافي" value="{{ old('location') }}" class="@error('location') is-invalid @enderror" required />
                             @error('location') <div class="text-danger">{{ $message }}</div> @enderror
@@ -102,6 +118,8 @@
                         <div id="associationStep1" class="entity-step">
                             <input type="text" name="name" placeholder="اسم الجمعية" value="{{ old('name') }}" class="@error('name') is-invalid @enderror" required />
                             @error('name') <div class="text-danger">{{ $message }}</div> @enderror
+                            <input type="file" name="logo" accept="image/*" class="@error('logo') is-invalid @enderror" required />
+                            @error('logo') <div class="text-danger">{{ $message }}</div> @enderror
 
                             <input type="email" name="email" placeholder="البريد الإلكتروني الرسمي" value="{{ old('email') }}" class="@error('email') is-invalid @enderror" required />
                             @error('email') <div class="text-danger">{{ $message }}</div> @enderror
@@ -123,7 +141,7 @@
                     <!-- Step 2 -->
                     <div class="step" data-step="2">
                         <div id="centerStep2" class="entity-step">
-                         <textarea name="description" placeholder="الوصف" class="@error('description') is-invalid @enderror" required>{{ old('description') }}</textarea>
+                            <textarea name="description" placeholder="الوصف" class="@error('description') is-invalid @enderror" required>{{ old('description') }}</textarea>
                             @error('description') <div class="text-danger">{{ $message }}</div> @enderror
 
                             <input type="text" name="center_license_number" placeholder="رقم الترخيص" value="{{ old('center_license_number') }}" class="@error('center_license_number') is-invalid @enderror" required />
@@ -157,7 +175,34 @@
 
                     <!-- Step 3 -->
                     <div class="step" data-step="3">
+
+
+
+
                         <div id="centerStep3" class="entity-step">
+                            <input type="text" name="director_name" placeholder="اسم المدير التنفيذي" value="{{ old('director_name') }}" class="@error('director_name') is-invalid @enderror" required />
+                            @error('director_name') <div class="text-danger">{{ $message }}</div> @enderror
+
+                            <input type="text" name="center_director_phone" placeholder="رقم الجوال" value="{{ old('center_director_phone') }}" class="@error('center_director_phone') is-invalid @enderror" required />
+                            @error('center_director_phone') <div class="text-danger">{{ $message }}</div> @enderror
+
+                            <input type="email" name="center_director_email" placeholder="البريد الإلكتروني" value="{{ old('center_director_email') }}" class="@error('center_director_email') is-invalid @enderror" required />
+                            @error('center_director_email') <div class="text-danger">{{ $message }}</div> @enderror
+
+                            <input type="text" name="center_coordinator_name" placeholder="اسم المنسق" value="{{ old('center_coordinator_name') }}" class="@error('center_coordinator_name') is-invalid @enderror" required />
+                            @error('center_coordinator_name') <div class="text-danger">{{ $message }}</div> @enderror
+
+                            <input type="text" name="center_coordinator_phone" placeholder="رقم المنسق" value="{{ old('center_coordinator_phone') }}" class="@error('center_coordinator_phone') is-invalid @enderror" required />
+                            @error('center_coordinator_phone') <div class="text-danger">{{ $message }}</div> @enderror
+
+                            <input type="email" name="center_coordinator_email" placeholder="البريد الإلكتروني للمنسق" value="{{ old('center_coordinator_email') }}" class="@error('center_coordinator_email') is-invalid @enderror" required />
+                            @error('center_coordinator_email') <div class="text-danger">{{ $message }}</div> @enderror
+                            <input type="url" name="facebook" placeholder="رابط فيسبوك" value="{{ old('facebook') }}" class="@error('facebook') is-invalid @enderror" />
+                            @error('facebook') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div id="associationStep3" class="entity-step">
+
                             <input type="text" name="director_name" placeholder="اسم المدير التنفيذي" value="{{ old('director_name') }}" class="@error('director_name') is-invalid @enderror" required />
                             @error('director_name') <div class="text-danger">{{ $message }}</div> @enderror
 
@@ -175,12 +220,6 @@
 
                             <input type="email" name="coordinator_email" placeholder="البريد الإلكتروني للمنسق" value="{{ old('coordinator_email') }}" class="@error('coordinator_email') is-invalid @enderror" required />
                             @error('coordinator_email') <div class="text-danger">{{ $message }}</div> @enderror
-                        </div>
-
-                        <div id="associationStep3" class="entity-step">
-                            <input type="url" name="facebook" placeholder="رابط فيسبوك" value="{{ old('facebook') }}" class="@error('facebook') is-invalid @enderror" />
-                            @error('facebook') <div class="text-danger">{{ $message }}</div> @enderror
-
                             <input type="url" name="twitter" placeholder="رابط تويتر" value="{{ old('twitter') }}" class="@error('twitter') is-invalid @enderror" />
                             @error('twitter') <div class="text-danger">{{ $message }}</div> @enderror
 
@@ -275,5 +314,6 @@
     document.addEventListener("DOMContentLoaded", function() {
         showStep(currentStep);
     });
+
 </script>
 @endsection

@@ -54,7 +54,7 @@ if (!function_exists('get_setting')) {
                     'course_date' => $courseStudent->course->start_at ? Carbon::parse($courseStudent->course->start_at)->format('Y / m / d') : '',
 
                 ];
-                $html = view('admin.courses.certificate', $data)->toArabicHTML();
+                $html = view('admin.courses.certificate', $data)->render();
                 $pdf = PDF::loadHTML($html)->output();
 
                 Storage::put($path, $pdf);

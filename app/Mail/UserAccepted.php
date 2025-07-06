@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
 
-class AssociationAccepted extends Mailable
+class UserAccepted extends Mailable
 {
 
     use Queueable, SerializesModels;

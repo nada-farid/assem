@@ -20,6 +20,12 @@ class CreateAssociationsTable extends Migration
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
             $table->string('linked_in')->nullable();
+            $table->string('director_name')->nullable();
+            $table->integer('director_phone')->nullable();
+            $table->string('director_email')->nullable();
+            $table->string('coordinator_name')->nullable();
+            $table->integer('coordinator_phone')->nullable();
+            $table->string('coordinator_email')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

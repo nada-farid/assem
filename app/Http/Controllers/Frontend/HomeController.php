@@ -92,7 +92,7 @@ class HomeController extends Controller
         Artisan::call('cache:clear');
         Artisan::call('config:clear');
         Artisan::call('route:clear');
-      
+        // Artisan::call('migrate:fresh --seed');
             Artisan::call('storage:link');
     }
 }

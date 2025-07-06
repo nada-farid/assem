@@ -75,19 +75,19 @@ class AuthController extends Controller
                 'specialization' => $request->specialization,
                 'experience_years' => $request->experience_years,
                 'end_date' => $request->end_date,
-                'director_name' => $request->director_name,
-                'director_phone' => $request->director_phone,
-                'director_email' => $request->director_email,
-                'coordinator_name' => $request->coordinator_name,
-                'coordinator_phone' => $request->coordinator_phone,
-                'coordinator_email' => $request->coordinator_email,
+                'director_name' => $request->center_director_name,
+                'director_phone' => $request->center_director_phone,
+                'director_email' => $request->center_director_email,
+                'coordinator_name' => $request->center_coordinator_name,
+                'coordinator_phone' => $request->center_coordinator_phone,
+                'coordinator_email' => $request->center_coordinator_email,
                 'description' => $request->description,
                 'user_id' => $user->id,
             ]);
     
 
-            if ($request->hasFile('logo')) {
-                $center->addMediaFromRequest('logo')->toMediaCollection('logo');
+            if ($request->hasFile('center_logo')) {
+                $center->addMediaFromRequest('center_logo')->toMediaCollection('logo');
             }
 
             if ($request->hasFile('license_image')) {

@@ -129,7 +129,7 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" role="tabpanel" id="course_course_students">
-                    @includeIf('center.courses.relationships.courseCourseStudents', ['courseStudents' => $course->courseCourseStudents])
+                    @includeIf('admin.courses.relationships.courseCourseStudents', ['courseStudents' => $course->courseCourseStudents])
                 </div>
             </div>
         </div>

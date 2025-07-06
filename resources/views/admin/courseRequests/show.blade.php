@@ -128,11 +128,7 @@
                                     {{ $courseStudent->attend_course ?? '' }}
                                 </td>
                                 <td>
-                                    @if ($courseStudent->courses_before)
-                                        @foreach (json_decode($courseStudent->courses_before, true) as $raw)
-                                            {{ $raw['course_name'] }} ,
-                                        @endforeach
-                                    @endif
+                                  {{$courseStudent->courses_before ?? ''}}
                                 </td>
                                 <td>
                                     {{ $courseStudent->transportaion ?? '' }}
