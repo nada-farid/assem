@@ -21,33 +21,33 @@ class AssociationReportController extends Controller
         // جلب طلبات الدورات المعتمدة مع المستفيدين والدورات والفصول
         $requests = CourseRequest::where('association_id', $association->id)
             ->where('status', 'approved')
-            ->with(['beneficiaries', 'course.chapters'])
+            ->with(['students', 'course.chapters'])
             ->get();
 
         $chartData = [];
 
         // تجهيز بيانات الرسم البياني لكل دورة
         foreach ($requests as $request) {
-            $totalLessons = $request->course->chapters->count();
-            $beneficiaryIds = $request->beneficiaries->pluck('id');
+            $studentIds = $request->students->pluck('id');
 
-            $totalAttended = LessonAttendance::whereIn('beneficiary_id', $beneficiaryIds)
-                ->where('attended', 1)
-                ->count();
+            $totalAttended = $request->students()->whereHas('attendance', function ($query) use ($request) {
+                $query->where('course_id', $request->course_id);
+            })->count();
 
-            $totalMissed = LessonAttendance::whereIn('beneficiary_id', $beneficiaryIds)
-                ->where('attended', 0)
-                ->count();
 
-            $possibleAttendances = $totalLessons * $request->beneficiaries->count();
+            $totalMissed = $request->students()->whereDoesntHave('attendance', function ($query) use ($request) {
+                $query->where('course_id', $request->course_id);
+            })->count();
 
-            $attendancePercentage = $possibleAttendances > 0
-                ? round(($totalAttended / $possibleAttendances) * 100, 2)
+
+
+            $attendancePercentage = $request->students->count() > 0
+                ? round(($totalAttended / $request->students->count()) * 100, 2)
                 : 0;
 
             $chartData[] = [
                 'course_title'         => $request->course->title,
-                'total_beneficiaries'  => $request->beneficiaries->count(),
+                'total_students'  => $request->students->count(),
                 'attendance_percentage'=> $attendancePercentage,
                 'total_attended'       => $totalAttended,
                 'total_missed'         => $totalMissed,
@@ -63,30 +63,30 @@ class AssociationReportController extends Controller
     public function report($id)
     {
         // التحقق من وجود طلب الدورة
-        $courseRequest = CourseRequest::with(['beneficiaries', 'course.chapters'])->findOrFail($id);
+        $courseRequest = CourseRequest::with(['students', 'course.chapters'])->findOrFail($id);
 
-        $chapterIds = $courseRequest->course->chapters->pluck('id');
-        $totalLessons = $chapterIds->count();
-        $beneficiaryIds = $courseRequest->beneficiaries->pluck('id');
+    
+        $studentIds = $courseRequest->students->pluck('id');
 
-        $query = LessonAttendance::whereIn('beneficiary_id', $beneficiaryIds)
-            ->whereIn('curriculum_id', $chapterIds);
 
-        $totalAttended = (clone $query)->where('attended', 1)->count();
-        $totalMissed   = (clone $query)->where('attended', 0)->count();
+        $totalAttended = $courseRequest->students()->whereHas('attendance', function ($query) use ($courseRequest) {
+            $query->where('course_id', $courseRequest->course_id);
+        })->count();
+        $totalMissed   = $courseRequest->students()->whereDoesntHave('attendance', function ($query) use ($courseRequest) {
+            $query->where('course_id', $courseRequest->course_id);
+        })->count();
 
-        $possibleAttendances = $totalLessons * $courseRequest->beneficiaries->count();
 
-        $overallAttendancePercentage = $possibleAttendances > 0
-            ? round(($totalAttended / $possibleAttendances) * 100, 2)
-            : 0;
+        $attendancePercentage = $courseRequest->students->count() > 0
+        ? round(($totalAttended / $courseRequest->students->count()) * 100, 2)
+        : 0;
+
 
         return view('associations.reports.show', compact(
             'courseRequest',
-            'totalLessons',
             'totalAttended',
             'totalMissed',
-            'overallAttendancePercentage'
+            'attendancePercentage'
         ));
     }
 }

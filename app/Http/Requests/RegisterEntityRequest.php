@@ -51,7 +51,7 @@ class RegisterEntityRequest extends FormRequest
             'website' => 'required|url',
             'specialization' => 'required',
             'experience_years' => 'required',
-            'end_date' => 'required|date',
+            'center_end_date' => 'required|date',
             'center_director_name' => 'required',
             'center_director_phone' => 'required|regex:/^05[0-9]{8}$/',
             'center_director_email' => 'required|email|unique:centers,director_email',

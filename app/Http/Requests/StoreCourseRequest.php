@@ -49,15 +49,7 @@ class StoreCourseRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'video_background' => [
-                'required',
-            ],
-            'photo' => [
-                'required',
-            ],
-            'inside_image' => [
-                'required',
-            ],
+           
             'start_at' => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
@@ -94,7 +86,7 @@ class StoreCourseRequest extends FormRequest
     {
         return [
             'photo.required' => __('global.Please upload an image with required dimensions'),
-            'inside_imagep.required' => __('global.Please upload inside image with required dimensions'),
+            'inside_image.required' => __('global.Please upload inside image with required dimensions'),
         ];
     }
 }

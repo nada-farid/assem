@@ -5,9 +5,8 @@
    
 
     <ul >
-        <li>عدد المستفيدين المسجلين: {{ $courseRequest->beneficiaries->count() }}</li>
-        <li>معدل الحضور الكلي: {{ $overallAttendancePercentage }}%</li>
-        <li>عدد الدروس الكلي: {{ $totalLessons }}</li>
+        <li>عدد المستفيدين المسجلين: {{ $courseRequest->students->count() }}</li>
+        <li>معدل الحضور الكلي: {{ $attendancePercentage }}%</li>
         <li>عدد الحضور الكلي: {{ $totalAttended }}</li>
         <li>عدد الغياب الكلي: {{ $totalMissed }}</li>
     </ul>

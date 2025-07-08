@@ -32,7 +32,7 @@
                                 <tr>
                                     <td><a href="{{ route('frontend.course', $request->course_id) }}">
                                             {{ $request->course->title }} </a> </td>
-                                    <td>{{ $request->beneficiaries->count() }} </td>
+                                    <td>{{ $request->students->count() }} </td>
 
                                     <td><a href="{{ route('association.reports.show', $request->id) }}"> <i
                                                 class="fa-solid fa-file"></i></a></td>

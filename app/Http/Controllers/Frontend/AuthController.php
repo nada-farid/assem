@@ -74,7 +74,7 @@ class AuthController extends Controller
                 'license_number' => $request->center_license_number,
                 'specialization' => $request->specialization,
                 'experience_years' => $request->experience_years,
-                'end_date' => $request->end_date,
+                'end_date' => $request->center_end_date,
                 'director_name' => $request->center_director_name,
                 'director_phone' => $request->center_director_phone,
                 'director_email' => $request->center_director_email,
@@ -83,6 +83,9 @@ class AuthController extends Controller
                 'coordinator_email' => $request->center_coordinator_email,
                 'description' => $request->description,
                 'user_id' => $user->id,
+                'facebook_link' => $request->center_facebook_link,
+                'twitter_link' => $request->center_twitter_link,
+                'linked_in' => $request->center_linked_in,
             ]);
     
 
