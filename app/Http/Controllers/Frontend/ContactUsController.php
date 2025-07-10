@@ -20,8 +20,22 @@ class ContactUsController extends Controller
 
     public function store(StoreContactRequest $request)
     {
+       
+        if(app()->environment('production')){
+            $request->validate([
+                'g-recaptcha-response' => 'required|captcha',
+            ]);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'يرجى التحقق من أنك لست روبوت.'
+            ]);
+        }
+
         $contact = Contact::create($request->all());
 
-        return response()->json();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم الحفظ بنجاح'
+        ]);
     }
 }

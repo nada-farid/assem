@@ -64,7 +64,7 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                <x-captcha />
                                 <button class="btn btn-az-primary btn-rounded">إضافة</button>
 
                             </form>

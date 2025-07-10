@@ -42,8 +42,30 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if(app()->environment('production')){
+            $request->validate([
+                'g-recaptcha-response' => 'required|captcha',
+            ]);
+        }
+
+        if(app()->environment('production') && !$request->has('g-recaptcha-response')){
+            return redirect()->back()->with('error', 'يرجى التحقق من أنك لست روبوت.');
+        }
+
+        return $this->authenticated($request, $this->guard()->attempt($request->only('email', 'password'), $request->filled('remember')));
+        
+    }
       protected function authenticated(Request $request, $user)
     { 
+    
         if(!$user->approved){
             Alert::error('حسابك قيد المراجعه قم بالتواصل مع الدعم');
             Auth::logout();
@@ -62,3 +84,5 @@ class LoginController extends Controller
         return redirect('/home');
     }
 }
+
+

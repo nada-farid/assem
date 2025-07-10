@@ -36,9 +36,15 @@ public function enroll(Request $request)
     $request->validate([
         'file' => 'required|file|mimes:xlsx,csv',
         'course_id' => 'required|exists:courses,id',
+        
     ]);
 
-    // 1. تحقق من صحة البيانات داخل الملف
+    if(app()->environment('production')){
+        $request->validate([
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
+    }
+
     $validator = new \App\Imports\CourseStudentValidator();
     \Maatwebsite\Excel\Facades\Excel::import($validator, $request->file('file'));
 
@@ -99,7 +105,7 @@ public function enroll(Request $request)
             
             $imported++;
         } catch (\Exception $e) {
-            \Log::error("❌ خطأ أثناء حفظ المستفيد: " . $e->getMessage(), $row->toArray());
+            \Log::error(" خطأ أثناء حفظ المستفيد: " . $e->getMessage(), $row->toArray());
             dd($e);
         }
     }

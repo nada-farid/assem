@@ -35,6 +35,9 @@
                             {{ $errors->first('password') }}
                         </div>
                         @endif
+
+                        <x-captcha />
+
                         <div class="row justify-content-between">
                             <div class="col-auto form-group d-flex align-items-center">
                                 <input type="checkbox" name="remember" id="rememberlogin">
@@ -44,7 +47,6 @@
                                 <a class="forget-link" href="{{ route('password.request') }}">نسيت كلمة المرور؟</a>
                             </div>
                         </div>
-
                         <button type="submit" class="vs-btn">دخول</button>
                         <div class="text-center mt-3">
                             <span>ليس لديك حساب؟</span>

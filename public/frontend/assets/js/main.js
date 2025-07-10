@@ -312,7 +312,7 @@
   var form = '.ajax-contact';
   var invalidCls = 'is-invalid';
   var $email = '[name="email"]';
-  var $validation = '[name="name"],[name="email"],[name="number"],[name="subject"],[name="callchoice"],[name="message"]'; // Must be use (,) without any space
+  var $validation = '[name="name"],[name="email"],[name="phone"],[name="message"]';  // Must be use (,) without any space
   var formMessages = $(form).find('.form-messages');
 
   function sendContact() {
@@ -321,29 +321,30 @@
     valid = validateContact();
     if (valid) {
       jQuery.ajax({
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
           url: $(form).attr('action'),
           data: formData,
           type: "POST"
         })
         .done(function (response) {
-          // Make sure that the formMessages div has the 'success' class.
-          formMessages.removeClass('error');
-          formMessages.addClass('success');
-          // Set the message text.
-          formMessages.text(response);
-          // Clear the form.
+          Swal.fire({
+            icon: 'success',
+            title: 'تم الإرسال بنجاح',
+            text: response.message,
+            confirmButtonText: 'حسنًا'
+          });
+
           $(form + ' input:not([type="submit"]),' + form + ' textarea').val('');
         })
         .fail(function (data) {
-          // Make sure that the formMessages div has the 'error' class.
-          formMessages.removeClass('success');
-          formMessages.addClass('error');
-          // Set the message text.
-          if (data.responseText !== '') {
-            formMessages.html(data.responseText);
-          } else {
-            formMessages.html('Oops! An error occured and your message could not be sent.');
-          }
+          Swal.fire({
+            icon: 'error',
+            title: 'حدث خطأ!',
+            text: data.responseJSON.message,
+            confirmButtonText: 'حسنًا'
+          });
         });
     };
   };

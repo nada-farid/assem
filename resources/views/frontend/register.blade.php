@@ -241,6 +241,7 @@
 
                             <input type="url" name="center_linked_in" placeholder="رابط لينكدإن" value="{{ old('center_linked_in') }}" />
                             @error('center_linked_in') <div class="text-danger">{{ $message }}</div> @enderror
+                            <x-captcha />
                         </div>
 
                         <div id="associationStep3" class="entity-step">
@@ -278,6 +279,7 @@
 
                             <input type="url" name="linked_in" placeholder="رابط لينكدإن" value="{{ old('linked_in') }}" />
                             @error('linked_in') <div class="text-danger">{{ $message }}</div> @enderror
+                            <x-captcha />
                         </div>
                     </div>
 
