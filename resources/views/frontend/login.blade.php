@@ -18,7 +18,7 @@
                     <div class="form-style4 login" data-bg-src="{{ asset('frontend/assets/img/bg/course-bg-pattern.jpg') }}">
                         <h2 class="form-title">دخول</h2>
                         <div class="form-group">
-                            <input type="text" autocomplete="off" name="email" id="email" placeholder="البريد الإلكتروني">
+                            <input type="text" autocomplete="off" name="email" id="email" placeholder="البريد الإلكتروني" value="{{ old('email') }}">
                         </div>
 
                         @if ($errors->has('email'))
