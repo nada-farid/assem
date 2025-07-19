@@ -1,4 +1,8 @@
 @extends('frontend.layouts.main')
+@section('styles')
+
+
+@endsection
 
 @section('content')
     <!--==============================
@@ -9,12 +13,13 @@
             @foreach ($sliders as $slider)
                 <div>
                     <div class="hero-inner">
-                        <div class="hero-bg" data-bg-src="{{ $slider->image->getUrl() }}"></div>
+                   <div class="hero-bg background-image" style="background-image: url('{{$slider->image->getUrl()}}');"></div>
+
                         <div class="container">
                             <div class="hero-content">
-                                <!--<h1 class="hero-title animated">{{ $slider->title }}-->
-                                <!--</h1>-->
-                                <h1 class="hero-title animated">مــــــــعـــــــاً <span>لمستقـــبل</span> واعـــــــــــــــد</h1>
+                                <h1 class="hero-title animated">{!! $slider->formatted_title !!}
+                                </h1>
+                                
                                 <p class="hero-text animated">{{ $slider->sub_title }}</p>
                                 <div class="hero-btns animated">
                                 </div>

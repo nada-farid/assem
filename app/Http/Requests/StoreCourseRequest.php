@@ -39,7 +39,7 @@ class StoreCourseRequest extends FormRequest
             ],
             'video_url' => [
                 'string',
-                'required',
+                // 'required',
             ],
             'duration' => [
                 'string',

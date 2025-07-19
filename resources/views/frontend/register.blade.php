@@ -563,7 +563,10 @@
                         return $("#entityType").val() === "center";
                     }
                     , regex: /^05[0-9]{8}$/
-                }
+                },
+                  'g-recaptcha-response': {
+                    required: true
+                },
             }
             , messages: {
                 entity_type: "يرجى اختيار نوع الجهة"
@@ -583,6 +586,10 @@
                 , center_director_phone: "رقم المدير يجب أن يبدأ بـ 05 ويكون 10 أرقام"
                 , center_coordinator_phone: "يجب أن يبدأ بـ 05 ويكون 10 أرقام"
                 , center_phone: "يجب أن يبدأ بـ 05 ويكون 10 أرقام"
+                , phone: "يجب أن يبدأ بـ 05 ويكون 10رقام"
+                ,'g-recaptcha-response': {
+                    required: "من فضلك أكد أنك لست روبوتًا"
+                }
             }
         });
 

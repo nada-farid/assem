@@ -55,4 +55,23 @@ class Slider extends Model implements HasMedia
 
         return $file;
     }
+    
+public function getFormattedTitleAttribute()
+{
+    $words = preg_split('/\s+/', trim($this->title));
+    $count = count($words);
+
+    if ($count === 0) return '';
+
+    $middle = floor($count / 2);
+
+    $firstPart = implode(' ', array_slice($words, 0, $middle));
+    $middleWord = $words[$middle] ?? '';
+    $lastPart = implode(' ', array_slice($words, $middle + 1));
+
+return '<h1 class="hero-title animated">' . $firstPart . ' <span>' . $middleWord . '</span> ' . $lastPart . '</h1>';
+
+}
+
+
 }

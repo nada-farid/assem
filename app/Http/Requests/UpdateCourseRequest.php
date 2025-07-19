@@ -39,7 +39,7 @@ class UpdateCourseRequest extends FormRequest
             ],
             'video_url' => [
                 'string',
-                'required',
+                // 'required',
             ],
             'duration' => [
                 'string',
@@ -55,15 +55,10 @@ class UpdateCourseRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'video_background' => [
-                'required',
-            ],
             'photo' => [
                 'required',
             ],
-            'inside_image' => [
-                'required',
-            ],
+      
              'start_at' => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',

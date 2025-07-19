@@ -37,7 +37,7 @@ class RegisterEntityRequest extends FormRequest
             'coordinator_phone' => 'required|regex:/^05[0-9]{8}$/|unique:associations,phone',
             'coordinator_email' => 'required|email|unique:associations,coordinator_email',
             'phone' => 'required|regex:/^05[0-9]{8}$/|unique:associations,phone',
-            'g-recaptcha-response' => 'required|captcha',
+            // 'g-recaptcha-response' => 'required|captcha',
         ];
     }
 
@@ -60,7 +60,7 @@ class RegisterEntityRequest extends FormRequest
             'center_coordinator_phone' => 'required|regex:/^05[0-9]{8}$/|unique:centers,coordinator_phone',
             'center_coordinator_email' => 'required|email|unique:centers,coordinator_email',
             'center_phone' => 'required|regex:/^05[0-9]{8}$/|unique:centers,phone',
-            'g-recaptcha-response' => 'required|captcha',
+            // 'g-recaptcha-response' => 'required|captcha',
         ];
     }
 

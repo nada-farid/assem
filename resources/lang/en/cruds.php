@@ -108,7 +108,7 @@ return [
             'count_benificair'=>'عدد المستفدين'
         ],
     ],
-    'course' => [
+       'course' => [
         'title'          => 'Courses',
         'title_singular' => 'Course',
         'fields'         => [
@@ -121,7 +121,7 @@ return [
             'end_at'                   => 'End At',
             'end_at_helper'            => ' ',
             'photo'                    => 'Photo',
-            'photo_helper'             => '440 x 440',
+            'photo_helper'             => '( The image size is suitable for the width: 440px - the length: 440px)',
             'description'              => 'description',
             'description_helper'       => ' ',
             'title'                    => 'Title',
@@ -135,7 +135,7 @@ return [
             'deleted_at'               => 'Deleted at',
             'deleted_at_helper'        => ' ',
             'inside_image'             => 'Inside Image',
-            'inside_image_helper'      => ' ',
+            'inside_image_helper'      => '( The image size is suitable for the width: 860px - the length: 430px)',
             'video_url'                => 'Video Url',
             'video_url_helper'         => ' ',
             'duration'                 => 'Duration',
