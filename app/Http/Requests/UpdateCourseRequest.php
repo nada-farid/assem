@@ -38,7 +38,7 @@ class UpdateCourseRequest extends FormRequest
                 'nullable',
             ],
             'video_url' => [
-                'string',
+                // 'string',
                 // 'required',
             ],
             'duration' => [

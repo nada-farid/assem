@@ -106,12 +106,12 @@ class News extends Model implements HasMedia
 
         if ($date != null) {
 
-            $translatedDate = Carbon::createFromFormat('d/m/Y', $date)->locale('ar')->format('d - m - Y');
+            // $translatedDate = Carbon::createFromFormat('d-m-Y', $date)->locale('ar')->format('d - m - Y');
         }
         else{
             return $date;
         }
 
-        return $translatedDate;
+        return $date;
     }
 }

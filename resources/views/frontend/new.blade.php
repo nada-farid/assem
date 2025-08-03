@@ -14,7 +14,7 @@
 
                         <div class="vs-blog blog-single">
                             <div class="blog-img">
-                                <img src="{{$new->inside_image->getUrl()}}" alt="Blog Image">
+                                <img src="{{$new->inside_image?->getUrl()}}" alt="Blog Image">
                                 <a href="blog.html" class="blog-date"><span class="day">11</span><span class="month">January</span></a>
                             </div>
                             <div class="blog-content">
@@ -25,7 +25,7 @@
                                 <h2 class="blog-title">{{$new->title}}</h2>
                                 {!! $new->description !!}
                                 <div class="position-relative mt-30 mb-30">
-                                    <img src="{{$new->backgroubd_image->getUrl()}}" alt="blog video">
+                                    <img src="{{$new->backgroubd_image?->getUrl()}}" alt="blog video">
                                     <a href="{{$new->video_link}}" class="play-btn position-center popup-video"><i class="fas fa-play"></i></a>
                                 </div>
                                 {!! $new->description_2 !!}

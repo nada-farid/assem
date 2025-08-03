@@ -38,7 +38,7 @@ class StoreCourseRequest extends FormRequest
                 'nullable',
             ],
             'video_url' => [
-                'string',
+                // 'string',
                 // 'required',
             ],
             'duration' => [

@@ -17,8 +17,8 @@
             },
             params: {
                 size: 2,
-                width: 4096,
-                height: 4096
+                 width: 410,
+                height: 330
             },
             success: function(file, response) {
                 $('form').find('input[name="photo"]').remove()
@@ -151,8 +151,8 @@
             },
             params: {
                 size: 20,
-                width: 4096,
-                height: 4096
+               width: 860,
+                height: 430
             },
             success: function(file, response) {
                 $('form').find('input[name="inside_image"]').remove()
@@ -205,8 +205,6 @@
             },
             params: {
                 size: 20,
-                width: 4096,
-                height: 4096
             },
             success: function(file, response) {
                 $('form').find('input[name="video_background"]').remove()

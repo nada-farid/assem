@@ -37,7 +37,7 @@
 
     <div class="form-check {{ $errors->has('avaliable') ? 'is-invalid' : '' }}">
         <input class="form-check-input" type="checkbox" name="avaliable" id="avaliable" value="1"
-            {{ old('avaliable', 0) === 1 ? 'checked' : '' }}>
+            {{ old('avaliable', 0) === 1 || $course->avaliable == 1 ? 'checked' : '' }}>
         <label class="form-check-label toggle-label" for="avaliable"></label>
     </div>
     @if ($errors->has('avaliable'))

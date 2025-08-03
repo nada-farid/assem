@@ -117,7 +117,7 @@
                                     </h3>
                                     <div class="course-teacher"><a href="{{ route('frontend.center', $course->id) }}l"
                                             class="text-inherit"> بواسطة :
-                                            {{ $course->center->name }} </a></div>
+                                            {{ $course->center?->name }} </a></div>
                                 </div>
                                 <div class="course-meta">
                                     <span><i class="fal fa-users"></i>{{ $course->beneficiary_count }} مستفيد</span>

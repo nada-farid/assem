@@ -34,7 +34,7 @@ class UpdateNewsRequest extends FormRequest
                 'required',
             ],
             'description_2' => [
-                'required',
+                // 'required',
             ],
             'views' => [
                 'nullable',
