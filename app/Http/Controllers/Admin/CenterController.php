@@ -61,6 +61,42 @@ class CenterController extends Controller
             $table->editColumn('experience_years', function ($row) {
                 return $row->experience_years ? $row->experience_years : '';
             });
+               $table->editColumn('approved', function ($row) {
+
+                if ($row->user?->approved == 1) {
+                    return '<span class="badge badge-success">تم القبول</span>';
+                }
+
+
+                $badge = '<span class="badge badge-secondary mb-1 d-block">بانتظار المراجعة</span>';
+
+                $approveBtn = '<a class="btn btn-sm btn-success" href="' . route('admin.associations.approve', $row->id) . '">قبول</a>';
+
+                $rejectBtn = '
+        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#rejectModal-' . $row->id . '">رفض</button>
+
+        <div class="modal fade" id="rejectModal-' . $row->id . '" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <form method="POST" action="' . route('admin.associations.reject', $row->id) . '">
+                    ' . csrf_field() . '
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">سبب الرفض</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea name="reason" class="form-control" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">رفض نهائي</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>';
+
+                return $badge . $approveBtn . ' ' . $rejectBtn;
+            });
             $table->editColumn('logo', function ($row) {
                 if ($photo = $row->logo) {
                     return sprintf(
@@ -93,7 +129,7 @@ class CenterController extends Controller
                 return $row->coordinator_name ? $row->coordinator_name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'logo', 'image']);
+            $table->rawColumns(['actions', 'placeholder', 'logo', 'image','approved']);
 
             return $table->make(true);
         }

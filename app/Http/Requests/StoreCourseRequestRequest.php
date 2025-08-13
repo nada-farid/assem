@@ -25,9 +25,7 @@ class StoreCourseRequestRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'beneficiar' => [
-                'required',
-            ],
+           
         ];
     }
 }

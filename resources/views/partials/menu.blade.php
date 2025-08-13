@@ -7,10 +7,8 @@
     </div>
 
     @php
-        $query = \App\Models\User::where('approved', 0);
-        $new_centers = $query->where('user_type', 'center')->count();
-        $new_associations = $query->where('user_type', 'association')->count();
-
+        $new_associations = \App\Models\User::where('approved', 0)->where('user_type','association')->count();
+        $new_centers = \App\Models\User::where('approved', 0)->where('user_type', 'center')->count();
     @endphp
 
     <ul class="c-sidebar-nav">
@@ -75,7 +73,7 @@
                                 </i>
                                 {{ trans('cruds.association.title') }}
                                 @if ($new_associations > 0)
-                                    <span class="badge badge-warning">{{ $newAssociationsCount }}</span>
+                                    <span class="badge badge-warning">{{ $new_associations }}</span>
                                 @endif
                             </a>
                         </li>
@@ -210,17 +208,7 @@
                     {{ trans('cruds.hawkmaMangment.title') }}
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                    @can('hawkma_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.hawkmas.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/hawkmas') || request()->is('admin/hawkmas/*') ? 'c-active' : '' }}">
-                                <i class="fa-fw fas fa-file c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.hawkma.title') }}
-                            </a>
-                        </li>
-                    @endcan
+               
                     @can('hawkam_category_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.hawkam-categories.index') }}"
@@ -232,44 +220,21 @@
                             </a>
                         </li>
                     @endcan
-                </ul>
-            </li>
-        @endcan
-        @can('report_mangment_access')
-            <li
-                class="c-sidebar-nav-dropdown {{ request()->is('admin/report-categories*') ? 'c-show' : '' }} {{ request()->is('admin/reports*') ? 'c-show' : '' }}">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-
-                    </i>
-                    {{ trans('cruds.reportMangment.title') }}
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    @can('report_category_access')
+                         @can('hawkma_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.report-categories.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/report-categories') || request()->is('admin/report-categories/*') ? 'c-active' : '' }}">
-                                <i class="fa-fw fas fa-barcode c-sidebar-nav-icon">
+                            <a href="{{ route('admin.hawkmas.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/hawkmas') || request()->is('admin/hawkmas/*') ? 'c-active' : '' }}">
+                                <i class="fa-fw fas fa-file c-sidebar-nav-icon">
 
                                 </i>
-                                {{ trans('cruds.reportCategory.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('report_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.reports.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/reports') || request()->is('admin/reports/*') ? 'c-active' : '' }}">
-                                <i class="fa-fw fas fa-file-alt c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.report.title') }}
+                                {{ trans('cruds.hawkma.title') }}
                             </a>
                         </li>
                     @endcan
                 </ul>
             </li>
         @endcan
+     
         @can('news_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.newss.index') }}"
@@ -371,16 +336,6 @@
                 </a>
             </li>
         @endcan
-
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.systemCalendar') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'c-active' : '' }}">
-                <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
-
-                </i>
-                {{ trans('global.systemCalendar') }}
-            </a>
-        </li>
         @can('supporter_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.supporters.index') }}"

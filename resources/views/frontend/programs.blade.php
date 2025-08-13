@@ -18,7 +18,7 @@
                             <div class="col-md-6 col-xl-6 wow fadeInUp wow-animated" data-wow-delay="0.2s"
                                 style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
                                 <div class="media-style4">
-                                    <div class="media-icon"><img src="{{$program->image->getUrl()}}}" width="120"
+                                    <div class="media-icon"><img src="{{$program->image->getUrl()}}" width="120"
                                             alt=""></div>
                                     <h5 class="media-title">{{$program->title}}</h5>
                                     <p>

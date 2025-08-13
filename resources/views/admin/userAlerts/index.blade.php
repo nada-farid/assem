@@ -1,55 +1,40 @@
 @extends('layouts.admin')
 @section('content')
-@can('center_create')
+@can('user_alert_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.centers.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.center.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.user-alerts.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.userAlert.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.center.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.userAlert.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Center">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-UserAlert">
             <thead>
                 <tr>
                     <th width="10">
 
                     </th>
                     <th>
-                        {{ trans('cruds.center.fields.id') }}
+                        {{ trans('cruds.userAlert.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.center.fields.name') }}
-                    </th>
-                       <th>
-                            {{ trans('cruds.association.fields.status') }}
-                        </th>
-                    <th>
-                        {{ trans('cruds.center.fields.specialization') }}
+                        {{ trans('cruds.userAlert.fields.alert_text') }}
                     </th>
                     <th>
-                        {{ trans('cruds.center.fields.experience_years') }}
+                        {{ trans('cruds.userAlert.fields.alert_link') }}
                     </th>
                     <th>
-                        {{ trans('cruds.center.fields.logo') }}
+                        {{ trans('cruds.userAlert.fields.user') }}
                     </th>
                     <th>
-                        {{ trans('cruds.center.fields.image') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.center.fields.license_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.center.fields.director_name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.center.fields.coordinator_name') }}
+                        {{ trans('cruds.userAlert.fields.created_at') }}
                     </th>
                     <th>
                         &nbsp;
@@ -68,11 +53,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('center_delete')
+@can('user_alert_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.centers.massDestroy') }}",
+    url: "{{ route('admin.user-alerts.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -104,29 +89,21 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.centers.index') }}",
+    ajax: "{{ route('admin.user-alerts.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
- {
-                        data: 'approved',
-                        name: 'user.approved'
-                    },
-{ data: 'specialization', name: 'specialization' },
-{ data: 'experience_years', name: 'experience_years' },
-{ data: 'logo', name: 'logo', sortable: false, searchable: false },
-{ data: 'image', name: 'image', sortable: false, searchable: false },
-{ data: 'license_number', name: 'license_number' },
-{ data: 'director_name', name: 'director_name' },
-{ data: 'coordinator_name', name: 'coordinator_name' },
+{ data: 'alert_text', name: 'alert_text' },
+{ data: 'alert_link', name: 'alert_link' },
+{ data: 'user', name: 'users.name' },
+{ data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
-    pageLength: 50,
+    pageLength: 100,
   };
-  let table = $('.datatable-Center').DataTable(dtOverrideGlobals);
+  let table = $('.datatable-UserAlert').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

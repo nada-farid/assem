@@ -111,6 +111,79 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.association.fields.bref_helper') }}</span>
                 </div>
+                   
+                        <div class="form-group ">
+                        <label for="director_name">{{ trans('cruds.center.fields.director_name') }}</label>
+                        <input class="form-control {{ $errors->has('director_name') ? 'is-invalid' : '' }}"
+                            type="text" name="director_name" id="director_name"
+                            value="{{ old('director_name', $association->director_name) }}">
+                        @if ($errors->has('director_name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('director_name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.center.fields.director_name_helper') }}</span>
+                    </div>
+                    <div class="form-group ">
+                        <label for="director_phone">{{ trans('cruds.center.fields.director_phone') }}</label>
+                        <input class="form-control {{ $errors->has('director_phone') ? 'is-invalid' : '' }}"
+                            type="number" name="director_phone" id="director_phone"
+                            value="{{ old('director_phone', $association->director_phone) }}" step="1">
+                        @if ($errors->has('director_phone'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('director_phone') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.center.fields.director_phone_helper') }}</span>
+                    </div>
+                    <div class="form-group ">
+                        <label for="director_email">{{ trans('cruds.center.fields.director_email') }}</label>
+                        <input class="form-control {{ $errors->has('director_email') ? 'is-invalid' : '' }}"
+                            type="email" name="director_email" id="director_email"
+                            value="{{ old('director_email', $association->director_email) }}">
+                        @if ($errors->has('director_email'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('director_email') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.center.fields.director_email_helper') }}</span>
+                    </div>
+                    <div class="form-group ">
+                        <label for="coordinator_name">{{ trans('cruds.center.fields.coordinator_name') }}</label>
+                        <input class="form-control {{ $errors->has('coordinator_name') ? 'is-invalid' : '' }}"
+                            type="text" name="coordinator_name" id="coordinator_name"
+                            value="{{ old('coordinator_name', $association->coordinator_name) }}">
+                        @if ($errors->has('coordinator_name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('coordinator_name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.center.fields.coordinator_name_helper') }}</span>
+                    </div>
+                    <div class="form-group ">
+                        <label for="coordinator_phone">{{ trans('cruds.center.fields.coordinator_phone') }}</label>
+                        <input class="form-control {{ $errors->has('coordinator_phone') ? 'is-invalid' : '' }}"
+                            type="number" name="coordinator_phone" id="coordinator_phone"
+                            value="{{ old('coordinator_phone', $association->coordinator_phone) }}" step="1">
+                        @if ($errors->has('coordinator_phone'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('coordinator_phone') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.center.fields.coordinator_phone_helper') }}</span>
+                    </div>
+                    <div class="form-group ">
+                        <label for="coordinator_email">{{ trans('cruds.center.fields.coordinator_email') }}</label>
+                        <input class="form-control {{ $errors->has('coordinator_email') ? 'is-invalid' : '' }}"
+                            type="email" name="coordinator_email" id="coordinator_email"
+                            value="{{ old('coordinator_email', $association->coordinator_email) }}">
+                        @if ($errors->has('coordinator_email'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('coordinator_email') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.center.fields.coordinator_email_helper') }}</span>
+                    </div>
                 <div class="form-group">
                     <label for="facebook">{{ trans('cruds.association.fields.facebook') }}</label>
                     <input class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" type="text"

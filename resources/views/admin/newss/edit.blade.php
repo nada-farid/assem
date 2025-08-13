@@ -203,6 +203,8 @@
     },
     params: {
       size: 4,
+      width:410,
+      height:240
        
     },
     success: function (file, response) {
@@ -257,6 +259,8 @@
     },
     params: {
       size: 2,
+      width:847,
+      height:565
        
     },
     success: function (file, response) {
@@ -311,6 +315,8 @@
     },
     params: {
       size: 2,
+       width:847,
+      height:565
        
     },
     success: function (file, response) {

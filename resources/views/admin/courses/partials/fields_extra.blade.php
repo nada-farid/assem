@@ -35,11 +35,12 @@
 <div class="form-group">
     <span class="toggle-text">{{ trans('cruds.course.fields.avaliable') }}</span>
 
-    <div class="form-check {{ $errors->has('avaliable') ? 'is-invalid' : '' }}">
-        <input class="form-check-input" type="checkbox" name="avaliable" id="avaliable" value="1"
-            {{ old('avaliable', 0) === 1 || $course->avaliable == 1 ? 'checked' : '' }}>
-        <label class="form-check-label toggle-label" for="avaliable"></label>
-    </div>
+<div class="form-check {{ $errors->has('avaliable') ? 'is-invalid' : '' }}">
+    <input class="form-check-input" type="checkbox" name="avaliable" id="avaliable" value="1"
+        {{ old('avaliable', $course->avaliable ?? 0) == 1 ? 'checked' : '' }}>
+    <label class="form-check-label toggle-label" for="avaliable"></label>
+</div>
+
     @if ($errors->has('avaliable'))
         <div class="invalid-feedback">
             {{ $errors->first('avaliable') }}

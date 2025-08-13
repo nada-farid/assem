@@ -25,7 +25,7 @@
                                 <h2 class="blog-title">{{$new->title}}</h2>
                                 {!! $new->description !!}
                                 <div class="position-relative mt-30 mb-30">
-                                    <img src="{{$new->backgroubd_image?->getUrl()}}" alt="blog video">
+                                    <img src="{{$new->background_image?->getUrl() ?? $new->inside_image?->getUrl()}}" alt="blog video">
                                     <a href="{{$new->video_link}}" class="play-btn position-center popup-video"><i class="fas fa-play"></i></a>
                                 </div>
                                 {!! $new->description_2 !!}

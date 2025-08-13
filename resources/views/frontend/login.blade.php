@@ -27,7 +27,7 @@
                         </div>
                         @endif
                         <div class="form-group">
-                            <input type="text" autocomplete="off" name="password" id="password" placeholder="كلمة المرور">
+                            <input type="password" autocomplete="off" name="password" id="password" placeholder="كلمة المرور">
                         </div>
 
                         @if ($errors->has('password'))

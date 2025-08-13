@@ -98,7 +98,7 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="team-style2 text-center">
                             <div class="team-img">
-                                <img src="assets/img/team/team-s-3-1.png" class="rounded-circle" alt="member">
+                                <img src="{{$director->image->getUrl()}}" class="rounded-circle" alt="member">
                             </div>
                             <div class="team-content text-center">
                                 <h4 class="team-name h5"><a href="#">{{ $director->name }}</a></h4>
@@ -116,7 +116,8 @@
     <!--==============================
                         Call To Action
                         ==============================-->
-    <section class="  " data-bg-src="assets/img/bg/divider-bg-1-1.jpg">
+    <section class="background-image" style="background-image: url('{{ asset('frontend/assets/img/bg/divider-bg-1-1.jpg') }}');">
+
         <div class="container">
             <div class="row align-items-center  ">
                 <div class="col-lg-5 col-xl-6 space-extra">
@@ -127,7 +128,7 @@
                                 <ul class="list-unstyled m-0">
                                     @foreach ($goals as $goal)
                                         <li>
-                                            {{ $goal->reason }}
+                                            {{ $goal->title }}
                                         </li>
                                     @endforeach
                                 </ul>

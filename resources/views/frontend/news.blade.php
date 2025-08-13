@@ -14,7 +14,7 @@
                        <div class="col-sm-6 col-xl-4 ">
                            <div class="vs-blog blog-style2">
                                <div class="blog-img">
-                                   <a href="news-details.html" tabindex="-1"><img class="w-100"
+                                   <a href="{{ route('frontend.new', $new->id) }}" tabindex="-1"><img class="w-100"
                                            src="{{ $new->photo->getUrl() }}" alt="Blog Img"></a>
                                </div>
                                <div class="blog-content">

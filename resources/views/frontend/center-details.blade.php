@@ -47,6 +47,7 @@
     <!--==============================
                 Course Area
             ==============================-->
+            @if($center->courses)
     <section class="space-top space-extra-bottom " data-bg-src="{{asset(
     'frontend/assets/img/bg/course-bg-pattern.jpg')}}">
         <div class="container">
@@ -91,4 +92,5 @@
             </div>
         </div>
     </section>
+    @endif
 @endsection

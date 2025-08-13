@@ -8,11 +8,6 @@
         {{ trans('global.edit') }}
     </a>
 @endcan
-@if(request()->routeIs('admin.curricula.*'))
-    <a class="btn btn-xs btn-info" href="{{ route('admin.attendance.index', $row->id) }}">
-        تسجيل الحضور
-    </a>
-@endif
 @can($deleteGate)
     <form action="{{ route('admin.' . $crudRoutePart . '.destroy', $row->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
         <input type="hidden" name="_method" value="DELETE">

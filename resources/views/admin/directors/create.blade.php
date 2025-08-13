@@ -66,6 +66,8 @@
     },
     params: {
       size: 20,
+      width:250,
+      height:250
        
     },
     success: function (file, response) {
