@@ -61,79 +61,119 @@
         #chat-box {
             display: none;
             position: fixed;
-            bottom: 80px;
+            bottom: 20px;
             right: 20px;
-            width: 300px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-family: 'Tahoma', sans-serif;
             overflow: hidden;
-            z-index: 999;
-            font-family: sans-serif;
+            z-index: 9999;
         }
 
         .chat-header {
             background: var(--theme-color);
-            color: white;
+            color: #fff;
             padding: 10px;
+            font-size: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .chat-messages {
-            max-height: 250px;
+        .chat-header button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .chat-messages,
+        #messages {
+            height: 150px;
             overflow-y: auto;
             padding: 10px;
-        }
-
-        .bot-msg,
-        .user-msg {
-            background: #f1f1f1;
-            padding: 6px 10px;
-            border-radius: 10px;
-            margin: 5px 0;
-            max-width: 80%;
-        }
-
-        .user-msg {
-            background: #dcf8c6;
-            margin-left: auto;
+            background: #f8f9fa;
         }
 
         .chat-input {
             display: flex;
-            border-top: 1px solid #ccc;
+            border-top: 1px solid #ddd;
         }
 
         .chat-input input {
             flex: 1;
-            padding: 8px;
+            padding: 10px;
             border: none;
+            outline: none;
+            font-size: 14px;
         }
 
         .chat-input button {
             background: var(--theme-color);
-            color: white;
+            color: #fff;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 15px;
             cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .chat-input button:hover {
+                 background: var(--theme-color);
         }
 
         .chat-footer {
-            background: #f9f9f9;
-            padding: 8px;
             text-align: center;
-            border-top: 1px solid #ccc;
+            padding: 8px;
+            background: #f1f1f1;
+            font-size: 13px;
         }
 
         .chat-footer a {
+            {{-- background: var(--theme-color); --}}
             text-decoration: none;
-            color: var(--theme-color);
-            font-weight: bold;
+        }
+
+        /* رسائل المستخدم والرد */
+        .text-ends {
+            text-align: right;
+            background: #d1e7ff;
+            padding: 8px 10px;
+            margin: 5px 0;
+            border-radius: 10px 10px 0 10px;
+            display: inline-block;
+            max-width: 80%;
+        }
+
+        .text-starts {
+            text-align: left;
+            background: #e9ecef;
+            padding: 8px 10px;
+            margin: 5px 0;
+            border-radius: 10px 10px 10px 0;
+            display: inline-block;
+            max-width: 80%;
+        }
+
+        /* الأزرار السريعة */
+        #quick-replies {
+            padding: 5px 10px;
+            border-top: 1px solid #ddd;
+            background: #fafafa;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        #quick-replies button {
+            border-radius: 20px;
         }
 
     </style>
+
+
+
 
 </head>
 
@@ -439,7 +479,6 @@
 
     {!! NoCaptcha::renderJs(app()->getLocale()) !!}
     <div id="chat-icon">💬</div>
-
     <div id="chat-box">
         <div class="chat-header">
             <span>خدمة العملاء</span>
@@ -457,7 +496,7 @@
             <button id="send-btn">إرسال</button>
         </div>
         <div class="chat-footer">
-            <a href="https://wa.me/201234567890" target="_blank">📲 تواصل عبر واتساب</a>
+            <a href="https://wa.me/{{get_setting('phone')}}" target="_blank">📲 تواصل عبر واتساب</a>
         </div>
     </div>
 
@@ -481,38 +520,37 @@
                     container.innerHTML = '';
                     data.forEach(item => {
                         container.innerHTML += `
-                    <button class="btn btn-outline-primary btn-sm m-1" onclick="sendQuick('${item.keyword}')">
-                        ${item.keyword}
-                    </button>`;
+                <button class="btn btn-outline-primary btn-sm m-1" onclick="sendQuick('${item.keyword}')">
+                    ${item.keyword}
+                </button>`;
                     });
                 });
         }
 
         function sendQuick(text) {
-
-            document.getElementById('messages').value = text;
+            document.getElementById('user-input').value = text;
             sendMessage();
         }
 
         function sendMessage() {
-            let msg = document.getElementById('messages').value;
+            let msg = document.getElementById('user-input').value;
             if (!msg) return;
 
-            document.getElementById('messages').innerHTML += `<div class="text-end mb-2"><b>أنت:</b> ${msg}</div>`;
+            document.getElementById('messages').innerHTML += `<br><div class="text-ends mb-2"><b>أنت:</b> ${msg}</div>`;
 
             fetch(`/api/chat-reply?message=${encodeURIComponent(msg)}`)
                 .then(res => res.json())
                 .then(data => {
-                    document.getElementById('messages').innerHTML += `<div class="text-start mb-2"><b>البوت:</b> ${data.reply}</div>`;
+                    document.getElementById('messages').innerHTML += `<br><div class="text-starts mb-2"><b>الرد الألي:</b> ${data.reply}</div>`;
                 });
 
-            document.getElementById('messages').value = '';
+            document.getElementById('user-input').value = '';
         }
-
 
         loadQuickReplies();
 
     </script>
+
 </body>
 
 </html>
