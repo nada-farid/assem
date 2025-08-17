@@ -247,12 +247,12 @@ h4,
 h5,
 .h6,
 h6 {
-  font-family: var(--title-font);
-  color: var(--title-color);
-  text-transform: none;
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0 0 15px 0;
+    font-family: var(--title-font);
+    color: var(--theme-color2);
+    text-transform: none;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 15px 0;
 }
 
 .h1,
@@ -1566,7 +1566,7 @@ textarea.is-invalid {
 
 .sec-subtitle {
   display: block;
-  color: var(--title-color);
+  color: var(--theme-color2);
   font-size: 16px;
   font-weight: 500;
  
@@ -2610,6 +2610,7 @@ a.text-theme:hover,
   font-size: 26px;
   font-weight: 700;
   font-family: var(--title-font);
+  color:var(--body-color);
   line-height: 1em;
   margin: -0.1em 0 30px 0;
   padding: 0 0 15px 0;
@@ -2971,11 +2972,12 @@ a.text-theme:hover,
   padding-bottom: 0;
   background-color: transparent;
 }
-.footer-widget .widget_title {
-  border: none;
-  font-size: 24px;
-  margin-bottom: 36px;
-}
+    .footer-widget .widget_title {
+        border: none;
+        font-size: 24px;
+        margin-bottom: 36px;
+        color: var(--body-color);
+    }
 .footer-widget.nav_menu {
   margin-bottom: 50px;
 }
@@ -5870,7 +5872,7 @@ blockquote.vs-quote cite {
   margin: 0 0 20px 0;
 }
 .list-style4 li {
-  color: var(--white-color);
+  
   font-size: 18px;
   line-height: 42px;
   padding-right: 38px;
@@ -6724,6 +6726,7 @@ blockquote.vs-quote cite {
 .form-style4 .form-title {
   font-size: 20px;
   margin-bottom: 20px;
+  color:var(--body-color);
 }
 .form-style4 .form-group {
   margin-bottom: 20px;
@@ -9946,3 +9949,25 @@ blockquote.vs-quote cite {
         font-size: 14px;
     }
 }
+
+.quraan {font-size:20px;
+         font-weight:bold;
+         line-height:30px;
+}
+
+.bankaccount {
+    background: #33657C;
+    padding: 20px;
+    border-radius: 20px;
+    color:#fff;
+    margin-top:20px;
+}
+    .bankaccount p {
+        color: #fff;
+        margin-bottom:0;
+    }
+@media (max-width: 768px) {
+    .quraan {
+        font-size: 15px;
+    }
+    }

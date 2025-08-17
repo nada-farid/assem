@@ -95,4 +95,10 @@ class HomeController extends Controller
         // Artisan::call('migrate:fresh --seed');
             Artisan::call('storage:link');
     }
+
+    public function certificate()
+    {
+        $certificate = get_setting('certificate');
+        return view('frontend.certificate',compact('certificate'));
+    }
 }

@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Models\Banq;
+use Gate;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
+
+class UpdateBanqRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return Gate::allows('banq_edit');
+    }
+
+    public function rules()
+    {
+        return [
+            'bank_name' => [
+                'string',
+                'required',
+            ],
+            'bank_number' => [
+                'string',
+                'required',
+            ],
+            'iban' => [
+                'string',
+                'required',
+            ],
+        ];
+    }
+}

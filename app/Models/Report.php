@@ -30,6 +30,7 @@ class Report extends Model implements HasMedia
     protected $fillable = [
         'type',
         'name',
+        'category_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -67,5 +68,10 @@ class Report extends Model implements HasMedia
         }
 
         return $file;
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(ReportCategory::class, 'category_id');
     }
 }

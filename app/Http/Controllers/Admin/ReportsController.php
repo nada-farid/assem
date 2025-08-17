@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyReportRequest;
 use App\Http\Requests\StoreReportRequest;
 use App\Http\Requests\UpdateReportRequest;
 use App\Models\Report;
+use App\Models\ReportCategory;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -23,7 +24,7 @@ class ReportsController extends Controller
         abort_if(Gate::denies('report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Report::query()->select(sprintf('%s.*', (new Report)->table));
+            $query = Report::with(['category'])->select(sprintf('%s.*', (new Report)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -67,8 +68,14 @@ class ReportsController extends Controller
 
                 return '';
             });
+            $table->editColumn('published', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->published ? 'checked' : null) . '>';
+            });
+            $table->addColumn('category_type', function ($row) {
+                return $row->category ? $row->category->type : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'file', 'image']);
+            $table->rawColumns(['actions', 'placeholder', 'file', 'image', 'published', 'category']);
 
             return $table->make(true);
         }
@@ -80,7 +87,9 @@ class ReportsController extends Controller
     {
         abort_if(Gate::denies('report_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.reports.create');
+        $categories = ReportCategory::pluck('type', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.reports.create', compact('categories'));
     }
 
     public function store(StoreReportRequest $request)
@@ -106,7 +115,11 @@ class ReportsController extends Controller
     {
         abort_if(Gate::denies('report_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.reports.edit', compact('report'));
+        $categories = ReportCategory::pluck('type', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $report->load('category');
+
+        return view('admin.reports.edit', compact('categories', 'report'));
     }
 
     public function update(UpdateReportRequest $request, Report $report)
@@ -142,6 +155,8 @@ class ReportsController extends Controller
     {
         abort_if(Gate::denies('report_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $report->load('category');
+
         return view('admin.reports.show', compact('report'));
     }
 
@@ -176,4 +191,13 @@ class ReportsController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+
+    
+    public function getCategories(Request $request)
+{
+    $type = $request->input('type');
+    $categories = ReportCategory::where('type', $type)->pluck('name', 'id');
+
+    return response()->json($categories);
+}
 }

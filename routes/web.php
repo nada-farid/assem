@@ -25,6 +25,7 @@ Route::group(['as' => 'frontend.'], function () {
     Route::get('course/certificate/{id}', 'CourseController@course_certificate')->name('course.certificate');
     Route::post('course/attend_store', 'CourseController@attend_store')->name('course.attend_store');
     Route::post('course/certificate_store', 'CourseController@certificate_store')->name('course.certificate_store');
+    Route::get('certificate', 'HomeController@certificate')->name('certificate');
 
 });
 

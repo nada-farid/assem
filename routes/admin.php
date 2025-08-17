@@ -94,6 +94,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('report-categories', 'ReportCategoriesController');
 
     // Reports
+    Route::get('reports/get-categories', 'ReportsController@getCategories')->name('reports.getCategories');
     Route::delete('reports/destroy', 'ReportsController@massDestroy')->name('reports.massDestroy');
     Route::post('reports/media', 'ReportsController@storeMedia')->name('reports.storeMedia');
     Route::post('reports/ckmedia', 'ReportsController@storeCKEditorImages')->name('reports.storeCKEditorImages');
@@ -169,8 +170,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('supporters/destroy', 'SupporterController@massDestroy')->name('supporters.massDestroy');
     Route::resource('supporters', 'SupporterController');
 
+    Route::delete('banqs/destroy', 'BanqController@massDestroy')->name('banqs.massDestroy');
+    Route::resource('banqs', 'BanqController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+
+    Route::resource('chat-responses', ChatResponseController::class);
+
 
 
 });

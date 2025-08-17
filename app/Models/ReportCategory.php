@@ -35,4 +35,10 @@ class ReportCategory extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'category_id');
+    }
 }

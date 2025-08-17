@@ -538,6 +538,22 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 132,
                 'title' => 'profile_password_edit',
             ],
+            [
+                'id'    => 133,
+                'title' => 'banq_create',
+            ],
+            [
+                'id'    => 134,
+                'title' => 'banq_edit',
+            ],
+            [
+                'id'    => 135,
+                'title' => 'banq_show',
+            ],
+            [
+                'id'    => 136,
+                'title' => 'banq_delete',
+            ],
         ];
 
         Permission::insert($permissions);

@@ -42,6 +42,99 @@
 
     @yield('styles')
 
+
+    <style>
+        #chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--theme-color);
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+
+        #chat-box {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            z-index: 999;
+            font-family: sans-serif;
+        }
+
+        .chat-header {
+            background: var(--theme-color);
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .bot-msg,
+        .user-msg {
+            background: #f1f1f1;
+            padding: 6px 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            max-width: 80%;
+        }
+
+        .user-msg {
+            background: #dcf8c6;
+            margin-left: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+        }
+
+        .chat-input button {
+            background: var(--theme-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .chat-footer {
+            background: #f9f9f9;
+            padding: 8px;
+            text-align: center;
+            border-top: 1px solid #ccc;
+        }
+
+        .chat-footer a {
+            text-decoration: none;
+            color: var(--theme-color);
+            font-weight: bold;
+        }
+
+    </style>
+
 </head>
 
 
@@ -77,6 +170,7 @@
                             <li><a href="{{ route('frontend.needs') }}">تحديد الإحتياج</a></li>
                             <li><a href="{{ route('frontend.beneficars') }}">الفئة المستفيدة </a></li>
                             <li><a href="{{ route('frontend.programs') }}"> البرامج </a></li>
+                            <li><a href="{{ route('frontend.certificate') }}"> تصريح الجمعية </a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children">
@@ -90,10 +184,19 @@
 
                         </ul>
                     </li>
-
-
-
-
+                    <li class="menu-item-has-children">
+                        <a href="#"> التقارير </a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="{{ route('frontend.reports', 'yearly') }}"><span> تقارير سنوية
+                                    </span></a>
+                            </li>
+                            <li>
+                                <a href="{{ route('frontend.reports', 'money') }}"><span> تقارير مالية
+                                    </span></a>
+                            </li>
+                        </ul>
+                    </li>
                     <li><a href="{{ route('frontend.courses') }}"> الدورات التدريبية </a></li>
 
 
@@ -165,8 +268,9 @@
                         <div class="col-auto">
                             <div class="vs-logo"> <a href="{{ route('frontend.home') }}"><img src="{!! asset(get_setting('logo')) !!}" alt="logo"></a> </div>
                         </div>
-                        <div class="col text-end text-xl-center">
+                        <div class="col p-0 text-end text-xl-center">
                             <nav class="main-menu menu-style1 ">
+
                                 <ul>
                                     <li> <a href="{{ route('frontend.home') }}"> الرئيسية</a> </li>
                                     <li class="menu-item-has-children">
@@ -177,6 +281,7 @@
                                             <li><a href="{{ route('frontend.needs') }}">تحديد الإحتياج</a></li>
                                             <li><a href="{{ route('frontend.beneficars') }}">الفئة المستفيدة </a></li>
                                             <li><a href="{{ route('frontend.programs') }}"> البرامج </a></li>
+                                            <li><a href="{{ route('frontend.certificate') }}"> تصريح الجمعية </a></li>
                                         </ul>
                                     </li>
                                     <li class="menu-item-has-children">
@@ -189,11 +294,19 @@
 
                                         </ul>
                                     </li>
-
-
-                                    <li><a href="{{ route('frontend.courses') }}"> الدورات التدريبية </a></li>
-
-
+                                    <li class="menu-item-has-children">
+                                        <a href="#"> التقارير </a>
+                                        <ul class="sub-menu">
+                                            <li>
+                                                <a href="{{ route('frontend.reports', 'yearly') }}"><span> تقارير سنوية
+                                                    </span></a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('frontend.reports', 'money') }}"><span> تقارير مالية
+                                                    </span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li><a href="{{ route('frontend.centers') }}"> المراكز التدريبية</a></li>
 
                                     <li class="menu-item-has-children">
@@ -325,8 +438,81 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     {!! NoCaptcha::renderJs(app()->getLocale()) !!}
+    <div id="chat-icon">💬</div>
+
+    <div id="chat-box">
+        <div class="chat-header">
+            <span>خدمة العملاء</span>
+            <button id="close-chat">×</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="bot-msg">👋 أهلاً بك! كيف أقدر أساعدك؟</div>
+        </div>
+        <div id="messages" class="mb-3"></div>
+
+        <!-- اختيارات سريعة -->
+        <div id="quick-replies" class="mb-3"></div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="اكتب رسالتك...">
+            <button id="send-btn">إرسال</button>
+        </div>
+        <div class="chat-footer">
+            <a href="https://wa.me/201234567890" target="_blank">📲 تواصل عبر واتساب</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('chat-icon').onclick = () => {
+            document.getElementById('chat-box').style.display = 'block';
+        };
+        document.getElementById('close-chat').onclick = () => {
+            document.getElementById('chat-box').style.display = 'none';
+        };
+        document.getElementById('send-btn').onclick = sendMessage;
+        document.getElementById('user-input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function loadQuickReplies() {
+            fetch('/api/quick-replies')
+                .then(res => res.json())
+                .then(data => {
+                    let container = document.getElementById('quick-replies');
+                    container.innerHTML = '';
+                    data.forEach(item => {
+                        container.innerHTML += `
+                    <button class="btn btn-outline-primary btn-sm m-1" onclick="sendQuick('${item.keyword}')">
+                        ${item.keyword}
+                    </button>`;
+                    });
+                });
+        }
+
+        function sendQuick(text) {
+
+            document.getElementById('messages').value = text;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            let msg = document.getElementById('messages').value;
+            if (!msg) return;
+
+            document.getElementById('messages').innerHTML += `<div class="text-end mb-2"><b>أنت:</b> ${msg}</div>`;
+
+            fetch(`/api/chat-reply?message=${encodeURIComponent(msg)}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('messages').innerHTML += `<div class="text-start mb-2"><b>البوت:</b> ${data.reply}</div>`;
+                });
+
+            document.getElementById('messages').value = '';
+        }
 
 
+        loadQuickReplies();
+
+    </script>
 </body>
 
 </html>

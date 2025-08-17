@@ -53,23 +53,30 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.report.fields.image') }}
+                            {{ trans('cruds.report.fields.link') }}
                         </th>
                         <td>
-                            @if($report->image)
-                                <a href="{{ $report->image->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $report->image->getUrl('thumb') }}">
-                                </a>
-                            @endif
+                            {{ $report->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.report.fields.published') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $report->published ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.report.fields.category') }}
+                        </th>
+                        <td>
+                            {{ $report->category->type ?? '' }}
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.reports.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
         </div>
     </div>
 </div>

@@ -1,4 +1,7 @@
 <?php
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
+Route::group([ 'as' => 'api.', 'namespace' => 'Api'], function () {
+    Route::get('/chat-reply', 'ChatBotController@reply');
+    Route::get('/quick-replies', 'ChatBotController@quickReplies');
+
 });

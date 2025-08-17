@@ -1,7 +1,7 @@
 @extends('frontend.layouts.main')
 @section('content')
 @include('frontend.partials.breadcrumb', [
-'heading' => 'تواسل معنا ',
+'heading' => 'تواصل معنا ',
 ])
 <!--==============================
     Contact Area
@@ -28,6 +28,14 @@
                     <i class="fas fa-envelope"></i>
                     <a class="text-inherit" href="mailto:{{ get_setting('email') }}">{{ get_setting('email') }}</a>
                 </p>
+                @foreach($banks as $bank)
+                <div class="bankaccount">
+                    بيانات الحساب
+                    <p> البنك: {{ $bank->name }}</p>
+                    <p> رقم الحساب: {{ $bank->account_number }}</p>
+                    <p> IBAN: {{ $bank->iban }}</p>
+                </div>
+                @endforeach
             </div>
             <div class="col-lg-6 col-xl-6">
                 <form action="{{route('frontend.contact.store')}}" class="form-style5 ajax-contact">

@@ -198,6 +198,15 @@
                 </a>
             </li>
         @endcan
+          <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.chat-responses.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/chat-responses') || request()->is('admin/chat-responses/*') ? 'c-active' : '' }}">
+                    <i class="fa-fw fas fa-newspaper c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.chat-responses.title') }}
+                </a>
+            </li>
         @can('hawkma_access')
             <li
                 class="c-sidebar-nav-dropdown {{ request()->is('admin/hawkmas*') ? 'c-show' : '' }} {{ request()->is('admin/hawkam-categories*') ? 'c-show' : '' }}">
@@ -234,6 +243,38 @@
                 </ul>
             </li>
         @endcan
+          @can('report_mangment_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/report-categories*") ? "c-show" : "" }} {{ request()->is("admin/reports*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.reportMangment.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('report_category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.report-categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/report-categories") || request()->is("admin/report-categories/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-barcode c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.reportCategory.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('report_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.reports.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/reports") || request()->is("admin/reports/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-file-alt c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.report.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
      
         @can('news_access')
             <li class="c-sidebar-nav-item">
@@ -254,6 +295,16 @@
 
                     </i>
                     {{ trans('cruds.contact.title') }}
+                </a>
+            </li>
+        @endcan
+          @can('banq_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.banqs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/banqs") || request()->is("admin/banqs/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-university c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.banq.title') }}
                 </a>
             </li>
         @endcan

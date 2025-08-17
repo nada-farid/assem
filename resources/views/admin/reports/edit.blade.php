@@ -46,7 +46,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.report.fields.file_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="image">{{ trans('cruds.report.fields.image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('image') ? 'is-invalid' : '' }}" id="image-dropzone">
                 </div>
@@ -56,6 +56,30 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.report.fields.image_helper') }}</span>
+            </div> --}}
+            <div class="form-group">
+                <label for="link">{{ trans('cruds.report.fields.link') }}</label>
+                <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link" id="link" value="{{ old('link', $report->link) }}">
+                @if($errors->has('link'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('link') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.report.fields.link_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="category_id">{{ trans('cruds.report.fields.category') }}</label>
+                <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                    @foreach($categories as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $report->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('category'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('category') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.report.fields.category_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -133,7 +157,7 @@
     },
     params: {
       size: 5,
-       
+     
     },
     success: function (file, response) {
       $('form').find('input[name="image"]').remove()
@@ -174,5 +198,49 @@
     }
 }
 
+</script>
+<script>
+    $(document).ready(function () {
+       
+        var type = $('#type').val(); 
+        var selectedCategory = {{ $report->category_id ?? 'null' }}; 
+
+        if (type) {
+            loadCategories(type, selectedCategory);
+        }
+
+      
+        $('#type').change(function () {
+            var selectedType = $(this).val();
+            if (selectedType) {
+                loadCategories(selectedType, null);
+            } else {
+                $('#category_id').empty();
+                $('#category_id').append('<option value disabled selected>{{ trans("global.pleaseSelect") }}</option>');
+            }
+        });
+
+        
+        function loadCategories(type, selectedCategory = null) {
+            $.ajax({
+                url: '{{ route("admin.reports.getCategories") }}',
+                type: 'GET',
+                data: { type: type },
+                success: function (data) {
+                    $('#category_id').empty();
+                    $('#category_id').append('<option value disabled selected>{{ trans("global.pleaseSelect") }}</option>');
+                    
+                    $.each(data, function (key, value) {
+                        $('#category_id').append(
+                            '<option value="' + key + '"' + (key == selectedCategory ? ' selected' : '') + '>' + value + '</option>'
+                        );
+                    });
+                },
+                error: function () {
+                    alert('{{ trans("global.ajax_error") }}');
+                }
+            });
+        }
+    });
 </script>
 @endsection

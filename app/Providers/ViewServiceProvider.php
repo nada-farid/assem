@@ -9,6 +9,7 @@ use App\Models\MembershipType;
 use App\Models\Project;
 use App\Models\Setting;
 use App\Models\Slider;
+use App\Models\ReportCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Auth;
@@ -21,11 +22,13 @@ class ViewServiceProvider extends ServiceProvider
 {
     View::composer('*', function ($view) {
         $hawkma_categories = HawkamCategory::all();
+        $report_categories = ReportCategory::all();
         $assocation = Auth::check()
             ? Association::where('user_id', Auth::id())->first()
             : null;
 
         $view->with('hawkma_categories', $hawkma_categories);
+        $view->with('report_categories', $report_categories);
         $view->with('assocation', $assocation);
     });
 }
