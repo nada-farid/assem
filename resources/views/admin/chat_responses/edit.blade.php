@@ -8,18 +8,18 @@
 
     <div class="card-body">
 
-        <form action="{{ route('admin.chat-responses.update', $response->id) }}" method="POST">
+        <form action="{{ route('admin.chat-chatResponses.update', $chatchatResponse->id) }}" method="POST">
             @csrf
             @method('PUT')
 
             <div class="mb-3">
                 <label for="keyword" class="form-label">الكلمة المفتاحية</label>
-                <input type="text" name="keyword" id="keyword" value="{{ $response->keyword }}" class="form-control" required>
+                <input type="text" name="keyword" id="keyword" value="{{ $chatResponse->keyword }}" class="form-control" required>
             </div>
 
             <div class="mb-3">
                 <label for="reply" class="form-label">الرد</label>
-                <textarea name="response" id="reply" class="form-control" rows="4" required>{{ $response->reply }}</textarea>
+                <textarea name="chatResponse" id="reply" class="form-control" rows="4" required>{{ $chatResponse->reply }}</textarea>
             </div>
             <div class="form-group">
                 <span class="toggle-text"> عرض كاختيار سريع</span>

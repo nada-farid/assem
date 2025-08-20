@@ -31,9 +31,9 @@
                 @foreach($banks as $bank)
                 <div class="bankaccount">
                     بيانات الحساب
-                    <p> البنك: {{ $bank->name }}</p>
-                    <p> رقم الحساب: {{ $bank->account_number }}</p>
-                    <p> IBAN: {{ $bank->iban }}</p>
+                     <p> البنك: {{ $bank->bank_name }}</p>
+                    <p> رقم الحساب: {{ $bank->bank_number }}</p>
+                    <p>{{ $bank->iban }} :IBAN </p>
                 </div>
                 @endforeach
             </div>

@@ -539,19 +539,23 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'profile_password_edit',
             ],
             [
-                'id'    => 133,
-                'title' => 'banq_create',
-            ],
-            [
                 'id'    => 134,
-                'title' => 'banq_edit',
+                'title' => 'banq_access',
             ],
             [
                 'id'    => 135,
-                'title' => 'banq_show',
+                'title' => 'banq_create',
             ],
             [
                 'id'    => 136,
+                'title' => 'banq_edit',
+            ],
+            [
+                'id'    => 137,
+                'title' => 'banq_show',
+            ],
+            [
+                'id'    => 138,
                 'title' => 'banq_delete',
             ],
         ];
