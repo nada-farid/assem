@@ -42,10 +42,13 @@ class LoginController extends Controller
         }
 
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-     
+        if (Auth::attempt(
+            ['email' => $request->email, 'password' => $request->password],
+            $request->filled('remember') 
+        )) {
             return redirect()->intended($this->redirectPath());
         }
+        
 
 
         return redirect()->back()->withErrors([
@@ -56,6 +59,12 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        if (!$user->hasVerifiedEmail()) {
+            Auth::logout();
+            Alert::warning('يجب تفعيل بريدك الإلكتروني قبل تسجيل الدخول.');
+            return redirect()->route('verification.notice');
+        }
+        
  
         if (!$user->approved) {
             Auth::logout();

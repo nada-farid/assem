@@ -22,9 +22,8 @@
     <div class="row">
         <div class="col-md-6">
             <div style="background: #33657C;margin: 10%;border-radius:25px"> 
-                <div class="text-center p-5"> 
+                <div class="text-center  px-5"> 
                     <h5 class=" p-2" style="color:white;font-family:'Lalezar', sans-serif;font-size:48px">طلب شهادة</h5>
-                    <img height="100" style="float: left" src="{{ asset('Vector.png') }}" alt="">
                 </div>
                 <div class="text-center p-5" style="clear: both">
                     {!! QrCode::size(460)->generate(route('frontend.course.certificate',encrypt($course->id))) !!}  

@@ -1103,6 +1103,7 @@ textarea.is-invalid {
 }
 .vs-btn:hover {
   color: var(--white-color);
+  background:var(--theme-color2);
 }
 .vs-btn:hover:before, .vs-btn:hover:after {
   transform: scale(1);
@@ -2701,7 +2702,7 @@ a.text-theme:hover,
 }
 .recent-post .media-img {
   width: 110px;
-  margin-right: 20px;
+  margin-left: 20px;
   border-radius: 14px;
   overflow: hidden;
 }
@@ -3304,7 +3305,7 @@ a.text-theme:hover,
   }
 }
 .main-menu a:hover {
-  color: var(--theme-color);
+  color: var(--theme-color2);
 }
 .main-menu > ul > li {
   margin: 0 13px;

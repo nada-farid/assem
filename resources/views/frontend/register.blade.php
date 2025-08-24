@@ -126,8 +126,7 @@
                             <input type="file" name="center_logo" accept="image/*" required />
                             @error('center_logo') <div class="text-danger">{{ $message }}</div> @enderror
 
-                            <input type="text" name="location" placeholder="الموقع الجغرافي" value="{{ old('location') }}" required />
-                            @error('location') <div class="text-danger">{{ $message }}</div> @enderror
+                         
 
                             <input type="email" name="center_email" placeholder="البريد الإلكتروني الرسمي" value="{{ old('center_email') }}" required />
                             @error('center_email') <div class="text-danger">{{ $message }}</div> @enderror
@@ -140,6 +139,8 @@
 
                             <input type="text" name="center_phone" placeholder="رقم الهاتف" value="{{ old('center_phone') }}" class="phone form-control" required />
                             @error('center_phone') <div class="text-danger">{{ $message }}</div> @enderror
+                               <input type="text" name="location" placeholder="الموقع الجغرافي" value="{{ old('location') }}" required />
+                            @error('location') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
 
                         <!-- جمعية -->
@@ -505,7 +506,7 @@
                     required: function() {
                         return $("#entityType").val() === "center";
                     }
-                    , url: true
+                    ,
                 }
                 , specialization: {
                     required: function() {

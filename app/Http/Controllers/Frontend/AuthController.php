@@ -97,12 +97,16 @@ class AuthController extends Controller
                 $center->addMediaFromRequest('license_image')->toMediaCollection('license_image');
             }
             $alert = UserAlert::create([
-                'alert_text' => " قم مركز جديد بالتسجيل:  {$center->name}",
+                'alert_text' => " قام مركز جديد بالتسجيل:  {$center->name}",
                 'alert_link' => route('admin.centers.show', $center->id),
             ]);
     
             $alert->users()->sync($adminUsers->pluck('id')->toArray());
         }
+
+        event(new Registered($user));
+
+        
         Alert::success('اضافة بنجاح', ' تم تسجيل حسابك بنجاح وفي انتظار موافقة المشرف');
         return redirect()->back();
     }

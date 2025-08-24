@@ -49,7 +49,7 @@ class RegisterEntityRequest extends FormRequest
             'center_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'center_license_number' => 'required',
             'location' => 'required',
-            'website' => 'required|url',
+            'website' => 'required',
             'specialization' => 'required',
             'experience_years' => 'required',
             'center_end_date' => 'required|date',
