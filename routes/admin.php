@@ -178,6 +178,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('chat-responses', ChatResponseController::class);
 
+    
+    // Blog
+    Route::delete('blogs/destroy', 'BlogController@massDestroy')->name('blogs.massDestroy');
+    Route::post('blogs/media', 'BlogController@storeMedia')->name('blogs.storeMedia');
+    Route::post('blogs/ckmedia', 'BlogController@storeCKEditorImages')->name('blogs.storeCKEditorImages');
+    Route::resource('blogs', 'BlogController');
+
+    // Comment
+    Route::delete('comments/destroy', 'CommentController@massDestroy')->name('comments.massDestroy');
+    Route::resource('comments', 'CommentController', ['except' => ['create', 'store', 'edit', 'update']]);
+
 
 
 });

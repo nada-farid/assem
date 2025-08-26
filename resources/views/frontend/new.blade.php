@@ -15,13 +15,9 @@
                         <div class="vs-blog blog-single">
                             <div class="blog-img">
                                 <img src="{{$new->inside_image?->getUrl()}}" alt="Blog Image">
-                                <a href="blog.html" class="blog-date"><span class="day">11</span><span class="month">January</span></a>
+                                <a href="blog.html" class="blog-date"><span class="day">{{$blog->created_at->format('d')}}</span><span class="month">{{$blog->created_at->format('M')}}</span></a>
                             </div>
                             <div class="blog-content">
-                                <div class="blog-meta">
-                                  
-                                    <a href="blog.html"><i class="fal fa-eye"></i>{{$new->views}} مشاهدة</a>
-                                </div>
                                 <h2 class="blog-title">{{$new->title}}</h2>
                                 {!! $new->description !!}
                                 <div class="position-relative mt-30 mb-30">

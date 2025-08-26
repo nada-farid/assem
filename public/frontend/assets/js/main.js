@@ -228,7 +228,7 @@
       arrows: (d('arrows') ? true : false),
       speed: (d('speed') ? d('speed') : 1000),
       asNavFor: (d('asnavfor') ? d('asnavfor') : false),
-      autoplay: ((d('autoplay') == false) ? false : false),
+      autoplay: (d('autoplay') == false ? false : true),
       infinite: ((d('infinite') == false) ? false : true),
       slidesToShow: (d('slide-show') ? d('slide-show') : 1),
       adaptiveHeight: (d('adaptive-height') ? true : false),
@@ -312,7 +312,7 @@
   var form = '.ajax-contact';
   var invalidCls = 'is-invalid';
   var $email = '[name="email"]';
-  var $validation = '[name="name"],[name="email"],[name="phone"],[name="message"]';  // Must be use (,) without any space
+  var $validation = '[name="name"],[name="email"],[name="number"],[name="subject"],[name="callchoice"],[name="message"]'; // Must be use (,) without any space
   var formMessages = $(form).find('.form-messages');
 
   function sendContact() {
@@ -321,30 +321,29 @@
     valid = validateContact();
     if (valid) {
       jQuery.ajax({
-        headers: {
-          'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
           url: $(form).attr('action'),
           data: formData,
           type: "POST"
         })
         .done(function (response) {
-          Swal.fire({
-            icon: 'success',
-            title: 'تم الإرسال بنجاح',
-            text: response.message,
-            confirmButtonText: 'حسنًا'
-          });
-
+          // Make sure that the formMessages div has the 'success' class.
+          formMessages.removeClass('error');
+          formMessages.addClass('success');
+          // Set the message text.
+          formMessages.text(response);
+          // Clear the form.
           $(form + ' input:not([type="submit"]),' + form + ' textarea').val('');
         })
         .fail(function (data) {
-          Swal.fire({
-            icon: 'error',
-            title: 'حدث خطأ!',
-            text: data.responseJSON.message,
-            confirmButtonText: 'حسنًا'
-          });
+          // Make sure that the formMessages div has the 'error' class.
+          formMessages.removeClass('success');
+          formMessages.addClass('error');
+          // Set the message text.
+          if (data.responseText !== '') {
+            formMessages.html(data.responseText);
+          } else {
+            formMessages.html('Oops! An error occured and your message could not be sent.');
+          }
         });
     };
   };

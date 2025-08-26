@@ -246,8 +246,7 @@
                         <a href="#">المركز الإعلامي </a>
                         <ul class="sub-menu">
                             <li><a href="{{ route('frontend.news') }}">الأخبار </a></li>
-
-
+                            <li><a href="{{ route('frontend.blogs') }}">المدونة </a></li>
                         </ul>
                     </li>
                     <li><a href="{{ route('frontend.contact') }}">تواصل معنا</a></li>
@@ -353,8 +352,7 @@
                                         <a href="#">المركز الإعلامي </a>
                                         <ul class="sub-menu">
                                             <li><a href="{{ route('frontend.news') }}">الأخبار </a></li>
-
-
+                                            <li><a href="{{ route('frontend.blogs') }}">المدونة </a></li>
                                         </ul>
                                     </li>
 

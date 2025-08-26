@@ -308,6 +308,16 @@
                 </a>
             </li>
         @endcan
+          @can('blog_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.blogs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/blogs") || request()->is("admin/blogs/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-edit c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.blog.title') }}
+                </a>
+            </li>
+        @endcan
         @can('about_association_access')
             <li
                 class="c-sidebar-nav-dropdown {{ request()->is('admin/directors*') ? 'c-show' : '' }} {{ request()->is('admin/goals*') ? 'c-show' : '' }} {{ request()->is('admin/partners*') ? 'c-show' : '' }} {{ request()->is('admin/programs*') ? 'c-show' : '' }} {{ request()->is('admin/needs*') ? 'c-show' : '' }}">

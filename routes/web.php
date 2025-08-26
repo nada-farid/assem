@@ -10,6 +10,8 @@ Route::group(['as' => 'frontend.'], function () {
     Route::get('reports/{type}', 'HomeController@reports')->name('reports');
     Route::get('news', 'NewsController@news')->name('news');
     Route::get('new/{id}', 'NewsController@new')->name('new');
+    Route::get('blogs', 'NewsController@blogs')->name('blogs');
+    Route::get('blog/{id}', 'NewsController@blog')->name('blog');
     Route::get('/courses', 'CourseController@index')->name('courses');
     Route::get('/course/{id}', 'CourseController@show')->name('course');
     Route::get('centers', 'CenterController@index')->name('centers');

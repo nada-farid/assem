@@ -3402,11 +3402,16 @@ a.text-theme:hover,
   margin: 0 0;
   padding: 3px 9px;
 }
-.main-menu ul.sub-menu li.menu-item-has-children > a:after {
-  content: "\f105";
-  float: right;
-  top: 3px;
-}
+
+    .main-menu ul.sub-menu li:hover {
+        background: #33657C;
+        color:#fff;
+    }
+    .main-menu ul.sub-menu li.menu-item-has-children > a:after {
+        content: "\f105";
+        float: right;
+        top: 3px;
+    }
 .main-menu ul.sub-menu li a {
   position: relative;
   padding-right: 21px;

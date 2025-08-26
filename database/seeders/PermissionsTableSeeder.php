@@ -536,27 +536,59 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 132,
-                'title' => 'profile_password_edit',
-            ],
-            [
-                'id'    => 134,
-                'title' => 'banq_access',
-            ],
-            [
-                'id'    => 135,
                 'title' => 'banq_create',
             ],
             [
-                'id'    => 136,
+                'id'    => 133,
                 'title' => 'banq_edit',
             ],
             [
-                'id'    => 137,
+                'id'    => 134,
                 'title' => 'banq_show',
             ],
             [
-                'id'    => 138,
+                'id'    => 135,
                 'title' => 'banq_delete',
+            ],
+            [
+                'id'    => 136,
+                'title' => 'banq_access',
+            ],
+            [
+                'id'    => 137,
+                'title' => 'blog_create',
+            ],
+            [
+                'id'    => 138,
+                'title' => 'blog_edit',
+            ],
+            [
+                'id'    => 139,
+                'title' => 'blog_show',
+            ],
+            [
+                'id'    => 140,
+                'title' => 'blog_delete',
+            ],
+            [
+                'id'    => 141,
+                'title' => 'blog_access',
+            ],
+            [
+                'id'    => 142,
+                'title' => 'comment_show',
+            ],
+            [
+                'id'    => 143,
+                'title' => 'comment_delete',
+            ],
+            [
+                'id'    => 144,
+                'title' => 'comment_access',
+            ],
+            [
+                'id'    => 145,
+                'title' => 'profile_password_edit',
             ],
         ];
 
